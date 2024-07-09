@@ -15,7 +15,22 @@ struct CycloStatsApp: App {
     // MARK: -
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            TabView {
+                HomeView()
+                    .tabItem {
+                        Label("Home", systemImage: "house.fill")
+                    }
+                
+                EmptyView()
+                    .tabItem {
+                        Label("Activités", systemImage: "figure.outdoor.cycle")
+                    }
+                
+                EmptyView()
+                    .tabItem {
+                        Label("Progrè", systemImage: "chart.bar.xaxis.ascending")
+                    }
+            }
                 .environmentObject(healthManager)
                 .onAppear {
                     healthManager.requestAutorisation()

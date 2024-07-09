@@ -22,6 +22,8 @@
 		D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A252C3C55BD004837E2 /* Double+Extensions.swift */; };
 		D9263A282C3C5657004837E2 /* SelectPeriodButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A272C3C5657004837E2 /* SelectPeriodButtons.swift */; };
 		D9263A2A2C3C569F004837E2 /* CyclingStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A292C3C569F004837E2 /* CyclingStatsView.swift */; };
+		D958A5F22C3D934B004C2A1D /* CyclingChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */; };
+		D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F32C3DB935004C2A1D /* ActivityRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		D9263A272C3C5657004837E2 /* SelectPeriodButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPeriodButtons.swift; sourceTree = "<group>"; };
 		D9263A292C3C569F004837E2 /* CyclingStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingStatsView.swift; sourceTree = "<group>"; };
 		D9263A2B2C3C5BC4004837E2 /* CycloStats.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycloStats.entitlements; sourceTree = "<group>"; };
+		D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingChartsView.swift; sourceTree = "<group>"; };
+		D958A5F32C3DB935004C2A1D /* ActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,8 @@
 				D9263A292C3C569F004837E2 /* CyclingStatsView.swift */,
 				D9263A232C3C5545004837E2 /* CyclingTargetView.swift */,
 				D9263A272C3C5657004837E2 /* SelectPeriodButtons.swift */,
+				D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */,
+				D958A5F32C3DB935004C2A1D /* ActivityRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -247,7 +253,9 @@
 				D9263A0E2C3C52F1004837E2 /* HomeView.swift in Sources */,
 				D9263A242C3C5545004837E2 /* CyclingTargetView.swift in Sources */,
 				D9263A1C2C3C5479004837E2 /* WorkoutMetadataKey.swift in Sources */,
+				D958A5F22C3D934B004C2A1D /* CyclingChartsView.swift in Sources */,
 				D9263A212C3C550A004837E2 /* Color+Extensions.swift in Sources */,
+				D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */,
 				D9263A1A2C3C5462004837E2 /* ActivityTarget.swift in Sources */,
 				D9263A112C3C5351004837E2 /* HealthManager.swift in Sources */,
 				D9263A282C3C5657004837E2 /* SelectPeriodButtons.swift in Sources */,

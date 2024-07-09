@@ -15,20 +15,33 @@ struct HomeView: View {
     var body: some View {
         ScrollView {
             SelectPeriodButtons(period: $healthManager.selectedPeriod)
+            
+            if let lastActivity = healthManager.cyclingActivities.first {
+                ActivityRow(activity: lastActivity)
+                    .padding()
+            }
  
             CyclingStatsView()
                 .padding()
+//            
+//            CyclingChartsView()
+//                .padding()
             
             VStack(spacing: 12) {
-                CyclingTargetView(target: .montVentoux)
-                CyclingTargetView(target: .metzToThionvile)
-                CyclingTargetView(target: .metzToNancy)
-                CyclingTargetView(target: .stageTourOfFrance)
-                CyclingTargetView(target: .milanToRome)
-                CyclingTargetView(target: .parisToMarseille)
-                CyclingTargetView(target: .parisToDubai)
-                CyclingTargetView(target: .circumferenceMoon)
-                CyclingTargetView(target: .circumferenceEarth)
+                Text("Progrès")
+                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(spacing: 12) {
+                    CyclingTargetView(target: .montVentoux)
+                    CyclingTargetView(target: .metzToThionvile)
+                    CyclingTargetView(target: .metzToNancy)
+                    CyclingTargetView(target: .stageTourOfFrance)
+                    CyclingTargetView(target: .milanToRome)
+                    CyclingTargetView(target: .parisToMarseille)
+                    CyclingTargetView(target: .parisToDubai)
+                    CyclingTargetView(target: .circumferenceMoon)
+                    CyclingTargetView(target: .circumferenceEarth)
+                }
             }
             .padding()
         

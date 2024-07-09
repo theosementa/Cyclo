@@ -14,46 +14,51 @@ struct CyclingStatsView: View {
 
     // MARK: -
     var body: some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 16) {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "number")
-                        Text("Sorties")
-                    }
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-
-                    Text(healthManager.numberOfCyclingWorkout.formatted())
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
-                }
+        VStack(spacing: 12) {
+            Text("Statistiques")
+                .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .backgroundComponent()
-                
+            VStack(spacing: 16) {
+                HStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "number")
+                            Text("Sorties")
+                        }
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        
+                        Text(healthManager.numberOfCyclingWorkout.formatted())
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .backgroundComponent()
+                    
+                    VStack(alignment: .leading, spacing: 6) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "point.bottomleft.forward.to.point.topright.scurvepath.fill")
+                            Text("Distance")
+                        }
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        
+                        Text(healthManager.totalDistance.formatWith(num: 2) + " km")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .backgroundComponent()
+                }
                 VStack(alignment: .leading, spacing: 6) {
                     HStack(spacing: 4) {
-                        Image(systemName: "point.bottomleft.forward.to.point.topright.scurvepath.fill")
-                        Text("Distance")
+                        Image(systemName: "mountain.2.fill")
+                        Text("Dénivelé")
                     }
                     .font(.system(size: 14, weight: .medium, design: .rounded))
-
-                    Text(healthManager.totalDistance.formatWith(num: 2) + " km")
+                    
+                    Text(healthManager.totalElevationAscended.formatWith(num: 2) + " m")
                         .font(.system(size: 20, weight: .semibold, design: .rounded))
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .backgroundComponent()
             }
-            VStack(alignment: .leading, spacing: 6) {
-                HStack(spacing: 4) {
-                    Image(systemName: "mountain.2.fill")
-                    Text("Dénivelé")
-                }
-                .font(.system(size: 14, weight: .medium, design: .rounded))
-
-                Text(healthManager.totalElevationAscended.formatWith(num: 2) + " m")
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .backgroundComponent()
         }
     } // End body
 } // End struct

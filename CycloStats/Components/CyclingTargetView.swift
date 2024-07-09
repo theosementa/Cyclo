@@ -49,9 +49,9 @@ struct CyclingTargetView: View {
                                             .padding(.leading)
                                     }
                                 }
-                                .padding(2)
                         }
                     }
+                    .clipShape(Capsule())
                     .overlay(alignment: .trailing) {
                         if numberOfTime.progress < 0.20 {
                             Text((numberOfTime.progress * 100).formatWith(num: 1) + "%")
