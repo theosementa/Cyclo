@@ -12,38 +12,53 @@ struct CyclingChartsView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
     
+    var minYAxisValue: Double {
+        healthManager.aggregatedActivities.map { $0.distanceInKm }.min() ?? 0
+    }
+    
+    var maxYAxisValue: Double {
+        healthManager.aggregatedActivities.map { $0.distanceInKm }.max() ?? 0
+    }
+    
     // MARK: -
     var body: some View {
-        Chart {
-            ForEach(healthManager.cyclingActivities) { activity in
-                LineMark(
-                    x: .value("X", activity.endDate),
-                    y: .value("Y", activity.distanceInKm)
-                )
-                .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                .interpolationMethod(.catmullRom)
-                .foregroundStyle(Color.green)
-                
-                AreaMark(
-                    x: .value("X", activity.endDate),
-                    y: .value("Y", activity.distanceInKm)
-                )
-                .interpolationMethod(.catmullRom)
-                .foregroundStyle(LinearGradient(colors: [Color.green, Color.green.opacity(0)], startPoint: .top, endPoint: .bottom))
-            }
-        }
-        .chartYAxis {
-            AxisMarks(position: .leading, values: .automatic(desiredCount: 5)) {
-//                let array = healthManager.cyclingActivities.sorted { $0.distanceInKm > $1.distanceInKm }
-//                let value = array[$0.index].distanceInKm
-                let value = $0.as(Int.self)!
-                AxisValueLabel(horizontalSpacing: 8) {
-                    Text(value.formatted())
+        VStack(spacing: 12) {
+            Text("Graphique")
+                .font(.system(size: 24, weight: .semibold, design: .rounded))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Chart {
+                ForEach(healthManager.aggregatedActivities) { activity in
+                    LineMark(
+                        x: .value("X", activity.endDate),
+                        y: .value("Y", activity.distanceInKm)
+                    )
+                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                    .interpolationMethod(.catmullRom)
+                    .foregroundStyle(Color.green)
+                    
+                    RuleMark(y: .value("Average Distance", healthManager.averageDistancePerDay))
+                        .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
+                        .foregroundStyle(Color.white)
+                        .annotation(position: .top, alignment: .leading) {
+                            Text("moy: \(healthManager.averageDistancePerDay.formatWith(num: 2)) km")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                        }
                 }
-                AxisGridLine()
             }
+            .frame(height: 200)
+            .chartYScale(domain: (minYAxisValue - 5)...(maxYAxisValue + 5))
+            .chartYAxis {
+                AxisMarks(position: .leading, values: .automatic(desiredCount: 5)) {
+                    let value = $0.as(Int.self)!
+                    AxisValueLabel(horizontalSpacing: 8) {
+                        Text(value.formatted())
+                    }
+                    AxisGridLine()
+                }
+            }
+            .backgroundComponent()
         }
-        .backgroundComponent()
     } // End body
 } // End struct
 

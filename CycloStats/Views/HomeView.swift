@@ -13,46 +13,19 @@ struct HomeView: View {
     
     // MARK: -
     var body: some View {
-        ScrollView {
-            SelectPeriodButtons(period: $healthManager.selectedPeriod)
-            
-            if let lastActivity = healthManager.cyclingActivities.first {
-                ActivityRow(activity: lastActivity)
+        NavigationStack {
+            ScrollView {
+                SelectPeriodButtons(period: $healthManager.selectedPeriod)
+                
+                CyclingStatsView()
+                    .padding()
+                
+                CyclingChartsView()
                     .padding()
             }
- 
-            CyclingStatsView()
-                .padding()
-//            
-//            CyclingChartsView()
-//                .padding()
-            
-            VStack(spacing: 12) {
-                Text("Progrès")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                VStack(spacing: 12) {
-                    CyclingTargetView(target: .montVentoux)
-                    CyclingTargetView(target: .metzToThionvile)
-                    CyclingTargetView(target: .metzToNancy)
-                    CyclingTargetView(target: .stageTourOfFrance)
-                    CyclingTargetView(target: .milanToRome)
-                    CyclingTargetView(target: .parisToMarseille)
-                    CyclingTargetView(target: .parisToDubai)
-                    CyclingTargetView(target: .circumferenceMoon)
-                    CyclingTargetView(target: .circumferenceEarth)
-                }
-            }
-            .padding()
-        
-        }
-        .scrollIndicators(.hidden)
-        .onAppear {
-            healthManager.fetchCyclingStats()
-        }
-        .onChange(of: healthManager.selectedPeriod) {
-            healthManager.fetchCyclingStats()
-        }
+            .scrollIndicators(.hidden)
+            .navigationTitle("Accueil")
+        } // End NavigationStack
     } // End body
 } // End struct
 

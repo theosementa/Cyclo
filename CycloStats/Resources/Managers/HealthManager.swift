@@ -21,20 +21,41 @@ final class HealthManager: ObservableObject {
 
 extension HealthManager {
     
-    func requestAutorisation() {
+    func requestAutorisation() async -> Bool {
         let distanceCycling = HKQuantityType(.distanceCycling)
         let speedCycling = HKQuantityType(.cyclingSpeed)
         
         let workouts = HKObjectType.workoutType()
         let healthTypes: Set = [distanceCycling, speedCycling, workouts]
         
-        Task {
-            do {
-                try await healthStore.requestAuthorization(toShare: [], read: healthTypes)
-            } catch { }
+        do {
+            try await healthStore.requestAuthorization(toShare: [], read: healthTypes)
+            return true
+        } catch {
+            return false
         }
     }
 
+}
+
+extension HealthManager {
+    
+    var aggregatedActivities: [CyclingActivity] {
+        var dailyDistances: [Date: Double] = [:]
+        
+        // Aggregate distances by date
+        for activity in cyclingActivities {
+            let calendar = Calendar.current
+            let date = calendar.startOfDay(for: activity.endDate)
+            dailyDistances[date, default: 0] += activity.distanceInKm
+        }
+        
+        // Convert dictionary to array
+        return dailyDistances.map { date, distance in
+            CyclingActivity(startDate: date, endDate: date, durationInMin: 0, distanceInKm: distance, averageSpeedInKMH: 0, elevationAscendedInM: 0)
+        }.sorted(by: { $0.endDate < $1.endDate })
+    }
+    
 }
 
 // MARK: - Cycling
@@ -57,6 +78,11 @@ extension HealthManager {
     
     var numberOfCyclingWorkout: Int {
         return cyclingActivities.count
+    }
+    
+    var averageDistancePerDay: Double {
+        let totalDistance = aggregatedActivities.reduce(0) { $0 + $1.distanceInKm }
+        return totalDistance / Double(aggregatedActivities.count)
     }
 }
 

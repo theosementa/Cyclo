@@ -12,7 +12,7 @@ enum ExplanationValue: String {
     case reel = "Valeur réel"
 }
 
-enum ActivityTarget {
+enum ActivityTarget: CaseIterable {
     case montVentoux
     case metzToThionvile
     case metzToNancy

@@ -18,23 +18,28 @@ struct CycloStatsApp: App {
             TabView {
                 HomeView()
                     .tabItem {
-                        Label("Home", systemImage: "house.fill")
+                        Label("Accueil", systemImage: "house.fill")
                     }
                 
-                EmptyView()
+                ActivitiesView()
                     .tabItem {
                         Label("Activités", systemImage: "figure.outdoor.cycle")
                     }
                 
-                EmptyView()
+                ProgressView()
                     .tabItem {
-                        Label("Progrè", systemImage: "chart.bar.xaxis.ascending")
+                        Label("Progrès", systemImage: "chart.bar.xaxis.ascending")
                     }
             }
-                .environmentObject(healthManager)
-                .onAppear {
-                    healthManager.requestAutorisation()
+            .environmentObject(healthManager)
+            .task {
+                if await healthManager.requestAutorisation() {
+                    healthManager.fetchCyclingStats()
                 }
+            }
+            .onChange(of: healthManager.selectedPeriod) {
+                healthManager.fetchCyclingStats()
+            }
         }
     } // End body
 } // End struct
