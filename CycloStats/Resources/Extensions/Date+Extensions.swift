@@ -29,4 +29,17 @@ extension Date {
         let components = calendar.dateComponents([.year], from: Date())
         return calendar.startOfDay(for: calendar.date(from: components) ?? .now)
     }
+    
+    static var iPhoneReleaseDate: Date {
+        var dateComponents = DateComponents()
+        dateComponents.year = 2007
+        dateComponents.month = 6
+        dateComponents.day = 29
+        dateComponents.timeZone = TimeZone(abbreviation: "UTC")
+        dateComponents.hour = 9
+        dateComponents.minute = 41
+        
+        let userCalendar = Calendar.current
+        return userCalendar.date(from: dateComponents) ?? Date()
+    }
 }

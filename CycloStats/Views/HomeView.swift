@@ -17,14 +17,26 @@ struct HomeView: View {
             ScrollView {
                 SelectPeriodButtons(period: $healthManager.selectedPeriod)
                 
-                CyclingStatsView()
+                CyclingChartsView()
                     .padding()
                 
-                CyclingChartsView()
+                CyclingStatsTotalView()
+                    .padding()
+                
+                CyclingStatsAverageView()
                     .padding()
             }
             .scrollIndicators(.hidden)
-            .navigationTitle("Accueil")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Accueil")
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    FilterMenu()
+                }
+            }
         } // End NavigationStack
     } // End body
 } // End struct

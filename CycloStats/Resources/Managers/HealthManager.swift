@@ -8,8 +8,17 @@
 import Foundation
 import HealthKit
 
-enum Period {
-    case week, month, year
+enum Period: CaseIterable {
+    case week, month, year, total
+    
+    var name: String {
+        switch self {
+        case .week:     return "Semaine"
+        case .month:    return "Mois"
+        case .year:     return "Année"
+        case .total:    return "Total"
+        }
+    }
 }
 
 final class HealthManager: ObservableObject {
@@ -86,6 +95,21 @@ extension HealthManager {
     }
 }
 
+// MARK: - Cycling Stats Average
+extension HealthManager {
+    var averageDistanceInKm: Double {
+        if !cyclingActivities.isEmpty {
+            return totalDistance / Double(cyclingActivities.count)
+        } else { return 0 }
+    }
+    
+    var averageElevationInM: Double {
+        if !cyclingActivities.isEmpty {
+            return totalElevationAscended / Double(cyclingActivities.count)
+        } else { return 0 }
+    }
+}
+
 extension HealthManager {
     
     func fetchCyclingStats() {
@@ -95,6 +119,7 @@ extension HealthManager {
         case .week: firstDay = .firstDayOfWeek
         case .month: firstDay = .firstDayOfMonth
         case .year: firstDay = .firstDayOfYear
+        case .total: firstDay = .iPhoneReleaseDate
         }
         
         let workout = HKObjectType.workoutType()

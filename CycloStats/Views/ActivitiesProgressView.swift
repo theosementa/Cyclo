@@ -1,5 +1,5 @@
 //
-//  ProgressView.swift
+//  ActivitiesProgressView.swift
 //  CycloStats
 //
 //  Created by KaayZenn on 10/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ProgressView: View {
+struct ActivitiesProgressView: View {
     
     // MARK: -
     var body: some View {
@@ -20,12 +20,18 @@ struct ProgressView: View {
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
-            .navigationTitle("Progrès")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Progrès")
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                }
+            }
         }
     } // End body
 } // End struct
 
 // MARK: - Preview
 #Preview {
-    ProgressView()
+    ActivitiesProgressView()
 }

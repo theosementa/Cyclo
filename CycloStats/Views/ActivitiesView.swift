@@ -24,7 +24,13 @@ struct ActivitiesView: View {
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .scrollIndicators(.hidden)
-            .navigationTitle("Activités")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Activités")
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                }
+            }
         }
     } // End body
 } // End struct

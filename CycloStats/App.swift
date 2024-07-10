@@ -26,11 +26,12 @@ struct CycloStatsApp: App {
                         Label("Activités", systemImage: "figure.outdoor.cycle")
                     }
                 
-                ProgressView()
+                ActivitiesProgressView()
                     .tabItem {
                         Label("Progrès", systemImage: "chart.bar.xaxis.ascending")
                     }
             }
+            
             .environmentObject(healthManager)
             .task {
                 if await healthManager.requestAutorisation() {
