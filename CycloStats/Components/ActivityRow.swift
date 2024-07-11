@@ -66,6 +66,20 @@ struct ActivityRow: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            
+            HStack {
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack(spacing: 4) {
+                        Image(systemName: "calendar")
+                        Text("Date")
+                    }
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    
+                    Text(activity.date.formatted(date: .numeric, time: .omitted))
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
         .backgroundComponent()
     } // End body

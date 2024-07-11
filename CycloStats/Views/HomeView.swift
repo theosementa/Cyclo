@@ -14,27 +14,30 @@ struct HomeView: View {
     // MARK: -
     var body: some View {
         NavigationStack {
-            ScrollView {
-                SelectPeriodButtons(period: $healthManager.selectedPeriod)
+            VStack {
+                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                    .padding(.top, 1)
                 
-                CyclingChartsView()
-                    .padding()
-                
-                CyclingStatsTotalView()
-                    .padding()
-                
-                CyclingStatsAverageView()
-                    .padding()
-            }
-            .scrollIndicators(.hidden)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text("Accueil")
-                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                ScrollView {
+                    CyclingChartsView()
+                        .padding()
+                    
+                    CyclingStatsTotalView()
+                        .padding()
+                    
+                    CyclingStatsAverageView()
+                        .padding()
                 }
-                ToolbarItem(placement: .topBarTrailing) {
-                    FilterMenu()
+                .scrollIndicators(.hidden)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Text("Accueil")
+                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        FilterMenu()
+                    }
                 }
             }
         } // End NavigationStack

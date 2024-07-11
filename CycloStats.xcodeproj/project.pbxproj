@@ -29,6 +29,7 @@
 		D958A5FA2C3EFE7E004C2A1D /* CyclingStatsAverageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F92C3EFE7E004C2A1D /* CyclingStatsAverageView.swift */; };
 		D958A5FC2C3EFEC0004C2A1D /* CyclingStatsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5FB2C3EFEC0004C2A1D /* CyclingStatsRow.swift */; };
 		D958A5FF2C3F054C004C2A1D /* FilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5FE2C3F054C004C2A1D /* FilterMenu.swift */; };
+		D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A6002C4056F5004C2A1D /* FilterByPeriodView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		D958A5F92C3EFE7E004C2A1D /* CyclingStatsAverageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingStatsAverageView.swift; sourceTree = "<group>"; };
 		D958A5FB2C3EFEC0004C2A1D /* CyclingStatsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingStatsRow.swift; sourceTree = "<group>"; };
 		D958A5FE2C3F054C004C2A1D /* FilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterMenu.swift; sourceTree = "<group>"; };
+		D958A6002C4056F5004C2A1D /* FilterByPeriodView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterByPeriodView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 				D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */,
 				D958A5F32C3DB935004C2A1D /* ActivityRow.swift */,
 				D958A5FB2C3EFEC0004C2A1D /* CyclingStatsRow.swift */,
+				D958A6002C4056F5004C2A1D /* FilterByPeriodView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
+				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
 				D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */,
 				D92639FD2C3C5252004837E2 /* App.swift in Sources */,
 			);

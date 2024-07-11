@@ -11,11 +11,10 @@ struct ActivitiesView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
 
-    
     // MARK: -
     var body: some View {
         NavigationStack {
-            List(healthManager.cyclingActivities) { activity in
+            List(healthManager.filteredCyclingActivities) { activity in
                 ActivityRow(activity: activity)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)

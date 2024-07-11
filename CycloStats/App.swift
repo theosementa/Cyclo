@@ -36,10 +36,14 @@ struct CycloStatsApp: App {
             .task {
                 if await healthManager.requestAutorisation() {
                     healthManager.fetchCyclingStats()
+                    await healthManager.filterActivities()
                 }
             }
             .onChange(of: healthManager.selectedPeriod) {
-                healthManager.fetchCyclingStats()
+                Task {
+                    healthManager.fetchCyclingStats()
+                    await healthManager.filterActivities()
+                }
             }
         }
     } // End body

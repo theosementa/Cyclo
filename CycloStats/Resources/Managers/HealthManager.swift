@@ -8,6 +8,10 @@
 import Foundation
 import HealthKit
 
+enum PeriodStatus {
+    case start, end
+}
+
 enum Period: CaseIterable {
     case week, month, year, total
     
@@ -25,7 +29,11 @@ final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
     
     @Published var selectedPeriod: Period = .month
-    @Published var cyclingActivities: [CyclingActivity] = []
+    @Published private var cyclingActivities: [CyclingActivity] = []
+    @Published var filteredCyclingActivities: [CyclingActivity] = []
+
+    @Published var startDatePeriod: Date = Date().startOfMonth ?? .now
+    @Published var endDatePeriod: Date = Date().endOfMonth ?? .now
 }
 
 extension HealthManager {
@@ -49,13 +57,19 @@ extension HealthManager {
 
 extension HealthManager {
     
+    @MainActor
+    func filterActivities() async {
+        self.filteredCyclingActivities = cyclingActivities
+            .filter { $0.date >= startDatePeriod && $0.date <= endDatePeriod }
+    }
+    
     var aggregatedActivities: [CyclingActivity] {
         var dailyDistances: [Date: Double] = [:]
         
         // Aggregate distances by date
-        for activity in cyclingActivities {
+        for activity in filteredCyclingActivities {
             let calendar = Calendar.current
-            let date = calendar.startOfDay(for: activity.endDate)
+            let date = calendar.startOfDay(for: activity.date)
             dailyDistances[date, default: 0] += activity.distanceInKm
         }
         
@@ -65,28 +79,49 @@ extension HealthManager {
         }.sorted(by: { $0.endDate < $1.endDate })
     }
     
+    func changeDateWhenChangePeriod() {
+        switch selectedPeriod {
+        case .week:
+            startDatePeriod = startDatePeriod.startOfWeek ?? .now
+            endDatePeriod = startDatePeriod.endOfWeek ?? .now
+        case .month:
+            startDatePeriod = startDatePeriod.startOfMonth ?? .now
+            endDatePeriod = startDatePeriod.endOfMonth ?? .now
+        case .year:
+            startDatePeriod = startDatePeriod.startOfYear ?? .now
+            endDatePeriod = startDatePeriod.endOfYear ?? .now
+        case .total:
+            let startDate = filteredCyclingActivities.map { $0.endDate }.min() ?? .now
+            let endDate = filteredCyclingActivities.map { $0.endDate }.max() ?? .now
+            startDatePeriod = startDate
+            endDatePeriod = endDate
+        }
+        
+        Task { await filterActivities() }
+    }
+    
 }
 
 // MARK: - Cycling
 extension HealthManager {
     var totalDistance: Double {
-        return cyclingActivities.map { $0.distanceInKm }.reduce(0, +)
+        return filteredCyclingActivities.map { $0.distanceInKm }.reduce(0, +)
     }
     
     var totalElevationAscended: Double {
-        return cyclingActivities.map { $0.elevationAscendedInM }.reduce(0, +)
+        return filteredCyclingActivities.map { $0.elevationAscendedInM }.reduce(0, +)
     }
     
     var longestActivity: CyclingActivity? {
-        return cyclingActivities.sorted { $0.distanceInKm > $1.distanceInKm }.first
+        return filteredCyclingActivities.sorted { $0.distanceInKm > $1.distanceInKm }.first
     }
     
     var highestActivity: CyclingActivity? {
-        return cyclingActivities.sorted { $0.elevationAscendedInM > $1.elevationAscendedInM }.first
+        return filteredCyclingActivities.sorted { $0.elevationAscendedInM > $1.elevationAscendedInM }.first
     }
     
     var numberOfCyclingWorkout: Int {
-        return cyclingActivities.count
+        return filteredCyclingActivities.count
     }
     
     var averageDistancePerDay: Double {
@@ -98,14 +133,14 @@ extension HealthManager {
 // MARK: - Cycling Stats Average
 extension HealthManager {
     var averageDistanceInKm: Double {
-        if !cyclingActivities.isEmpty {
-            return totalDistance / Double(cyclingActivities.count)
+        if !filteredCyclingActivities.isEmpty {
+            return totalDistance / Double(filteredCyclingActivities.count)
         } else { return 0 }
     }
     
     var averageElevationInM: Double {
-        if !cyclingActivities.isEmpty {
-            return totalElevationAscended / Double(cyclingActivities.count)
+        if !filteredCyclingActivities.isEmpty {
+            return totalElevationAscended / Double(filteredCyclingActivities.count)
         } else { return 0 }
     }
 }
@@ -116,10 +151,10 @@ extension HealthManager {
         var firstDay: Date
         
         switch selectedPeriod {
-        case .week: firstDay = .firstDayOfWeek
-        case .month: firstDay = .firstDayOfMonth
-        case .year: firstDay = .firstDayOfYear
-        case .total: firstDay = .iPhoneReleaseDate
+        case .week: firstDay = .now.startOfWeek ?? .now
+        case .month: firstDay = .now.startOfMonth ?? .now
+        case .year: firstDay = .now.startOfYear ?? .now
+        case .total: firstDay = .iPhoneReleaseDate ?? .now
         }
         
         let workout = HKObjectType.workoutType()
@@ -167,6 +202,7 @@ extension HealthManager {
             
             DispatchQueue.main.async {
                 self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
+                Task { await self.filterActivities() }
             }
         }
         

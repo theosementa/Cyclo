@@ -16,7 +16,11 @@ struct FilterMenu: View {
         Menu {
             ForEach(Period.allCases, id: \.self) { period in
                 Button { healthManager.selectedPeriod = period } label: {
-                    Label(period.name, systemImage: period == healthManager.selectedPeriod ? "checkmark": "")
+                    if period == healthManager.selectedPeriod {
+                        Label(period.name, systemImage: "checkmark")
+                    } else {
+                        Text(period.name)
+                    }
                 }
             }
         } label: {
@@ -24,6 +28,9 @@ struct FilterMenu: View {
                 Text(healthManager.selectedPeriod.name)
                 Image(systemName: "chevron.up.chevron.down")
             }
+        }
+        .onChange(of: healthManager.selectedPeriod) {
+            healthManager.changeDateWhenChangePeriod()
         }
     } // End body
 } // End struct

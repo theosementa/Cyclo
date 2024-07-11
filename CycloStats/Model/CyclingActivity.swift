@@ -28,6 +28,14 @@ class CyclingActivity: Identifiable, ObservableObject {
 
 extension CyclingActivity {
     
+    var date: Date {
+        return endDate
+    }
+    
+}
+
+extension CyclingActivity {
+    
     static var preview: CyclingActivity {
         return .init(
             startDate: .now,
