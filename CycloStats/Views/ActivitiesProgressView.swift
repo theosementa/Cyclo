@@ -15,9 +15,11 @@ struct ActivitiesProgressView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 2) {
-                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                    .padding(.horizontal)
-                    .padding(.top, 4)
+                if healthManager.selectedPeriod != .total {
+                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                        .padding(.horizontal)
+                        .padding(.top, 4)
+                }
                 
                 List(ActivityTarget.allCases, id: \.self) { target in
                     CyclingTargetView(target: target)

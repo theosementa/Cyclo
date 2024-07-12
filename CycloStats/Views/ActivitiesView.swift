@@ -16,9 +16,11 @@ struct ActivitiesView: View {
     var body: some View {
         NavStack(router: router) {
             VStack(spacing: 2) {
-                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                    .padding(.horizontal)
-                    .padding(.top, 4)
+                if healthManager.selectedPeriod != .total {
+                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                        .padding(.horizontal)
+                        .padding(.top, 4)
+                }
                 
                 List(healthManager.filteredCyclingActivities) { activity in
                     ActivityRow(activity: activity)
