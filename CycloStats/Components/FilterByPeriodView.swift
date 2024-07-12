@@ -21,10 +21,10 @@ struct FilterByPeriodView: View {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundStyle(Color.white)
-                    .padding(6)
+                    .padding(8)
                     .background {
                         Circle()
-                            .fill(Color.white.opacity(0.3))
+                            .fill(Color.Apple.componentInComponent)
                     }
             }
 
@@ -39,15 +39,19 @@ struct FilterByPeriodView: View {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundStyle(Color.white)
-                    .padding(6)
+                    .padding(8)
                     .background {
                         Circle()
-                            .fill(Color.white.opacity(0.3))
+                            .fill(Color.Apple.componentInComponent)
                     }
             }
         }
         .padding()
-        .background(Color.white.opacity(0.15))
+        .clipShape(Capsule())
+        .background {
+            Capsule()
+                .fill(Color.Apple.backgroundComponent)
+        }
     } // End body
     
     @ViewBuilder

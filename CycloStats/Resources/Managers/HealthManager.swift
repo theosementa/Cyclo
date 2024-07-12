@@ -7,23 +7,8 @@
 
 import Foundation
 import HealthKit
-
-enum PeriodStatus {
-    case start, end
-}
-
-enum Period: CaseIterable {
-    case week, month, year, total
-    
-    var name: String {
-        switch self {
-        case .week:     return "Semaine"
-        case .month:    return "Mois"
-        case .year:     return "Année"
-        case .total:    return "Total"
-        }
-    }
-}
+import SwiftUI
+import CoreLocation
 
 final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
@@ -43,10 +28,14 @@ extension HealthManager {
         let speedCycling = HKQuantityType(.cyclingSpeed)
         
         let workouts = HKObjectType.workoutType()
-        let healthTypes: Set = [distanceCycling, speedCycling, workouts]
+        let summary = HKSeriesType.activitySummaryType()
+        let routes = HKSeriesType.workoutRoute()
+        let types = HKSeriesType.workoutType()
+        
+        let read: Set = [distanceCycling, speedCycling, workouts, summary, routes, types]
         
         do {
-            try await healthStore.requestAuthorization(toShare: [], read: healthTypes)
+            try await healthStore.requestAuthorization(toShare: [], read: read)
             return true
         } catch {
             return false
@@ -59,24 +48,10 @@ extension HealthManager {
     
     @MainActor
     func filterActivities() async {
-        self.filteredCyclingActivities = cyclingActivities
-            .filter { $0.date >= startDatePeriod && $0.date <= endDatePeriod }
-    }
-    
-    var aggregatedActivities: [CyclingActivity] {
-        var dailyDistances: [Date: Double] = [:]
-        
-        // Aggregate distances by date
-        for activity in filteredCyclingActivities {
-            let calendar = Calendar.current
-            let date = calendar.startOfDay(for: activity.date)
-            dailyDistances[date, default: 0] += activity.distanceInKm
+        withAnimation(.smooth) {
+            self.filteredCyclingActivities = cyclingActivities
+                .filter { $0.date >= startDatePeriod && $0.date <= endDatePeriod }
         }
-        
-        // Convert dictionary to array
-        return dailyDistances.map { date, distance in
-            CyclingActivity(startDate: date, endDate: date, durationInMin: 0, distanceInKm: distance, averageSpeedInKMH: 0, elevationAscendedInM: 0)
-        }.sorted(by: { $0.endDate < $1.endDate })
     }
     
     func changeDateWhenChangePeriod() {
@@ -98,6 +73,33 @@ extension HealthManager {
         }
         
         Task { await filterActivities() }
+    }
+    
+}
+
+// MARK: - Charts
+extension HealthManager {
+    
+    struct ChartData: Hashable {
+        var date: Date
+        var distanceInKm: Double
+    }
+    
+    var activitiesForCharts: [ChartData] {
+        var dailyDistances: [Date: Double] = [:]
+        
+        for activity in filteredCyclingActivities {
+            let calendar = Calendar.current
+            let date = calendar.startOfDay(for: activity.date)
+            dailyDistances[date, default: 0] += activity.distanceInKm
+        }
+        
+        return dailyDistances.map { date, distance in
+            ChartData(
+                date: date,
+                distanceInKm: distance
+            )
+        }.sorted(by: { $0.date < $1.date })
     }
     
 }
@@ -125,8 +127,8 @@ extension HealthManager {
     }
     
     var averageDistancePerDay: Double {
-        let totalDistance = aggregatedActivities.reduce(0) { $0 + $1.distanceInKm }
-        return totalDistance / Double(aggregatedActivities.count)
+        let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
+        return totalDistance / Double(activitiesForCharts.count)
     }
 }
 
@@ -147,66 +149,183 @@ extension HealthManager {
 
 extension HealthManager {
     
-    func fetchCyclingStats() {
-        var firstDay: Date
-        
-        switch selectedPeriod {
-        case .week: firstDay = .now.startOfWeek ?? .now
-        case .month: firstDay = .now.startOfMonth ?? .now
-        case .year: firstDay = .now.startOfYear ?? .now
-        case .total: firstDay = .iPhoneReleaseDate ?? .now
-        }
-        
+    @MainActor
+    func fetchCyclingStats() async {
         let workout = HKObjectType.workoutType()
-        let timePredicate = HKQuery.predicateForSamples(withStart: firstDay, end: .now)
+        let timePredicate = HKQuery.predicateForSamples(withStart: .iPhoneReleaseDate, end: .now)
         let workoutPredicate = HKQuery.predicateForWorkouts(with: .cycling)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [timePredicate, workoutPredicate])
-        let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: 1000, sortDescriptors: nil) { _, sample, error in
-            guard let workouts = sample as? [HKWorkout], error == nil else { return }
-            
-            var activities: [CyclingActivity] = []
- 
-            for workout in workouts {
-//                print("/n")
-            //                print("👋 STATS \(workout.allStatistics)")
-            //                print("/n")
-                var durationInMin: Int = 0
-                var distanceInKm: Double = 0
-                var elevationAscended: Double = 0
-                
-                durationInMin = Int(workout.duration) / 60
-                
-                if let distance = workout.statistics(for: .init(.distanceCycling))?.sumQuantity() {
-                    distanceInKm = distance.doubleValue(for: .meter()) / 1000
-                }
-                
-                if let workoutMetadata = workout.metadata {
-                    if let workoutElevation = workoutMetadata[WorkoutMetadataKey.HKElevationAscended.rawValue] as? HKQuantity {
-                        elevationAscended = workoutElevation.doubleValue(for: HKUnit.meter())
-                    }
-                }
-                
-                let totalDurationInHours = Double(durationInMin) / 60.0
-                
-                let activity = CyclingActivity(
-                    startDate: workout.startDate,
-                    endDate: workout.endDate,
-                    durationInMin: Int(workout.duration / 60),
-                    distanceInKm: distanceInKm,
-                    averageSpeedInKMH: (distanceInKm / totalDurationInHours),
-                    elevationAscendedInM: elevationAscended
-                )
-            
-                activities.append(activity)
+
+        let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, sample, error in
+                guard let workouts = sample as? [HKWorkout], error == nil else { return }
+                continuation.resume(returning: workouts)
             }
             
-            DispatchQueue.main.async {
-                self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
-                Task { await self.filterActivities() }
+            healthStore.execute(query)
+        }
+
+        guard let workouts = samples as? [HKWorkout] else { return }
+        
+        let activities = await mapWorkoutsToCyclingActivities(workouts: workouts)
+        self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
+        await self.filterActivities()
+    }
+
+    private func mapWorkoutsToCyclingActivities(workouts: [HKWorkout]) async -> [CyclingActivity] {
+        var activities = [CyclingActivity]()
+
+        for workout in workouts {
+            var durationInMin: Int = 0
+            var distanceInKm: Double = 0
+            var elevationAscended: Double = 0
+            var averageHeartRate: Int = 0
+            var maxHeartRate: Int = 0
+            
+            durationInMin = Int(workout.duration) / 60
+            
+            if let distance = workout.statistics(for: .init(.distanceCycling))?.sumQuantity() {
+                distanceInKm = distance.doubleValue(for: .meter()) / 1000
             }
+            
+            if let workoutAverageHeartRate = workout.statistics(for: .init(.heartRate))?.averageQuantity() {
+                averageHeartRate = Int(workoutAverageHeartRate.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
+            }
+            
+            if let workoutHeartRateMax = workout.statistics(for: .init(.heartRate))?.maximumQuantity() {
+                maxHeartRate = Int(workoutHeartRateMax.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
+            }
+            
+            if let workoutMetadata = workout.metadata {
+                if let workoutElevation = workoutMetadata[WorkoutMetadataKey.HKElevationAscended.rawValue] as? HKQuantity {
+                    elevationAscended = workoutElevation.doubleValue(for: HKUnit.meter())
+                }
+            }
+            
+            let totalDurationInHours = Double(durationInMin) / 60.0
+            
+            let activity = CyclingActivity(
+                originalWorkout: workout,
+                startDate: workout.startDate,
+                endDate: workout.endDate,
+                durationInMin: Int(workout.duration / 60),
+                distanceInKm: distanceInKm,
+                averageSpeedInKMH: (distanceInKm / totalDurationInHours),
+                maxSpeedInKMH: 0,
+                elevationAscendedInM: elevationAscended,
+                averageHeartRate: averageHeartRate,
+                maxHeartRate: maxHeartRate
+            )
+        
+            activities.append(activity)
         }
         
-        healthStore.execute(query)
+        return activities
     }
         
+}
+
+extension HealthManager {
+    
+    func fetchMaxSpeed(givenRoute: HKWorkoutRoute) async -> Double {
+        var maxSpeed: Double = 0
+        
+        let locations: [CLLocation] = await withCheckedContinuation { continuation in
+            var allLocations: [CLLocation] = []
+            let routeQuery = HKWorkoutRouteQuery(route: givenRoute) { (_, location, done, error) in
+                if let error = error {
+                    print("Erreur lors de la requête de points de route: \(error.localizedDescription)")
+                    continuation.resume(returning: [])
+                    return
+                }
+                
+                if let location = location {
+                    allLocations.append(contentsOf: location)
+                }
+                
+                if done {
+                    continuation.resume(returning: allLocations)
+                }
+            }
+            healthStore.execute(routeQuery)
+        }
+        
+        var previousLocation: CLLocation?
+        
+        for currentLocation in locations {
+            if let previousLocation = previousLocation {
+                let distance = currentLocation.distance(from: previousLocation)
+                let time = currentLocation.timestamp.timeIntervalSince(previousLocation.timestamp)
+                let speed = distance / time
+                
+                if speed > maxSpeed {
+                    maxSpeed = speed
+                }
+            }
+            previousLocation = currentLocation
+        }
+        
+        let maxSpeedInKilometersPerHour = maxSpeed * 3.6
+        return maxSpeedInKilometersPerHour
+    }
+    
+}
+
+// MARK: - Cycling Activity Route
+extension HealthManager {
+    
+    func getWorkoutRoute(workout: HKWorkout) async -> [HKWorkoutRoute]? {
+        let byWorkout = HKQuery.predicateForObjects(from: workout)
+
+        let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+            healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
+                if let hasError = error {
+                    continuation.resume(throwing: hasError)
+                    return
+                }
+
+                guard let samples = samples else {
+                    return
+                }
+
+                continuation.resume(returning: samples)
+            }))
+        }
+
+        guard let workouts = samples as? [HKWorkoutRoute] else {
+            return nil
+        }
+
+        return workouts
+    }
+    
+    func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
+        let locations = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
+            var allLocations: [CLLocation] = []
+
+            // Create the route query.
+            let query = HKWorkoutRouteQuery(route: givenRoute) { (query, locationsOrNil, done, errorOrNil) in
+
+                if let error = errorOrNil {
+                    continuation.resume(throwing: error)
+                    return
+                }
+
+                guard let currentLocationBatch = locationsOrNil else {
+                    fatalError("*** Invalid State: This can only fail if there was an error. ***")
+                }
+
+                allLocations.append(contentsOf: currentLocationBatch)
+
+                if done {
+                    continuation.resume(returning: allLocations)
+                }
+            }
+
+            healthStore.execute(query)
+        }
+
+        return locations
+    }
+    
 }

@@ -8,26 +8,41 @@
 import SwiftUI
 
 struct ActivitiesProgressView: View {
-    
+        
+    @EnvironmentObject private var healthManager: HealthManager
+
     // MARK: -
     var body: some View {
         NavigationStack {
-            List(ActivityTarget.allCases, id: \.self) { target in
-                CyclingTargetView(target: target)
-                    .listRowSeparator(.hidden)
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(.init(top: 6, leading: 12, bottom: 6, trailing: 12))
+            VStack(spacing: 2) {
+                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                    .padding(.horizontal)
+                    .padding(.top, 4)
+                
+                List(ActivityTarget.allCases, id: \.self) { target in
+                    CyclingTargetView(target: target)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.hidden)
+                .padding(.top, 8)
             }
-            .listStyle(.plain)
-            .scrollIndicators(.hidden)
+            .background(Color.Apple.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Text("Progrès")
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    FilterMenu()
+                }
             }
         }
+        .accentColor(.green)
     } // End body
 } // End struct
 

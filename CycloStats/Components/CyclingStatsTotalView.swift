@@ -15,7 +15,7 @@ struct CyclingStatsTotalView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 12) {
-            Text("Statistiques totales")
+            Text("Statistiques sur la période")
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack(spacing: 16) {
@@ -23,20 +23,23 @@ struct CyclingStatsTotalView: View {
                     CyclingStatsRow(
                         icon: "number",
                         title: "Sorties",
-                        value: healthManager.numberOfCyclingWorkout.formatted()
+                        value: healthManager.numberOfCyclingWorkout.formatted(),
+                        withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
                         title: "Distance",
-                        value: healthManager.totalDistance.formatWith(num: 2) + " km"
+                        value: healthManager.totalDistance.formatWith(num: 2) + " km",
+                        withBackground: true
                     )
                 }
                 
                 CyclingStatsRow(
                     icon: "mountain.2.fill",
                     title: "Dénivelé",
-                    value: healthManager.totalElevationAscended.formatWith(num: 2) + " m"
+                    value: healthManager.totalElevationAscended.formatWith(num: 2) + " m",
+                    withBackground: true
                 )
             }
         }

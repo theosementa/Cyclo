@@ -13,11 +13,11 @@ struct CyclingChartsView: View {
     @EnvironmentObject private var healthManager: HealthManager
     
     var minYAxisValue: Double {
-        healthManager.aggregatedActivities.map { $0.distanceInKm }.min() ?? 0
+        healthManager.activitiesForCharts.map { $0.distanceInKm }.min() ?? 0
     }
     
     var maxYAxisValue: Double {
-        healthManager.aggregatedActivities.map { $0.distanceInKm }.max() ?? 0
+        healthManager.activitiesForCharts.map { $0.distanceInKm }.max() ?? 0
     }
     
     // MARK: -
@@ -27,9 +27,9 @@ struct CyclingChartsView: View {
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
             Chart {
-                ForEach(healthManager.aggregatedActivities) { activity in
+                ForEach(healthManager.activitiesForCharts, id: \.self) { activity in
                     LineMark(
-                        x: .value("X", activity.endDate),
+                        x: .value("X", activity.date),
                         y: .value("Y", activity.distanceInKm)
                     )
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))

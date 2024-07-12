@@ -23,13 +23,15 @@ struct CyclingStatsAverageView: View {
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
                         title: "Distance",
-                        value: healthManager.averageDistanceInKm.formatWith(num: 2) + " km"
+                        value: healthManager.averageDistanceInKm.formatWith(num: 2) + " km",
+                        withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "mountain.2.fill",
                         title: "Dénivelé",
-                        value: healthManager.averageElevationInM.formatWith(num: 2) + " m"
+                        value: healthManager.averageElevationInM.formatWith(num: 2) + " m",
+                        withBackground: true
                     )
                 }
             }

@@ -9,4 +9,5 @@ import Foundation
 
 enum WorkoutMetadataKey: String{
     case HKElevationAscended
+    case HKMetadataKeyMaximumSpeed
 }

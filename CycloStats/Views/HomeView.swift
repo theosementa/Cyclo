@@ -14,10 +14,10 @@ struct HomeView: View {
     // MARK: -
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 2) {
                 FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                    .padding(.top, 1)
-                
+                    .padding(.horizontal)
+                    .padding(.top, 4)
                 ScrollView {
                     CyclingChartsView()
                         .padding()
@@ -29,18 +29,21 @@ struct HomeView: View {
                         .padding()
                 }
                 .scrollIndicators(.hidden)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Text("Accueil")
-                            .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                    }
-                    ToolbarItem(placement: .topBarTrailing) {
-                        FilterMenu()
-                    }
+                .padding(.top, 8)
+            }
+            .background(Color.Apple.background.ignoresSafeArea())
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("Accueil")
+                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    FilterMenu()
                 }
             }
         } // End NavigationStack
+        .accentColor(.green)
     } // End body
 } // End struct
 

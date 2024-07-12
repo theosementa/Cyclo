@@ -13,6 +13,7 @@ struct CyclingStatsRow: View {
     var icon: String
     var title: String
     var value: String
+    var withBackground: Bool? = false
     
     // MARK: -
     var body: some View {
@@ -25,9 +26,13 @@ struct CyclingStatsRow: View {
             
             Text(value)
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .contentTransition(.numericText())
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .backgroundComponent()
+        .if(withBackground ?? false) { view in
+            view
+                .backgroundComponent()
+        }
     } // End body
 } // End struct
 
