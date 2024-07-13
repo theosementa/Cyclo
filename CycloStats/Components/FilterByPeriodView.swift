@@ -17,7 +17,7 @@ struct FilterByPeriodView: View {
     // MARK: -
     var body: some View {
         HStack {
-            Button { changePeriodDate(inPast: true) } label: {
+            CustomButton(animation: .smooth) { changePeriodDate(inPast: true) } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundStyle(Color.white)
@@ -35,7 +35,7 @@ struct FilterByPeriodView: View {
             
             Spacer()
             
-            Button { changePeriodDate(inPast: false) } label: {
+            CustomButton(animation: .smooth) { changePeriodDate(inPast: false) } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
                     .foregroundStyle(Color.white)
@@ -77,15 +77,11 @@ struct FilterByPeriodView: View {
     
     func changePeriodDate(inPast: Bool) {
         if inPast {
-            withAnimation(.smooth) {
-                healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInPast(selectedPeriod, .start)
-                healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInPast(selectedPeriod, .end)
-            }
+            healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInPast(selectedPeriod, .start)
+            healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInPast(selectedPeriod, .end)
         } else {
-            withAnimation(.smooth) {
-                healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInFuture(selectedPeriod, .start)
-                healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInFuture(selectedPeriod, .end)
-            }
+            healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInFuture(selectedPeriod, .start)
+            healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInFuture(selectedPeriod, .end)
         }
         
         Task { await healthManager.filterActivities() }
