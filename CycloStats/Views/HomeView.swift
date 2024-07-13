@@ -15,12 +15,6 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 2) {
-                if healthManager.selectedPeriod != .total {
-                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.top, 4)
-                }
-                
                 ScrollView {
                     CyclingChartsView()
                         .padding()
@@ -32,7 +26,12 @@ struct HomeView: View {
                         .padding()
                 }
                 .scrollIndicators(.hidden)
-                .padding(.top, 8)
+                
+                if healthManager.selectedPeriod != .total {
+                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                }
             }
             .background(Color.Apple.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)

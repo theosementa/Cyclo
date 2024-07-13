@@ -16,12 +16,6 @@ struct ActivitiesView: View {
     var body: some View {
         NavStack(router: router) {
             VStack(spacing: 2) {
-                if healthManager.selectedPeriod != .total {
-                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.top, 4)
-                }
-                
                 List(healthManager.filteredCyclingActivities) { activity in
                     ActivityRow(activity: activity)
                         .listRowSeparator(.hidden)
@@ -31,7 +25,12 @@ struct ActivitiesView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
-                .padding(.top, 8)
+                
+                if healthManager.selectedPeriod != .total {
+                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                }
             }
             .background(Color.Apple.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)

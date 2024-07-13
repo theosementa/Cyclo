@@ -15,12 +15,6 @@ struct ActivitiesProgressView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 2) {
-                if healthManager.selectedPeriod != .total {
-                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.top, 4)
-                }
-                
                 List(ActivityTarget.allCases, id: \.self) { target in
                     CyclingTargetView(target: target)
                         .listRowSeparator(.hidden)
@@ -30,7 +24,12 @@ struct ActivitiesProgressView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
-                .padding(.top, 8)
+                
+                if healthManager.selectedPeriod != .total {
+                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                        .padding(.horizontal)
+                        .padding(.vertical, 4)
+                }
             }
             .background(Color.Apple.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)

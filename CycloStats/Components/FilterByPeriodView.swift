@@ -14,16 +14,19 @@ struct FilterByPeriodView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
     
+    @State private var dragOffset: CGSize = .zero
+    
     // MARK: -
     var body: some View {
         HStack {
             CustomButton(animation: .smooth) { changePeriodDate(inPast: true) } label: {
                 Image(systemName: "chevron.left")
+                    .frame(width: 14, height: 14)
                     .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.green)
                     .padding(8)
                     .background {
-                        Circle()
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.Apple.componentInComponent)
                     }
             }
@@ -37,21 +40,36 @@ struct FilterByPeriodView: View {
             
             CustomButton(animation: .smooth) { changePeriodDate(inPast: false) } label: {
                 Image(systemName: "chevron.right")
+                    .frame(width: 14, height: 14)
                     .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.white)
+                    .foregroundStyle(Color.green)
                     .padding(8)
                     .background {
-                        Circle()
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
                             .fill(Color.Apple.componentInComponent)
                     }
             }
         }
-        .padding()
+        .padding(8)
         .clipShape(Capsule())
         .background {
-            Capsule()
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
                 .fill(Color.Apple.backgroundComponent)
         }
+        .gesture(
+            DragGesture()
+                .onChanged { gesture in
+                    dragOffset = gesture.translation
+                }
+                .onEnded { gesture in
+                    if gesture.translation.width > 80 {
+                        withAnimation(.smooth) { changePeriodDate(inPast: true) }
+                    } else if gesture.translation.width < -80 {
+                        withAnimation(.smooth) { changePeriodDate(inPast: false) }
+                    }
+                    dragOffset = .zero
+                }
+        )
     } // End body
     
     @ViewBuilder
