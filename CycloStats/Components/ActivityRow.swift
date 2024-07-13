@@ -19,13 +19,13 @@ struct ActivityRow: View {
             HStack {
                 CyclingStatsRow(
                     icon: "calendar",
-                    title: "Date",
+                    title: Word.date,
                     value: activity.date.dayMonthAbbreviated
                 )
                 
                 CyclingStatsRow(
                     icon: "timer",
-                    title: "Durée",
+                    title: Word.duration,
                     value: activity.durationInMin.asHoursAndMinutes
                 )
             }
@@ -33,13 +33,13 @@ struct ActivityRow: View {
             HStack {
                 CyclingStatsRow(
                     icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                    title: "Distance",
+                    title: Word.distance,
                     value: activity.distanceInKm.formatWith(num: 2) + " km"
                 )
 
                 CyclingStatsRow(
                     icon: "mountain.2.fill",
-                    title: "Dénivelé",
+                    title: Word.elevation,
                     value: activity.elevationAscendedInM.formatWith(num: 2) + " m"
                 )
             }

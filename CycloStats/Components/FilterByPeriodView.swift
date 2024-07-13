@@ -79,7 +79,7 @@ struct FilterByPeriodView: View {
             case .week:
                 HStack(spacing: 8) {
                     Text(healthManager.startDatePeriod.dayMonthNumeric)
-                    Text("au")
+                    Text("word_to".localized)
                     Text(healthManager.endDatePeriod.dayMonthNumeric)
                 }
             case .month:

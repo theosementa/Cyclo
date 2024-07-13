@@ -36,7 +36,7 @@ struct ActivitiesView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Activités")
+                    Text(Word.activities)
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 }
                 ToolbarItem(placement: .topBarTrailing) {

@@ -12,10 +12,10 @@ enum Period: CaseIterable {
     
     var name: String {
         switch self {
-        case .week:     return "Semaine"
-        case .month:    return "Mois"
-        case .year:     return "Année"
-        case .total:    return "Total"
+        case .week:     return Word.Period.week
+        case .month:    return Word.Period.month
+        case .year:     return Word.Period.year
+        case .total:    return Word.Period.total
         }
     }
 }

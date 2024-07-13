@@ -44,6 +44,8 @@
 		D9A73F0C2C4248CA008E39DC /* MapFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F0B2C4248CA008E39DC /* MapFullScreenView.swift */; };
 		D9A73F0E2C424F1D008E39DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F0D2C424F1D008E39DC /* CustomButton.swift */; };
 		D9A73F122C42643A008E39DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9A73F102C42643A008E39DC /* Localizable.strings */; };
+		D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F142C428D8B008E39DC /* String+Extensions.swift */; };
+		D9A73F172C428E95008E39DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F162C428E95008E39DC /* String.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		D9A73F0D2C424F1D008E39DC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		D9A73F112C42643A008E39DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D9A73F132C42643E008E39DC /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D9A73F142C428D8B008E39DC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		D9A73F162C428E95008E39DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +163,7 @@
 			children = (
 				D9263A0C2C3C52DD004837E2 /* Assets */,
 				D9263A152C3C540B004837E2 /* Extensions */,
-				D9A73F0F2C426427008E39DC /* Localize */,
+				D9A73F0F2C426427008E39DC /* Localizable */,
 				D9263A0F2C3C5345004837E2 /* Managers */,
 				D9263A1D2C3C548E004837E2 /* Modifiers */,
 				D958A6102C412081004C2A1D /* Navigation */,
@@ -198,6 +202,7 @@
 				D9263A162C3C541E004837E2 /* Date+Extensions.swift */,
 				D9263A252C3C55BD004837E2 /* Double+Extensions.swift */,
 				D958A6192C414A32004C2A1D /* Int+Extensions.swift */,
+				D9A73F142C428D8B008E39DC /* String+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -263,6 +268,7 @@
 				D9263A192C3C5462004837E2 /* ActivityTarget.swift */,
 				D958A6022C40FE76004C2A1D /* Period.swift */,
 				D9263A1B2C3C5479004837E2 /* WorkoutMetadataKey.swift */,
+				D9A73F162C428E95008E39DC /* String.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -275,12 +281,12 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		D9A73F0F2C426427008E39DC /* Localize */ = {
+		D9A73F0F2C426427008E39DC /* Localizable */ = {
 			isa = PBXGroup;
 			children = (
 				D9A73F102C42643A008E39DC /* Localizable.strings */,
 			);
-			path = Localize;
+			path = Localizable;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -370,6 +376,7 @@
 				D9A73F0A2C42418C008E39DC /* CyclingActivityDetailViewModel.swift in Sources */,
 				D9A73F0C2C4248CA008E39DC /* MapFullScreenView.swift in Sources */,
 				D958A5FF2C3F054C004C2A1D /* FilterMenu.swift in Sources */,
+				D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */,
 				D9263A212C3C550A004837E2 /* Color+Extensions.swift in Sources */,
 				D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */,
 				D9263A1A2C3C5462004837E2 /* ActivityTarget.swift in Sources */,
@@ -384,6 +391,7 @@
 				D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */,
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,
 				D958A6182C412E26004C2A1D /* Conditional.swift in Sources */,
+				D9A73F172C428E95008E39DC /* String.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
