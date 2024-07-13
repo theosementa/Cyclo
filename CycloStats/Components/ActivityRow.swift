@@ -18,23 +18,23 @@ struct ActivityRow: View {
         VStack(spacing: 24) {
             HStack {
                 CyclingStatsRow(
-                    icon: "timer",
-                    title: "Durée",
-                    value: activity.durationInMin.asHoursAndMinutes
+                    icon: "calendar",
+                    title: "Date",
+                    value: activity.date.dayMonthAbbreviated
                 )
                 
                 CyclingStatsRow(
-                    icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                    title: "Distance",
-                    value: activity.distanceInKm.formatWith(num: 2) + " km"
+                    icon: "timer",
+                    title: "Durée",
+                    value: activity.durationInMin.asHoursAndMinutes
                 )
             }
             
             HStack {
                 CyclingStatsRow(
-                    icon: "figure.outdoor.cycle",
-                    title: "Vitesse moyenne",
-                    value: activity.averageSpeedInKMH.formatWith(num: 2) + " km/h"
+                    icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                    title: "Distance",
+                    value: activity.distanceInKm.formatWith(num: 2) + " km"
                 )
 
                 CyclingStatsRow(

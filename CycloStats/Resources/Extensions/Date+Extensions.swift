@@ -20,11 +20,18 @@ extension Date {
         return formatter.string(from: self)
     }
     
+    var dayMonthAbbreviated: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E dd MMM"
+        formatter.locale = Locale.current
+        return formatter.string(from: self).replacingOccurrences(of: ".", with: "").capitalized
+    }
+    
     var monthYearFull: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         formatter.locale = Locale.current
-        return formatter.string(from: self)
+        return formatter.string(from: self).capitalized
     }
     
     static var iPhoneReleaseDate: Date? {

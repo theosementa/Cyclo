@@ -15,7 +15,7 @@ struct CyclingStatsTotalView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 12) {
-            Text("Statistiques sur la période")
+            Text("Sur la période")
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack(spacing: 16) {

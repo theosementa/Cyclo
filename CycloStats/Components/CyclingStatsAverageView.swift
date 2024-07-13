@@ -15,7 +15,7 @@ struct CyclingStatsAverageView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 12) {
-            Text("Statistiques moyennes")
+            Text("Moyennes sur la période")
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack(spacing: 16) {
