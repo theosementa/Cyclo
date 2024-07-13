@@ -45,7 +45,6 @@ struct ActivitiesView: View {
                 }
             }
         }
-        .accentColor(.green)
     } // End body
 } // End struct
 

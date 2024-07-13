@@ -37,6 +37,7 @@ struct CyclingTargetView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Capsule()
                     .frame(height: 30)
+                    .foregroundStyle(Color.Apple.componentInComponent)
                     .overlay(alignment: .leading) {
                         GeometryReader { geo in
                             Capsule()

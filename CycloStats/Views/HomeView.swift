@@ -46,7 +46,6 @@ struct HomeView: View {
                 }
             }
         } // End NavigationStack
-        .accentColor(.green)
     } // End body
 } // End struct
 

@@ -44,7 +44,6 @@ struct ActivitiesProgressView: View {
                 }
             }
         }
-        .accentColor(.green)
     } // End body
 } // End struct
 
