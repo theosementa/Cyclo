@@ -8,30 +8,11 @@
 import Foundation
 
 extension Date {
-    var year: Int {
-        return Calendar.current.component(.year, from: self)
-    }
-    
-    var dayMonthNumeric: String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .none
-        formatter.locale = Locale.current
-        return formatter.string(from: self)
-    }
-    
     var dayMonthAbbreviated: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "E dd MMM"
         formatter.locale = Locale.current
         return formatter.string(from: self).replacingOccurrences(of: ".", with: "").capitalized
-    }
-    
-    var monthYearFull: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        formatter.locale = Locale.current
-        return formatter.string(from: self).capitalized
     }
     
     static var iPhoneReleaseDate: Date? {
@@ -41,7 +22,7 @@ extension Date {
         components.day = 29
         components.hour = 9
         components.minute = 41
-        components.timeZone = TimeZone(abbreviation: "PST") // Heure du Pacifique (California)
+        components.timeZone = TimeZone(abbreviation: "PST")
         
         return Calendar.current.date(from: components)
     }

@@ -78,14 +78,14 @@ struct FilterByPeriodView: View {
             switch selectedPeriod {
             case .week:
                 HStack(spacing: 8) {
-                    Text(healthManager.startDatePeriod.dayMonthNumeric)
+                    Text(healthManager.startDatePeriod.formatted(date: .numeric, time: .omitted))
                     Text("word_to".localized)
-                    Text(healthManager.endDatePeriod.dayMonthNumeric)
+                    Text(healthManager.endDatePeriod.formatted(date: .numeric, time: .omitted))
                 }
             case .month:
-                Text(healthManager.startDatePeriod.monthYearFull)
+                Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().month(.wide).year()).capitalized)
             case .year:
-                Text(String(healthManager.startDatePeriod.year))
+                Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().year()))
             case .total:
                 EmptyView()
             }
@@ -111,6 +111,3 @@ struct FilterByPeriodView: View {
 #Preview {
     FilterByPeriodView(selectedPeriod: .month)
 }
-
-
-
