@@ -46,6 +46,7 @@
 		D9A73F122C42643A008E39DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9A73F102C42643A008E39DC /* Localizable.strings */; };
 		D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F142C428D8B008E39DC /* String+Extensions.swift */; };
 		D9A73F172C428E95008E39DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F162C428E95008E39DC /* String.swift */; };
+		D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		D9A73F132C42643E008E39DC /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D9A73F142C428D8B008E39DC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D9A73F162C428E95008E39DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButtonStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 			children = (
 				D9263A1E2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift */,
 				D958A6172C412E26004C2A1D /* Conditional.swift */,
+				D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -397,6 +400,7 @@
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
 				D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */,
 				D92639FD2C3C5252004837E2 /* App.swift in Sources */,
+				D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

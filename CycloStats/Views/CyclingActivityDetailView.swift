@@ -39,7 +39,7 @@ struct CyclingActivityDetailView: View {
                 }            
             
             if !showFullMap {
-                LazyVGrid(columns: [GridItem(), GridItem()]) {
+                LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
                     CyclingStatsRow(
                         icon: "calendar",
                         title: "Date",

@@ -15,39 +15,39 @@ struct ActivityRow: View {
 
     // MARK: -
     var body: some View {
-        VStack(spacing: 24) {
-            HStack {
-                CyclingStatsRow(
-                    icon: "calendar",
-                    title: Word.date,
-                    value: activity.date.dayMonthAbbreviated
-                )
+        Button(action: { router.pushDetail(activity: activity) }, label: {
+            VStack(spacing: 24) {
+                HStack {
+                    CyclingStatsRow(
+                        icon: "calendar",
+                        title: Word.date,
+                        value: activity.date.dayMonthAbbreviated
+                    )
+                    
+                    CyclingStatsRow(
+                        icon: "timer",
+                        title: Word.duration,
+                        value: activity.durationInMin.asHoursAndMinutes
+                    )
+                }
                 
-                CyclingStatsRow(
-                    icon: "timer",
-                    title: Word.duration,
-                    value: activity.durationInMin.asHoursAndMinutes
-                )
-            }
-            
-            HStack {
-                CyclingStatsRow(
-                    icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                    title: Word.distance,
-                    value: activity.distanceInKm.formatWith(num: 2) + " km"
-                )
+                HStack {
+                    CyclingStatsRow(
+                        icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                        title: Word.distance,
+                        value: activity.distanceInKm.formatWith(num: 2) + " km"
+                    )
 
-                CyclingStatsRow(
-                    icon: "mountain.2.fill",
-                    title: Word.elevation,
-                    value: activity.elevationAscendedInM.formatWith(num: 2) + " m"
-                )
+                    CyclingStatsRow(
+                        icon: "mountain.2.fill",
+                        title: Word.elevation,
+                        value: activity.elevationAscendedInM.formatWith(num: 2) + " m"
+                    )
+                }
             }
-        }
-        .backgroundComponent()
-        .onTapGesture {
-            router.pushDetail(activity: activity)
-        }
+            .backgroundComponent()
+        })
+        .tappableStyle()
     } // End body
 } // End struct
 
