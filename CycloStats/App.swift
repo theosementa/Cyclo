@@ -23,19 +23,19 @@ struct CycloStatsApp: App {
                 HomeView()
                     .environmentObject(homeRouter)
                     .tabItem {
-                        Label("Accueil", systemImage: "house.fill")
+                        Label(Word.home, systemImage: "house.fill")
                     }
                 
                 ActivitiesView()
                     .environmentObject(activitiesRouter)
                     .tabItem {
-                        Label("Activités", systemImage: "figure.outdoor.cycle")
+                        Label(Word.activities, systemImage: "figure.outdoor.cycle")
                     }
                 
                 ActivitiesProgressView()
                     .environmentObject(progressRouter)
                     .tabItem {
-                        Label("Progrès", systemImage: "chart.bar.xaxis.ascending")
+                        Label(Word.progress, systemImage: "chart.bar.xaxis.ascending")
                     }
             } // End TabView
             .accentColor(.green)
