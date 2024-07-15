@@ -83,25 +83,37 @@ extension HealthManager {
     struct ChartData: Hashable {
         var date: Date
         var distanceInKm: Double
+        var elevationInM: Double
     }
     
     var activitiesForCharts: [ChartData] {
-        var dailyDistances: [Date: Double] = [:]
+        var dailyData: [Date: (distance: Double, elevation: Double)] = [:]
         
         for activity in filteredCyclingActivities {
             let calendar = Calendar.current
             let date = calendar.startOfDay(for: activity.date)
-            dailyDistances[date, default: 0] += activity.distanceInKm
+            dailyData[date, default: (distance: 0, elevation: 0)].distance += activity.distanceInKm
+            dailyData[date, default: (distance: 0, elevation: 0)].elevation += activity.elevationAscendedInM
         }
         
-        return dailyDistances.map { date, distance in
+        return dailyData.map { date, data in
             ChartData(
                 date: date,
-                distanceInKm: distance
+                distanceInKm: data.distance,
+                elevationInM: data.elevation
             )
         }.sorted(by: { $0.date < $1.date })
     }
     
+    var averageDistancePerDay: Double {
+        let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
+        return totalDistance / Double(activitiesForCharts.count)
+    }
+    
+    var averageElevationPerDay: Double {
+        let totalElevation = activitiesForCharts.reduce(0) { $0 + $1.elevationInM }
+        return totalElevation / Double(activitiesForCharts.count)
+    }
 }
 
 // MARK: - Cycling
@@ -114,6 +126,10 @@ extension HealthManager {
         return filteredCyclingActivities.map { $0.elevationAscendedInM }.reduce(0, +)
     }
     
+    var totalTime: Int {
+        return filteredCyclingActivities.map { $0.durationInMin }.reduce(0, +)
+    }
+    
     var longestActivity: CyclingActivity? {
         return filteredCyclingActivities.sorted { $0.distanceInKm > $1.distanceInKm }.first
     }
@@ -124,11 +140,6 @@ extension HealthManager {
     
     var numberOfCyclingWorkout: Int {
         return filteredCyclingActivities.count
-    }
-    
-    var averageDistancePerDay: Double {
-        let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
-        return totalDistance / Double(activitiesForCharts.count)
     }
 }
 

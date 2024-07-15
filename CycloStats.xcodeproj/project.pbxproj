@@ -21,7 +21,7 @@
 		D9263A242C3C5545004837E2 /* CyclingTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A232C3C5545004837E2 /* CyclingTargetView.swift */; };
 		D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A252C3C55BD004837E2 /* Double+Extensions.swift */; };
 		D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A292C3C569F004837E2 /* CyclingStatsTotalView.swift */; };
-		D958A5F22C3D934B004C2A1D /* CyclingChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */; };
+		D958A5F22C3D934B004C2A1D /* CyclingDistanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */; };
 		D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F32C3DB935004C2A1D /* ActivityRow.swift */; };
 		D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */; };
 		D958A5F82C3EEE9E004C2A1D /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F72C3EEE9E004C2A1D /* ActivitiesView.swift */; };
@@ -47,6 +47,7 @@
 		D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F142C428D8B008E39DC /* String+Extensions.swift */; };
 		D9A73F172C428E95008E39DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F162C428E95008E39DC /* String.swift */; };
 		D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */; };
+		D9F0221E2C45127300A84881 /* CyclingElevationChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,7 +67,7 @@
 		D9263A252C3C55BD004837E2 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		D9263A292C3C569F004837E2 /* CyclingStatsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingStatsTotalView.swift; sourceTree = "<group>"; };
 		D9263A2B2C3C5BC4004837E2 /* CycloStats.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycloStats.entitlements; sourceTree = "<group>"; };
-		D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingChartsView.swift; sourceTree = "<group>"; };
+		D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDistanceChartView.swift; sourceTree = "<group>"; };
 		D958A5F32C3DB935004C2A1D /* ActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRow.swift; sourceTree = "<group>"; };
 		D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesProgressView.swift; sourceTree = "<group>"; };
 		D958A5F72C3EEE9E004C2A1D /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 		D9A73F142C428D8B008E39DC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		D9A73F162C428E95008E39DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButtonStyle.swift; sourceTree = "<group>"; };
+		D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingElevationChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,11 +224,11 @@
 		D9263A222C3C552D004837E2 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D9F0221C2C45125900A84881 /* Charts */,
 				D958A5FD2C3F0537004C2A1D /* Toolbar */,
 				D9263A292C3C569F004837E2 /* CyclingStatsTotalView.swift */,
 				D958A5F92C3EFE7E004C2A1D /* CyclingStatsAverageView.swift */,
 				D9263A232C3C5545004837E2 /* CyclingTargetView.swift */,
-				D958A5F12C3D934B004C2A1D /* CyclingChartsView.swift */,
 				D958A5F32C3DB935004C2A1D /* ActivityRow.swift */,
 				D958A5FB2C3EFEC0004C2A1D /* CyclingStatsRow.swift */,
 				D958A6002C4056F5004C2A1D /* FilterByPeriodView.swift */,
@@ -290,6 +292,15 @@
 				D9A73F102C42643A008E39DC /* Localizable.strings */,
 			);
 			path = Localizable;
+			sourceTree = "<group>";
+		};
+		D9F0221C2C45125900A84881 /* Charts */ = {
+			isa = PBXGroup;
+			children = (
+				D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */,
+				D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */,
+			);
+			path = Charts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -371,11 +382,12 @@
 				D9A73F0E2C424F1D008E39DC /* CustomButton.swift in Sources */,
 				D958A6132C412081004C2A1D /* Push.swift in Sources */,
 				D958A6142C412081004C2A1D /* NavigationDirection.swift in Sources */,
+				D9F0221E2C45127300A84881 /* CyclingElevationChartView.swift in Sources */,
 				D958A6112C412081004C2A1D /* NavigationManager.swift in Sources */,
 				D9263A242C3C5545004837E2 /* CyclingTargetView.swift in Sources */,
 				D9263A1C2C3C5479004837E2 /* WorkoutMetadataKey.swift in Sources */,
 				D958A6122C412081004C2A1D /* Present.swift in Sources */,
-				D958A5F22C3D934B004C2A1D /* CyclingChartsView.swift in Sources */,
+				D958A5F22C3D934B004C2A1D /* CyclingDistanceChartView.swift in Sources */,
 				D9A73F0A2C42418C008E39DC /* CyclingActivityDetailViewModel.swift in Sources */,
 				D9A73F0C2C4248CA008E39DC /* MapFullScreenView.swift in Sources */,
 				D958A5FF2C3F054C004C2A1D /* FilterMenu.swift in Sources */,

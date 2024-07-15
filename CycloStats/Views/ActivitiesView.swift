@@ -16,11 +16,25 @@ struct ActivitiesView: View {
     var body: some View {
         NavStack(router: router) {
             VStack(spacing: 2) {
-                List(healthManager.filteredCyclingActivities) { activity in
-                    ActivityRow(activity: activity)
+                List {
+                    if !healthManager.filteredCyclingActivities.isEmpty {
+                        CyclingStatsTotalView()
+                            .listRowSeparator(.hidden)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(.init(top: 24, leading: 16, bottom: 8, trailing: 16))
+                        
+                        VStack(spacing: 12) {
+                            Text(Word.activities)
+                                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            ForEach(healthManager.filteredCyclingActivities) { activity in
+                                ActivityRow(activity: activity)
+                            }
+                        }
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
                         .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                    }
                 }
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)

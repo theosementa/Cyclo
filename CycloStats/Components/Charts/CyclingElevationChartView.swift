@@ -1,46 +1,52 @@
 //
-//  CyclingChartsView.swift
+//  CyclingElevationChartView.swift
 //  CycloStats
 //
-//  Created by KaayZenn on 09/07/2024.
+//  Created by KaayZenn on 15/07/2024.
 //
 
 import SwiftUI
 import Charts
 
-struct CyclingChartsView: View {
+struct CyclingElevationChartView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
     
+    // Computed
     var minYAxisValue: Double {
-        healthManager.activitiesForCharts.map { $0.distanceInKm }.min() ?? 0
+        healthManager.activitiesForCharts.map { $0.elevationInM }.min() ?? 0
     }
     
     var maxYAxisValue: Double {
-        healthManager.activitiesForCharts.map { $0.distanceInKm }.max() ?? 0
+        healthManager.activitiesForCharts.map { $0.elevationInM }.max() ?? 0
     }
     
     // MARK: -
     var body: some View {
-        VStack(spacing: 12) {
-            Text("Graphique")
-                .font(.system(size: 24, weight: .semibold, design: .rounded))
-                .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(spacing: 16) {
+            HStack(spacing: 8) {
+                Image(systemName: "mountain.2.fill")
+                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                Text(Word.elevation)
+                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                Spacer()
+            }
+            
             Chart {
                 ForEach(healthManager.activitiesForCharts, id: \.self) { activity in
                     LineMark(
                         x: .value("X", activity.date),
-                        y: .value("Y", activity.distanceInKm)
+                        y: .value("Y", activity.elevationInM)
                     )
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color.green)
                     
-                    RuleMark(y: .value("Average Distance", healthManager.averageDistancePerDay))
+                    RuleMark(y: .value("Average Elevation", healthManager.averageElevationPerDay))
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .foregroundStyle(Color.white)
                         .annotation(position: .top, alignment: .leading) {
-                            Text("moy: \(healthManager.averageDistancePerDay.formatWith(num: 2)) km")
+                            Text("moy: \(healthManager.averageElevationPerDay.formatWith(num: 2)) m")
                                 .font(.caption)
                                 .foregroundColor(.white)
                         }
@@ -57,12 +63,12 @@ struct CyclingChartsView: View {
                     AxisGridLine()
                 }
             }
-            .backgroundComponent()
         }
+        .backgroundComponent()
     } // End body
 } // End struct
 
 // MARK: - Preview
 #Preview {
-    CyclingChartsView()
+    CyclingElevationChartView()
 }
