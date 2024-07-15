@@ -14,19 +14,15 @@ struct CyclingActivityDetailView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
-    
-    @State private var showFullMap: Bool = false
-    
+        
     // MARK: -
     var body: some View {
         ScrollView {
             MapView(locations: viewModel.locations)
-                .frame(height: showFullMap ? UIScreen.main.bounds.height : 400)
+                .frame(height: viewModel.showFullMap ? UIScreen.main.bounds.height : 400)
                 .overlay(alignment: .topTrailing) {
-                    CustomButton(animation: .smooth) {
-                        showFullMap.toggle()
-                    } label: {
-                        Image(systemName: showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                    CustomButton(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
+                        Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
                             .foregroundStyle(Color.white)
                             .rotationEffect(.degrees(90))
                             .padding(8)
@@ -36,9 +32,9 @@ struct CyclingActivityDetailView: View {
                             }
                     }
                     .padding()
-                }            
-            
-            if !showFullMap {
+                }  
+                        
+            if !viewModel.showFullMap {
                 LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
                     CyclingStatsRow(
                         icon: "calendar",
@@ -50,6 +46,19 @@ struct CyclingActivityDetailView: View {
                         icon: "timer",
                         title: "Durée",
                         value: activity.durationInMin.asHoursAndMinutes,
+                        withBackground: true
+                    )
+                    
+                    CyclingStatsRow(
+                        icon: "timer",
+                        title: "Départ",
+                        value: activity.startDate.formatted(date: .omitted, time: .shortened),
+                        withBackground: true
+                    )
+                    CyclingStatsRow(
+                        icon: "timer",
+                        title: "Arrivée",
+                        value: activity.endDate.formatted(date: .omitted, time: .shortened),
                         withBackground: true
                     )
                     
@@ -91,6 +100,16 @@ struct CyclingActivityDetailView: View {
                         value: activity.maxHeartRate.formatted() + " bpm",
                         withBackground: true
                     )
+                }
+                .padding()
+                
+                VStack(spacing: 12) {
+                    Text("Graphiques")
+                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    VStack(spacing: 16) {
+                        ActivityElevationChart(locations: viewModel.locations)
+                    }
                 }
                 .padding()
             }

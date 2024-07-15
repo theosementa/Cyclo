@@ -12,6 +12,8 @@ final class CyclingActivityDetailViewModel: ObservableObject {
     
     @Published var locations: [CLLocation] = []
     
+    @Published var showFullMap: Bool = false
+    
 }
 
 extension CyclingActivityDetailViewModel {
