@@ -19,3 +19,37 @@
 
 "word_total" = "Total";
 
+"word_charts" = "Graphiques";
+
+"word_home" = "Accueil";
+
+"word_progress" = "Progès";
+
+"word_departure" = "Départ";
+
+"word_arrival" = "Arrivée";
+
+"word_averageSpeed" = "Vitesse moyenne";
+
+"word_maxSpeed" = "Vitesse max";
+
+"word_averageBPM" = "BPM moyen";
+
+"word_maxBPM" = "BPM max";
+
+"word_avg" = "moy";
+
+"word_min" = "Min";
+
+"word_max" = "Max";
+
+"word_trips" = "Sorties";
+
+"word_period_title" = "Sur la période";
+
+"word_period_avg_title" = "Moyennes sur la période";
+
+"word_traveled" = "Parcouru";
+
+"word_remaining" = "Restant";
+

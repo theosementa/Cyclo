@@ -15,21 +15,21 @@ struct CyclingStatsAverageView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 12) {
-            Text("Moyennes sur la période")
+            Text(Word.Period.avgTitle)
                 .font(.system(size: 22, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack(spacing: 16) {
                 HStack(spacing: 16) {
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                        title: "Distance",
+                        title: Word.distance,
                         value: healthManager.averageDistanceInKm.formatWith(num: 2) + " km",
                         withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "mountain.2.fill",
-                        title: "Dénivelé",
+                        title: Word.elevation,
                         value: healthManager.averageElevationInM.formatWith(num: 2) + " m",
                         withBackground: true
                     )

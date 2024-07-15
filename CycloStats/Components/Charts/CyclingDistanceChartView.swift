@@ -46,7 +46,7 @@ struct CyclingDistanceChartView: View {
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .foregroundStyle(Color.white)
                         .annotation(position: .top, alignment: .leading) {
-                            Text("moy: \(healthManager.averageDistancePerDay.formatWith(num: 2)) km")
+                            Text("\(Word.avg): \(healthManager.averageDistancePerDay.formatWith(num: 2)) km")
                                 .font(.caption)
                                 .foregroundColor(.white)
                         }

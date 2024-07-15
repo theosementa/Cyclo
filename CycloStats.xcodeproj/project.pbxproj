@@ -45,7 +45,7 @@
 		D9A73F0E2C424F1D008E39DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F0D2C424F1D008E39DC /* CustomButton.swift */; };
 		D9A73F122C42643A008E39DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9A73F102C42643A008E39DC /* Localizable.strings */; };
 		D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F142C428D8B008E39DC /* String+Extensions.swift */; };
-		D9A73F172C428E95008E39DC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F162C428E95008E39DC /* String.swift */; };
+		D9A73F172C428E95008E39DC /* Word.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F162C428E95008E39DC /* Word.swift */; };
 		D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */; };
 		D9F0221E2C45127300A84881 /* CyclingElevationChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */; };
 		D9F022202C45160200A84881 /* ActivityElevationChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F0221F2C45160200A84881 /* ActivityElevationChart.swift */; };
@@ -94,7 +94,7 @@
 		D9A73F112C42643A008E39DC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D9A73F132C42643E008E39DC /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D9A73F142C428D8B008E39DC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		D9A73F162C428E95008E39DC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		D9A73F162C428E95008E39DC /* Word.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Word.swift; sourceTree = "<group>"; };
 		D9A73F182C44505E008E39DC /* TappableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableButtonStyle.swift; sourceTree = "<group>"; };
 		D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingElevationChartView.swift; sourceTree = "<group>"; };
 		D9F0221F2C45160200A84881 /* ActivityElevationChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityElevationChart.swift; sourceTree = "<group>"; };
@@ -274,8 +274,8 @@
 			children = (
 				D9263A192C3C5462004837E2 /* ActivityTarget.swift */,
 				D958A6022C40FE76004C2A1D /* Period.swift */,
+				D9A73F162C428E95008E39DC /* Word.swift */,
 				D9263A1B2C3C5479004837E2 /* WorkoutMetadataKey.swift */,
-				D9A73F162C428E95008E39DC /* String.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -410,7 +410,7 @@
 				D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */,
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,
 				D958A6182C412E26004C2A1D /* Conditional.swift in Sources */,
-				D9A73F172C428E95008E39DC /* String.swift in Sources */,
+				D9A73F172C428E95008E39DC /* Word.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,

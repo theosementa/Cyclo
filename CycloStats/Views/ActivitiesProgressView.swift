@@ -35,7 +35,7 @@ struct ActivitiesProgressView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Progrès")
+                    Text(Word.progress)
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 }
                 ToolbarItem(placement: .topBarTrailing) {

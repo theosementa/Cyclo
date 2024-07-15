@@ -19,3 +19,37 @@
 
 "word_total" = "Total";
 
+"word_charts" = "Charts";
+
+"word_home" = "Home";
+
+"word_progress" = "Progress";
+
+"word_departure" = "Departure";
+
+"word_arrival" = "Arrival";
+
+"word_averageSpeed" = "Average speed";
+
+"word_maxSpeed" = "Max speed";
+
+"word_averageBPM" = "Average bpm";
+
+"word_maxBPM" = "Max bpm";
+
+"word_avg" = "avg";
+
+"word_min" = "Min";
+
+"word_max" = "Max";
+
+"word_trips" = "Trips";
+
+"word_period_title" = "During the period";
+
+"word_period_avg_title" = "Average during the period";
+
+"word_traveled" = "Traveled";
+
+"word_remaining" = "Remaining";
+

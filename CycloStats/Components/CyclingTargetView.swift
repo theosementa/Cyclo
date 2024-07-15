@@ -27,7 +27,7 @@ struct CyclingTargetView: View {
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                 }
                 
-                Text("Parcouru \(numberOfTime.time) fois")
+                Text("\(Word.traveled) \(numberOfTime.time) fois")
                     .italic()
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(Color(uiColor: .label).opacity(0.7))
@@ -65,9 +65,9 @@ struct CyclingTargetView: View {
                 let progressAlreadyDoInKm = numberOfTime.progress * target.value
                 let progressRemainingInKm = target.value - (numberOfTime.progress * target.value)
                 HStack {
-                    Text("Parcouru \(progressAlreadyDoInKm.formatWith(num: 2)) km")
+                    Text("\(Word.traveled) \(progressAlreadyDoInKm.formatWith(num: 2)) km")
                     Spacer()
-                    Text("Encore \(progressRemainingInKm.formatWith(num: 2)) km")
+                    Text("\(Word.remaining) \(progressRemainingInKm.formatWith(num: 2)) km")
                 }
                 .font(.system(size: 16, weight: .semibold, design: .rounded))
             }

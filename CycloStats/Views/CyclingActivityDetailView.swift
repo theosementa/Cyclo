@@ -38,65 +38,65 @@ struct CyclingActivityDetailView: View {
                 LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
                     CyclingStatsRow(
                         icon: "calendar",
-                        title: "Date",
+                        title: Word.date,
                         value: activity.date.formatted(date: .numeric, time: .omitted),
                         withBackground: true
                     )
                     CyclingStatsRow(
                         icon: "timer",
-                        title: "Durée",
+                        title: Word.duration,
                         value: activity.durationInMin.asHoursAndMinutes,
                         withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "timer",
-                        title: "Départ",
+                        title: Word.departure,
                         value: activity.startDate.formatted(date: .omitted, time: .shortened),
                         withBackground: true
                     )
                     CyclingStatsRow(
                         icon: "timer",
-                        title: "Arrivée",
+                        title: Word.arrival,
                         value: activity.endDate.formatted(date: .omitted, time: .shortened),
                         withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                        title: "Distance",
+                        title: Word.distance,
                         value: activity.distanceInKm.formatWith(num: 2) + " km",
                         withBackground: true
                     )
                     CyclingStatsRow(
                         icon: "mountain.2.fill",
-                        title: "Dénivelé",
+                        title: Word.elevation,
                         value: activity.elevationAscendedInM.formatWith(num: 2) + " m",
                         withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "figure.outdoor.cycle",
-                        title: "Vitesse moyenne",
+                        title: Word.averageSpeed,
                         value: activity.averageSpeedInKMH.formatWith(num: 2) + " km/h",
                         withBackground: true
                     )
                     CyclingStatsRow(
                         icon: "gauge.with.dots.needle.67percent",
-                        title: "Vitesse max",
+                        title: Word.maxSpeed,
                         value: activity.maxSpeedInKMH.formatWith(num: 2) + " km/h",
                         withBackground: true
                     )
                     
                     CyclingStatsRow(
                         icon: "heart",
-                        title: "BPM moyen",
+                        title: Word.averageBPM,
                         value: activity.averageHeartRate.formatted() + " bpm",
                         withBackground: true
                     )
                     CyclingStatsRow(
                         icon: "bolt.heart",
-                        title: "BPM max",
+                        title: Word.maxBPM,
                         value: activity.maxHeartRate.formatted() + " bpm",
                         withBackground: true
                     )
@@ -104,7 +104,7 @@ struct CyclingActivityDetailView: View {
                 .padding()
                 
                 VStack(spacing: 12) {
-                    Text("Graphiques")
+                    Text(Word.charts)
                         .font(.system(size: 22, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
                     VStack(spacing: 16) {

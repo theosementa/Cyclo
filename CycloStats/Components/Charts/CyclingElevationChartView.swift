@@ -46,7 +46,7 @@ struct CyclingElevationChartView: View {
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .foregroundStyle(Color.white)
                         .annotation(position: .top, alignment: .leading) {
-                            Text("moy: \(healthManager.averageElevationPerDay.formatWith(num: 2)) m")
+                            Text("\(Word.avg): \(healthManager.averageElevationPerDay.formatWith(num: 2)) m")
                                 .font(.caption)
                                 .foregroundColor(.white)
                         }

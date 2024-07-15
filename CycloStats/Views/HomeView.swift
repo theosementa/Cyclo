@@ -21,7 +21,7 @@ struct HomeView: View {
                         .padding(.top, 8)
                     
                     VStack(spacing: 12) {
-                        Text("Graphiques")
+                        Text(Word.charts)
                             .font(.system(size: 22, weight: .semibold, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
@@ -44,7 +44,7 @@ struct HomeView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Text("Accueil")
+                    Text(Word.home)
                         .font(.system(.largeTitle, design: .rounded, weight: .bold))
                 }
                 ToolbarItem(placement: .topBarTrailing) {
