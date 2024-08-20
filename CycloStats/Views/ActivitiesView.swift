@@ -47,6 +47,20 @@ struct ActivitiesView: View {
                 }
             }
             .background(Color.Apple.background.ignoresSafeArea())
+            .overlay {
+                if healthManager.filteredCyclingActivities.isEmpty {
+                    VStack {
+                        Image(.mountainBiking)
+                            .resizable()
+                            .scaledToFit()
+                            .padding(.horizontal, 32)
+                            .padding(.bottom)
+                        
+                        Text(Word.nothingToSee)
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    }
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -64,4 +78,6 @@ struct ActivitiesView: View {
 // MARK: - Preview
 #Preview {
     ActivitiesView()
+        .environmentObject(HealthManager())
+        .environmentObject(NavigationManager(isPresented: .constant(nil)))
 }
