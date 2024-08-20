@@ -57,9 +57,11 @@ extension HealthManager {
     func changeDateWhenChangePeriod() {
         switch selectedPeriod {
         case .week:
+            startDatePeriod = .now
             startDatePeriod = startDatePeriod.startOfWeek ?? .now
             endDatePeriod = startDatePeriod.endOfWeek ?? .now
         case .month:
+            startDatePeriod = .now
             startDatePeriod = startDatePeriod.startOfMonth ?? .now
             endDatePeriod = startDatePeriod.endOfMonth ?? .now
         case .year:

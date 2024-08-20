@@ -24,6 +24,7 @@ struct ActivitiesProgressView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
+                .contentMargins(.top, 16, for: .scrollContent)
                 
                 if healthManager.selectedPeriod != .total {
                     FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)

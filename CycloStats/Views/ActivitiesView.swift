@@ -33,7 +33,7 @@ struct ActivitiesView: View {
                         }
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.clear)
-                        .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                        .listRowInsets(.init(top: 32, leading: 16, bottom: 8, trailing: 16))
                     }
                 }
                 .listStyle(.plain)
