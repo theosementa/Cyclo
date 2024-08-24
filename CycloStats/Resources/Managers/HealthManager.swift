@@ -86,23 +86,33 @@ extension HealthManager {
         var date: Date
         var distanceInKm: Double
         var elevationInM: Double
+        var averageHeartRate: Int
     }
     
     var activitiesForCharts: [ChartData] {
-        var dailyData: [Date: (distance: Double, elevation: Double)] = [:]
-        
+        var dailyData: [Date: (distance: Double, elevation: Double, heartRateSum: Int, activityCount: Int)] = [:]
+
         for activity in filteredCyclingActivities {
-            let calendar = Calendar.current
-            let date = calendar.startOfDay(for: activity.date)
-            dailyData[date, default: (distance: 0, elevation: 0)].distance += activity.distanceInKm
-            dailyData[date, default: (distance: 0, elevation: 0)].elevation += activity.elevationAscendedInM
+            let date = Calendar.current.startOfDay(for: activity.date)
+            
+            if dailyData[date] == nil {
+                dailyData[date] = (distance: 0.0, elevation: 0.0, heartRateSum: 0, activityCount: 0)
+            }
+            
+            dailyData[date]!.distance += activity.distanceInKm
+            dailyData[date]!.elevation += activity.elevationAscendedInM
+            dailyData[date]!.heartRateSum += activity.averageHeartRate
+            dailyData[date]!.activityCount += 1
         }
         
         return dailyData.map { date, data in
-            ChartData(
+            let averageHeartRate = data.activityCount > 0 ? data.heartRateSum / data.activityCount : 0
+
+            return ChartData(
                 date: date,
                 distanceInKm: data.distance,
-                elevationInM: data.elevation
+                elevationInM: data.elevation,
+                averageHeartRate: averageHeartRate
             )
         }.sorted(by: { $0.date < $1.date })
     }
@@ -115,6 +125,11 @@ extension HealthManager {
     var averageElevationPerDay: Double {
         let totalElevation = activitiesForCharts.reduce(0) { $0 + $1.elevationInM }
         return totalElevation / Double(activitiesForCharts.count)
+    }
+    
+    var averageHeartRatePerDay: Int {
+        let totalHearthRate = activitiesForCharts.reduce(0) { $0 + $1.averageHeartRate }
+        return totalHearthRate / activitiesForCharts.count
     }
 }
 
@@ -325,7 +340,7 @@ extension HealthManager {
                 }
 
                 guard let currentLocationBatch = locationsOrNil else {
-                    fatalError("*** Invalid State: This can only fail if there was an error. ***")
+                    return
                 }
 
                 allLocations.append(contentsOf: currentLocationBatch)

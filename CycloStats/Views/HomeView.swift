@@ -16,10 +16,6 @@ struct HomeView: View {
         NavigationStack {
             VStack(spacing: 2) {
                 ScrollView {
-                    CyclingStatsAverageView()
-                        .padding()
-                        .padding(.top, 8)
-                    
                     VStack(spacing: 12) {
                         Text(Word.charts)
                             .font(.system(size: 22, weight: .semibold, design: .rounded))
@@ -28,6 +24,7 @@ struct HomeView: View {
                         VStack(spacing: 16) {
                             CyclingDistanceChartView()
                             CyclingElevationChartView()
+                            CyclingHeartRateChart()
                         }
                     }
                     .padding()

@@ -21,6 +21,7 @@
 		D9263A242C3C5545004837E2 /* CyclingTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A232C3C5545004837E2 /* CyclingTargetView.swift */; };
 		D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A252C3C55BD004837E2 /* Double+Extensions.swift */; };
 		D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9263A292C3C569F004837E2 /* CyclingStatsTotalView.swift */; };
+		D92C4CB62C7A036C003C9C49 /* CyclingHeartRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92C4CB52C7A036C003C9C49 /* CyclingHeartRateChart.swift */; };
 		D958A5F22C3D934B004C2A1D /* CyclingDistanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */; };
 		D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F32C3DB935004C2A1D /* ActivityRow.swift */; };
 		D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */; };
@@ -68,6 +69,7 @@
 		D9263A252C3C55BD004837E2 /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		D9263A292C3C569F004837E2 /* CyclingStatsTotalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingStatsTotalView.swift; sourceTree = "<group>"; };
 		D9263A2B2C3C5BC4004837E2 /* CycloStats.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CycloStats.entitlements; sourceTree = "<group>"; };
+		D92C4CB52C7A036C003C9C49 /* CyclingHeartRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingHeartRateChart.swift; sourceTree = "<group>"; };
 		D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDistanceChartView.swift; sourceTree = "<group>"; };
 		D958A5F32C3DB935004C2A1D /* ActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRow.swift; sourceTree = "<group>"; };
 		D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesProgressView.swift; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			children = (
 				D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */,
 				D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */,
+				D92C4CB52C7A036C003C9C49 /* CyclingHeartRateChart.swift */,
 				D9F0221F2C45160200A84881 /* ActivityElevationChart.swift */,
 			);
 			path = Charts;
@@ -411,6 +414,7 @@
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,
 				D958A6182C412E26004C2A1D /* Conditional.swift in Sources */,
 				D9A73F172C428E95008E39DC /* Word.swift in Sources */,
+				D92C4CB62C7A036C003C9C49 /* CyclingHeartRateChart.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
