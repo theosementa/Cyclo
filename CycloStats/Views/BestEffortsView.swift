@@ -38,6 +38,16 @@ struct BestEffortsView: View {
                         unit: "km"
                     )
                     
+                    let maxSpeedBestEfforts: [CyclingActivity] = Array(healthManager.maxSpeedBestEfforts.prefix(3))
+                    let maxSpeedBestEffortsValues = maxSpeedBestEfforts.map(\.maxSpeedInKMH)
+                    BestEffortsRow(
+                        icon: "gauge.with.dots.needle.67percent",
+                        title: Word.maxSpeed,
+                        activities: maxSpeedBestEfforts,
+                        values: maxSpeedBestEffortsValues,
+                        unit: "km/h"
+                    )
+                    
                     let averageBestEfforts: [CyclingActivity] = Array(healthManager.averageSpeedBestEfforts.prefix(3))
                     let averageBestEffortsValues = averageBestEfforts.map(\.averageSpeedInKMH)
                     BestEffortsRow(

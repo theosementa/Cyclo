@@ -24,4 +24,9 @@ extension HealthManager {
             .sorted(by: { $0.averageSpeedInKMH > $1.averageSpeedInKMH })
     }
     
+    var maxSpeedBestEfforts: [CyclingActivity] {
+        return self.cyclingActivities
+            .sorted(by: { $0.maxSpeedInKMH > $1.maxSpeedInKMH })
+    }
+    
 }
