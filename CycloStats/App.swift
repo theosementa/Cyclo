@@ -15,6 +15,7 @@ struct CycloStatsApp: App {
     private let homeRouter: NavigationManager = .init(isPresented: .constant(.home))
     private let activitiesRouter: NavigationManager = .init(isPresented: .constant(.activities))
     private let progressRouter: NavigationManager = .init(isPresented: .constant(.progress))
+    private let bestEffortsRouter: NavigationManager = .init(isPresented: .constant(.home))
 
     // MARK: -
     var body: some Scene {
@@ -37,13 +38,18 @@ struct CycloStatsApp: App {
                     .tabItem {
                         Label(Word.progress, systemImage: "chart.bar.xaxis.ascending")
                     }
+                
+                BestEffortsView()
+                    .environmentObject(bestEffortsRouter)
+                    .tabItem {
+                        Label(Word.bestEfforts, systemImage: "rosette")
+                    }
             } // End TabView
             .accentColor(.green)
             .environmentObject(healthManager)
             .task {
                 if await healthManager.requestAutorisation() {
                     await healthManager.fetchCyclingStats()
-                    await healthManager.filterActivities()
                 }
             }
         }

@@ -14,11 +14,15 @@ final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
     
     @Published var selectedPeriod: Period = .month
-    @Published private var cyclingActivities: [CyclingActivity] = []
-    @Published var filteredCyclingActivities: [CyclingActivity] = []
+    @Published var cyclingActivities: [CyclingActivity] = []
 
     @Published var startDatePeriod: Date = Date().startOfMonth ?? .now
     @Published var endDatePeriod: Date = Date().endOfMonth ?? .now
+    
+    var filteredCyclingActivities: [CyclingActivity] {
+        return self.cyclingActivities
+            .filter { $0.date >= startDatePeriod && $0.date <= endDatePeriod }
+    }
 }
 
 extension HealthManager {
@@ -46,14 +50,6 @@ extension HealthManager {
 
 extension HealthManager {
     
-    @MainActor
-    func filterActivities() async {
-        withAnimation(.smooth) {
-            self.filteredCyclingActivities = cyclingActivities
-                .filter { $0.date >= startDatePeriod && $0.date <= endDatePeriod }
-        }
-    }
-    
     func changeDateWhenChangePeriod() {
         switch selectedPeriod {
         case .week:
@@ -68,13 +64,11 @@ extension HealthManager {
             startDatePeriod = startDatePeriod.startOfYear ?? .now
             endDatePeriod = startDatePeriod.endOfYear ?? .now
         case .total:
-            let startDate = filteredCyclingActivities.map { $0.endDate }.min() ?? .now
-            let endDate = filteredCyclingActivities.map { $0.endDate }.max() ?? .now
+            let startDate = cyclingActivities.map { $0.endDate }.min() ?? .now
+            let endDate = cyclingActivities.map { $0.endDate }.max() ?? .now
             startDatePeriod = startDate
             endDatePeriod = endDate
         }
-        
-        Task { await filterActivities() }
     }
     
 }
@@ -118,16 +112,19 @@ extension HealthManager {
     }
     
     var averageDistancePerDay: Double {
+        guard activitiesForCharts.count != 0 else { return 0 }
         let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
         return totalDistance / Double(activitiesForCharts.count)
     }
     
     var averageElevationPerDay: Double {
+        guard activitiesForCharts.count != 0 else { return 0 }
         let totalElevation = activitiesForCharts.reduce(0) { $0 + $1.elevationInM }
         return totalElevation / Double(activitiesForCharts.count)
     }
     
     var averageHeartRatePerDay: Int {
+        guard activitiesForCharts.count != 0 else { return 0 }
         let totalHearthRate = activitiesForCharts.reduce(0) { $0 + $1.averageHeartRate }
         return totalHearthRate / activitiesForCharts.count
     }
@@ -136,23 +133,28 @@ extension HealthManager {
 // MARK: - Cycling
 extension HealthManager {
     var totalDistance: Double {
-        return filteredCyclingActivities.map { $0.distanceInKm }.reduce(0, +)
+        return filteredCyclingActivities
+            .map { $0.distanceInKm }.reduce(0, +)
     }
     
     var totalElevationAscended: Double {
-        return filteredCyclingActivities.map { $0.elevationAscendedInM }.reduce(0, +)
+        return filteredCyclingActivities
+            .map { $0.elevationAscendedInM }.reduce(0, +)
     }
     
     var totalTime: Int {
-        return filteredCyclingActivities.map { $0.durationInMin }.reduce(0, +)
+        return filteredCyclingActivities
+            .map { $0.durationInMin }.reduce(0, +)
     }
     
     var longestActivity: CyclingActivity? {
-        return filteredCyclingActivities.sorted { $0.distanceInKm > $1.distanceInKm }.first
+        return filteredCyclingActivities
+            .sorted { $0.distanceInKm > $1.distanceInKm }.first
     }
     
     var highestActivity: CyclingActivity? {
-        return filteredCyclingActivities.sorted { $0.elevationAscendedInM > $1.elevationAscendedInM }.first
+        return filteredCyclingActivities
+            .sorted { $0.elevationAscendedInM > $1.elevationAscendedInM }.first
     }
     
     var numberOfCyclingWorkout: Int {
@@ -163,15 +165,13 @@ extension HealthManager {
 // MARK: - Cycling Stats Average
 extension HealthManager {
     var averageDistanceInKm: Double {
-        if !filteredCyclingActivities.isEmpty {
-            return totalDistance / Double(filteredCyclingActivities.count)
-        } else { return 0 }
+        guard filteredCyclingActivities.count != 0 else { return 0 }
+        return totalDistance / Double(filteredCyclingActivities.count)
     }
     
     var averageElevationInM: Double {
-        if !filteredCyclingActivities.isEmpty {
-            return totalElevationAscended / Double(filteredCyclingActivities.count)
-        } else { return 0 }
+        guard filteredCyclingActivities.count != 0 else { return 0 }
+        return totalElevationAscended / Double(filteredCyclingActivities.count)
     }
 }
 
@@ -197,7 +197,6 @@ extension HealthManager {
         
         let activities = await mapWorkoutsToCyclingActivities(workouts: workouts)
         self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
-        await self.filterActivities()
     }
 
     private func mapWorkoutsToCyclingActivities(workouts: [HKWorkout]) async -> [CyclingActivity] {

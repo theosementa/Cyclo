@@ -100,9 +100,7 @@ struct FilterByPeriodView: View {
         } else {
             healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInFuture(selectedPeriod, .start)
             healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInFuture(selectedPeriod, .end)
-        }
-        
-        Task { await healthManager.filterActivities() }
+        }        
     }
 
 } // End struct

@@ -25,6 +25,7 @@ struct Word {
     static var max = "word_max".localized
     static var min = "word_min".localized
     static var progress = "word_progress".localized
+    static var bestEfforts = "word_bestEfforts".localized
     static var remaining = "word_remaining".localized
     static var traveled = "word_traveled".localized
     static var trips = "word_trips".localized

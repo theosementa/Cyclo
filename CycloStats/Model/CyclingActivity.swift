@@ -1,14 +1,7 @@
-//
-//  CyclingActivity.swift
-//  CycloStats
-//
-//  Created by KaayZenn on 08/07/2024.
-//
-
 import Foundation
 import HealthKit
 
-class CyclingActivity: Identifiable, ObservableObject {
+class CyclingActivity: Identifiable, ObservableObject, Hashable {
     @Published var originalWorkout: HKWorkout?
     @Published var startDate: Date
     @Published var endDate: Date
@@ -36,18 +29,25 @@ class CyclingActivity: Identifiable, ObservableObject {
     var id: String {
         return "\(distanceInKm)\(elevationAscendedInM)\(averageHeartRate)"
     }
+    
+    // MARK: - Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    // MARK: - Equatable
+    static func == (lhs: CyclingActivity, rhs: CyclingActivity) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 extension CyclingActivity {
-    
     var date: Date {
         return endDate
     }
-    
 }
 
 extension CyclingActivity {
-    
     static var preview: CyclingActivity {
         return .init(
             startDate: .now,
@@ -61,5 +61,4 @@ extension CyclingActivity {
             maxHeartRate: 165
         )
     }
-    
 }
