@@ -201,6 +201,7 @@ extension HealthManager {
 
     private func mapWorkoutsToCyclingActivities(workouts: [HKWorkout]) async -> [CyclingActivity] {
         var activities = [CyclingActivity]()
+        let cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
 
         for workout in workouts {
             var durationInMin: Int = 0
@@ -208,6 +209,7 @@ extension HealthManager {
             var elevationAscended: Double = 0
             var averageHeartRate: Int = 0
             var maxHeartRate: Int = 0
+            var maxSpeedInKMH: Double = 0
             
             durationInMin = Int(workout.duration) / 60
             
@@ -231,14 +233,31 @@ extension HealthManager {
             
             let totalDurationInHours = Double(durationInMin) / 60.0
             
+            // Get MaxSpeed
+            if let activityEntity = cyclingActivityEntityRepo.activities.first(where: { $0.id == workout.uuid }) {
+                maxSpeedInKMH = activityEntity.maxSpeed
+            } else {
+                if let routes = await self.getWorkoutRoute(workout: workout) {
+                    for route in routes {
+                        maxSpeedInKMH = await self.fetchMaxSpeed(givenRoute: route)
+                        let newEntity = CyclingActivityEntity(context: viewContext)
+                        newEntity.id = workout.uuid
+                        newEntity.maxSpeed = maxSpeedInKMH
+                        persistenceController.saveContext()
+                    }
+                }
+               
+            }
+            
             let activity = CyclingActivity(
+                id: workout.uuid,
                 originalWorkout: workout,
                 startDate: workout.startDate,
                 endDate: workout.endDate,
                 durationInMin: Int(workout.duration / 60),
                 distanceInKm: distanceInKm,
                 averageSpeedInKMH: (distanceInKm / totalDurationInHours),
-                maxSpeedInKMH: 0,
+                maxSpeedInKMH: maxSpeedInKMH,
                 elevationAscendedInM: elevationAscended,
                 averageHeartRate: averageHeartRate,
                 maxHeartRate: maxHeartRate

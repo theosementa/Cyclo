@@ -11,6 +11,7 @@ import SwiftUI
 struct CycloStatsApp: App {
     
     @StateObject private var healthManager: HealthManager = .init()
+    @StateObject private var cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
     
     private let homeRouter: NavigationManager = .init(isPresented: .constant(.home))
     private let activitiesRouter: NavigationManager = .init(isPresented: .constant(.activities))
@@ -49,6 +50,7 @@ struct CycloStatsApp: App {
             .environmentObject(healthManager)
             .task {
                 if await healthManager.requestAutorisation() {
+                    await cyclingActivityEntityRepo.fetchActivities()
                     await healthManager.fetchCyclingStats()
                 }
             }

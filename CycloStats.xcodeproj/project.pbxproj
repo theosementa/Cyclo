@@ -25,6 +25,10 @@
 		D93206712C8DE2BA00F34A0E /* BestEffortsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93206702C8DE2BA00F34A0E /* BestEffortsView.swift */; };
 		D93206732C8DE77C00F34A0E /* BestEffortsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */; };
 		D93206752C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93206742C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift */; };
+		D93206792C8E044C00F34A0E /* CycloStats.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D93206772C8E044C00F34A0E /* CycloStats.xcdatamodeld */; };
+		D932067B2C8E049100F34A0E /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D932067A2C8E049100F34A0E /* PersistenceController.swift */; };
+		D93C60EB2C9059DE00DA2A9E /* CyclingActivityEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C60E92C9059DE00DA2A9E /* CyclingActivityEntity.swift */; };
+		D93C60EE2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93C60ED2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift */; };
 		D958A5F22C3D934B004C2A1D /* CyclingDistanceChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */; };
 		D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F32C3DB935004C2A1D /* ActivityRow.swift */; };
 		D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */; };
@@ -76,6 +80,10 @@
 		D93206702C8DE2BA00F34A0E /* BestEffortsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestEffortsView.swift; sourceTree = "<group>"; };
 		D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestEffortsRow.swift; sourceTree = "<group>"; };
 		D93206742C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+BestEfforts+Extensions.swift"; sourceTree = "<group>"; };
+		D93206782C8E044C00F34A0E /* CycloStats.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CycloStats.xcdatamodel; sourceTree = "<group>"; };
+		D932067A2C8E049100F34A0E /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		D93C60E92C9059DE00DA2A9E /* CyclingActivityEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityEntity.swift; sourceTree = "<group>"; };
+		D93C60ED2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityEntityRepo.swift; sourceTree = "<group>"; };
 		D958A5F12C3D934B004C2A1D /* CyclingDistanceChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingDistanceChartView.swift; sourceTree = "<group>"; };
 		D958A5F32C3DB935004C2A1D /* ActivityRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRow.swift; sourceTree = "<group>"; };
 		D958A5F52C3EEE28004C2A1D /* ActivitiesProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesProgressView.swift; sourceTree = "<group>"; };
@@ -146,6 +154,7 @@
 				D9A73F082C424178008E39DC /* ViewModel */,
 				D9263A122C3C5364004837E2 /* Model */,
 				D9A73F072C4240A6008E39DC /* Enum */,
+				D93206762C8E042E00F34A0E /* CoreData */,
 				D9263A0B2C3C52CA004837E2 /* Resources */,
 				D9263A022C3C5253004837E2 /* Preview Content */,
 			);
@@ -249,6 +258,25 @@
 				D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		D93206762C8E042E00F34A0E /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D93206772C8E044C00F34A0E /* CycloStats.xcdatamodeld */,
+				D932067A2C8E049100F34A0E /* PersistenceController.swift */,
+				D93C60EC2C905A2E00DA2A9E /* Cycling Activity */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		D93C60EC2C905A2E00DA2A9E /* Cycling Activity */ = {
+			isa = PBXGroup;
+			children = (
+				D93C60E92C9059DE00DA2A9E /* CyclingActivityEntity.swift */,
+				D93C60ED2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift */,
+			);
+			path = "Cycling Activity";
 			sourceTree = "<group>";
 		};
 		D958A5FD2C3F0537004C2A1D /* Toolbar */ = {
@@ -399,6 +427,7 @@
 				D958A6132C412081004C2A1D /* Push.swift in Sources */,
 				D958A6142C412081004C2A1D /* NavigationDirection.swift in Sources */,
 				D9F0221E2C45127300A84881 /* CyclingElevationChartView.swift in Sources */,
+				D932067B2C8E049100F34A0E /* PersistenceController.swift in Sources */,
 				D958A6112C412081004C2A1D /* NavigationManager.swift in Sources */,
 				D93206732C8DE77C00F34A0E /* BestEffortsRow.swift in Sources */,
 				D9263A242C3C5545004837E2 /* CyclingTargetView.swift in Sources */,
@@ -422,12 +451,15 @@
 				D958A5FC2C3EFEC0004C2A1D /* CyclingStatsRow.swift in Sources */,
 				D958A6162C412081004C2A1D /* Router.swift in Sources */,
 				D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */,
+				D93206792C8E044C00F34A0E /* CycloStats.xcdatamodeld in Sources */,
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,
 				D958A6182C412E26004C2A1D /* Conditional.swift in Sources */,
 				D9A73F172C428E95008E39DC /* Word.swift in Sources */,
+				D93C60EE2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift in Sources */,
 				D92C4CB62C7A036C003C9C49 /* CyclingHeartRateChart.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
+				D93C60EB2C9059DE00DA2A9E /* CyclingActivityEntity.swift in Sources */,
 				D93206752C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift in Sources */,
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
 				D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */,
@@ -668,6 +700,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D93206772C8E044C00F34A0E /* CycloStats.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D93206782C8E044C00F34A0E /* CycloStats.xcdatamodel */,
+			);
+			currentVersion = D93206782C8E044C00F34A0E /* CycloStats.xcdatamodel */;
+			name = CycloStats.xcdatamodeld;
+			path = /Users/tsementa/Code/Swift/Projects/iOS/CycloStats/CycloStats/CoreData/CycloStats.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D92639F12C3C5252004837E2 /* Project object */;
 }

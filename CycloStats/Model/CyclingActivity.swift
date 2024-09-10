@@ -2,6 +2,7 @@ import Foundation
 import HealthKit
 
 class CyclingActivity: Identifiable, ObservableObject, Hashable {
+    @Published var id: UUID
     @Published var originalWorkout: HKWorkout?
     @Published var startDate: Date
     @Published var endDate: Date
@@ -13,7 +14,8 @@ class CyclingActivity: Identifiable, ObservableObject, Hashable {
     @Published var averageHeartRate: Int
     @Published var maxHeartRate: Int
     
-    init(originalWorkout: HKWorkout? = nil, startDate: Date, endDate: Date, durationInMin: Int, distanceInKm: Double, averageSpeedInKMH: Double, maxSpeedInKMH: Double, elevationAscendedInM: Double, averageHeartRate: Int, maxHeartRate: Int) {
+    init(id: UUID, originalWorkout: HKWorkout? = nil, startDate: Date, endDate: Date, durationInMin: Int, distanceInKm: Double, averageSpeedInKMH: Double, maxSpeedInKMH: Double, elevationAscendedInM: Double, averageHeartRate: Int, maxHeartRate: Int) {
+        self.id = id
         self.originalWorkout = originalWorkout
         self.startDate = startDate
         self.endDate = endDate
@@ -24,10 +26,6 @@ class CyclingActivity: Identifiable, ObservableObject, Hashable {
         self.elevationAscendedInM = elevationAscendedInM
         self.averageHeartRate = averageHeartRate
         self.maxHeartRate = maxHeartRate
-    }
-    
-    var id: String {
-        return "\(distanceInKm)\(elevationAscendedInM)\(averageHeartRate)"
     }
     
     // MARK: - Hashable
@@ -50,6 +48,7 @@ extension CyclingActivity {
 extension CyclingActivity {
     static var preview: CyclingActivity {
         return .init(
+            id: UUID(),
             startDate: .now,
             endDate: .now,
             durationInMin: 34,

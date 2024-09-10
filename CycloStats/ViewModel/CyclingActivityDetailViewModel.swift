@@ -23,10 +23,6 @@ extension CyclingActivityDetailViewModel {
         if let workout = activity.originalWorkout, let routes = await healthManager.getWorkoutRoute(workout: workout) {
             for route in routes {
                 let location = await healthManager.getLocationDataForRoute(givenRoute: route)
-                if activity.maxSpeedInKMH == 0 {
-                    let maxSpeed = await healthManager.fetchMaxSpeed(givenRoute: route)
-                    activity.maxSpeedInKMH = maxSpeed
-                }
                 self.locations.append(contentsOf: location)
             }
         }
