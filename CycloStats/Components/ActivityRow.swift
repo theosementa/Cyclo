@@ -27,7 +27,7 @@ struct ActivityRow: View {
                     CyclingStatsRow(
                         icon: "timer",
                         title: Word.duration,
-                        value: activity.durationInMin.asHoursAndMinutes
+                        value: activity.durationInMin.asHoursMinutesAndSeconds
                     )
                 }
                 

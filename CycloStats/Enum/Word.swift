@@ -18,6 +18,7 @@ struct Word {
     static var departure = "word_departure".localized
     static var distance = "word_distance".localized
     static var duration = "word_duration".localized
+    static var pause = "word_pause".localized
     static var elevation = "word_elevation".localized
     static var home = "word_home".localized
     static var maxBPM = "word_maxBPM".localized

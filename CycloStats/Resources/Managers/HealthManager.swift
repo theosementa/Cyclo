@@ -142,7 +142,7 @@ extension HealthManager {
             .map { $0.elevationAscendedInM }.reduce(0, +)
     }
     
-    var totalTime: Int {
+    var totalTime: Double {
         return filteredCyclingActivities
             .map { $0.durationInMin }.reduce(0, +)
     }
@@ -204,14 +204,15 @@ extension HealthManager {
         let cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
 
         for workout in workouts {
-            var durationInMin: Int = 0
+            let durationInMin: Double = Double(workout.duration) / 60
             var distanceInKm: Double = 0
             var elevationAscended: Double = 0
             var averageHeartRate: Int = 0
             var maxHeartRate: Int = 0
             var maxSpeedInKMH: Double = 0
             
-            durationInMin = Int(workout.duration) / 60
+            let dateDifference = workout.endDate.timeIntervalSince(workout.startDate)
+            let pauseTimeInMin = Double(dateDifference - workout.duration) / 60
             
             if let distance = workout.statistics(for: .init(.distanceCycling))?.sumQuantity() {
                 distanceInKm = distance.doubleValue(for: .meter()) / 1000
@@ -246,7 +247,6 @@ extension HealthManager {
                         persistenceController.saveContext()
                     }
                 }
-               
             }
             
             let activity = CyclingActivity(
@@ -254,7 +254,8 @@ extension HealthManager {
                 originalWorkout: workout,
                 startDate: workout.startDate,
                 endDate: workout.endDate,
-                durationInMin: Int(workout.duration / 60),
+                durationInMin: durationInMin,
+                pauseTime: pauseTimeInMin,
                 distanceInKm: distanceInKm,
                 averageSpeedInKMH: (distanceInKm / totalDurationInHours),
                 maxSpeedInKMH: maxSpeedInKMH,

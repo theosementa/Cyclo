@@ -45,7 +45,7 @@ struct CyclingStatsTotalView: View {
                     CyclingStatsRow(
                         icon: "timer",
                         title: Word.duration,
-                        value: healthManager.totalTime.asHoursAndMinutes,
+                        value: healthManager.totalTime.asHoursMinutesAndSeconds,
                         withBackground: true
                     )
                 }

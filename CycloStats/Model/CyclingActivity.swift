@@ -6,7 +6,8 @@ class CyclingActivity: Identifiable, ObservableObject, Hashable {
     @Published var originalWorkout: HKWorkout?
     @Published var startDate: Date
     @Published var endDate: Date
-    @Published var durationInMin: Int
+    @Published var durationInMin: Double
+    @Published var pauseTime: Double
     @Published var distanceInKm: Double
     @Published var averageSpeedInKMH: Double
     @Published var maxSpeedInKMH: Double
@@ -14,12 +15,13 @@ class CyclingActivity: Identifiable, ObservableObject, Hashable {
     @Published var averageHeartRate: Int
     @Published var maxHeartRate: Int
     
-    init(id: UUID, originalWorkout: HKWorkout? = nil, startDate: Date, endDate: Date, durationInMin: Int, distanceInKm: Double, averageSpeedInKMH: Double, maxSpeedInKMH: Double, elevationAscendedInM: Double, averageHeartRate: Int, maxHeartRate: Int) {
+    init(id: UUID, originalWorkout: HKWorkout? = nil, startDate: Date, endDate: Date, durationInMin: Double, pauseTime: Double, distanceInKm: Double, averageSpeedInKMH: Double, maxSpeedInKMH: Double, elevationAscendedInM: Double, averageHeartRate: Int, maxHeartRate: Int) {
         self.id = id
         self.originalWorkout = originalWorkout
         self.startDate = startDate
         self.endDate = endDate
         self.durationInMin = durationInMin
+        self.pauseTime = pauseTime
         self.distanceInKm = distanceInKm
         self.averageSpeedInKMH = averageSpeedInKMH
         self.maxSpeedInKMH = maxSpeedInKMH
@@ -51,7 +53,8 @@ extension CyclingActivity {
             id: UUID(),
             startDate: .now,
             endDate: .now,
-            durationInMin: 34,
+            durationInMin: 34.8,
+            pauseTime: 2.1,
             distanceInKm: 12,
             averageSpeedInKMH: 21.4,
             maxSpeedInKMH: 18.1,
