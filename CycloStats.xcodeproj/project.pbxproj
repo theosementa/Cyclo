@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D91644C92C9ABB690047A8C8 /* ActivityHeartRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644C82C9ABB690047A8C8 /* ActivityHeartRateChart.swift */; };
+		D91644CC2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CB2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift */; };
+		D91644CE2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */; };
+		D91644D02C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */; };
 		D92639FD2C3C5252004837E2 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92639FC2C3C5252004837E2 /* App.swift */; };
 		D9263A012C3C5253004837E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A002C3C5253004837E2 /* Assets.xcassets */; };
 		D9263A042C3C5253004837E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A032C3C5253004837E2 /* Preview Assets.xcassets */; };
@@ -61,6 +64,9 @@
 
 /* Begin PBXFileReference section */
 		D91644C82C9ABB690047A8C8 /* ActivityHeartRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeartRateChart.swift; sourceTree = "<group>"; };
+		D91644CB2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+HeartRate+Extensions.swift"; sourceTree = "<group>"; };
+		D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Route+Extensions.swift"; sourceTree = "<group>"; };
+		D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Average+Extensions.swift"; sourceTree = "<group>"; };
 		D92639F92C3C5252004837E2 /* CycloStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycloStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92639FC2C3C5252004837E2 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D9263A002C3C5253004837E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,6 +133,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D91644CA2C9ABEC90047A8C8 /* HealthManager */ = {
+			isa = PBXGroup;
+			children = (
+				D93206742C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift */,
+				D91644CB2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift */,
+				D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */,
+				D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */,
+			);
+			path = HealthManager;
+			sourceTree = "<group>";
+		};
 		D92639F02C3C5252004837E2 = {
 			isa = PBXGroup;
 			children = (
@@ -222,11 +239,11 @@
 		D9263A152C3C540B004837E2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				D91644CA2C9ABEC90047A8C8 /* HealthManager */,
 				D9263A202C3C550A004837E2 /* Color+Extensions.swift */,
 				D9263A162C3C541E004837E2 /* Date+Extensions.swift */,
 				D9263A252C3C55BD004837E2 /* Double+Extensions.swift */,
 				D9A73F142C428D8B008E39DC /* String+Extensions.swift */,
-				D93206742C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -435,12 +452,14 @@
 				D958A6122C412081004C2A1D /* Present.swift in Sources */,
 				D958A5F22C3D934B004C2A1D /* CyclingDistanceChartView.swift in Sources */,
 				D9A73F0A2C42418C008E39DC /* CyclingActivityDetailViewModel.swift in Sources */,
+				D91644D02C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift in Sources */,
 				D9A73F0C2C4248CA008E39DC /* MapFullScreenView.swift in Sources */,
 				D9F022202C45160200A84881 /* ActivityElevationChart.swift in Sources */,
 				D958A5FF2C3F054C004C2A1D /* FilterMenu.swift in Sources */,
 				D9A73F152C428D8B008E39DC /* String+Extensions.swift in Sources */,
 				D9263A212C3C550A004837E2 /* Color+Extensions.swift in Sources */,
 				D958A5F42C3DB935004C2A1D /* ActivityRow.swift in Sources */,
+				D91644CE2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift in Sources */,
 				D9263A1A2C3C5462004837E2 /* ActivityTarget.swift in Sources */,
 				D958A6052C410CB9004C2A1D /* CyclingActivityDetailView.swift in Sources */,
 				D9263A112C3C5351004837E2 /* HealthManager.swift in Sources */,
@@ -449,6 +468,7 @@
 				D9263A142C3C537A004837E2 /* CyclingActivity.swift in Sources */,
 				D958A5FC2C3EFEC0004C2A1D /* CyclingStatsRow.swift in Sources */,
 				D958A6162C412081004C2A1D /* Router.swift in Sources */,
+				D91644CC2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift in Sources */,
 				D9263A2A2C3C569F004837E2 /* CyclingStatsTotalView.swift in Sources */,
 				D93206792C8E044C00F34A0E /* CycloStats.xcdatamodeld in Sources */,
 				D9263A1F2C3C54F1004837E2 /* BackgroundComponentViewModifier.swift in Sources */,

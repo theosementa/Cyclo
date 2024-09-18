@@ -55,9 +55,7 @@ extension HealthManager {
         do {
             try await healthStore.requestAuthorization(toShare: [], read: read)
             return true
-        } catch {
-            return false
-        }
+        } catch { return false }
     }
     
 }
@@ -124,72 +122,6 @@ extension HealthManager {
             )
         }.sorted(by: { $0.date < $1.date })
     }
-    
-    var averageDistancePerDay: Double {
-        guard activitiesForCharts.count != 0 else { return 0 }
-        let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
-        return totalDistance / Double(activitiesForCharts.count)
-    }
-    
-    var averageElevationPerDay: Double {
-        guard activitiesForCharts.count != 0 else { return 0 }
-        let totalElevation = activitiesForCharts.reduce(0) { $0 + $1.elevationInM }
-        return totalElevation / Double(activitiesForCharts.count)
-    }
-    
-    var averageHeartRatePerDay: Int {
-        guard activitiesForCharts.count != 0 else { return 0 }
-        let totalHearthRate = activitiesForCharts.reduce(0) { $0 + $1.averageHeartRate }
-        return totalHearthRate / activitiesForCharts.count
-    }
-}
-
-// MARK: - HeathRate
-extension HealthManager {
-    
-    func getHeartRateForActivity(activity: CyclingActivity) async throws -> [HeartRateEntry] {
-        guard let sampleType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
-            throw HealthKitError.sampleTypeNotAvailable
-        }
-        
-        let predicate = HKQuery.predicateForSamples(
-            withStart: activity.startDate,
-            end: activity.endDate,
-            options: .strictEndDate
-        )
-        
-        return try await withCheckedThrowingContinuation { continuation in
-            let query = HKSampleQuery(
-                sampleType: sampleType,
-                predicate: predicate,
-                limit: HKObjectQueryNoLimit,
-                sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]
-            ) { _, samples, error in
-                if let error = error {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                
-                guard let samples = samples as? [HKQuantitySample] else {
-                    continuation.resume(throwing: HealthKitError.unexpectedSampleType)
-                    return
-                }
-                
-                let unit = HKUnit(from: "count/min")
-                let heartRateEntries = samples.map { sample in
-                    HeartRateEntry(
-                        heartRate: sample.quantity.doubleValue(for: unit),
-                        date: sample.startDate
-                    )
-                }
-                
-                continuation.resume(returning: heartRateEntries)
-            }
-            
-            self.healthStore.execute(query)
-        }
-    }
-    
 }
 
 // MARK: - Cycling
@@ -221,19 +153,6 @@ extension HealthManager {
     
     var numberOfCyclingWorkout: Int {
         return filteredCyclingActivities.count
-    }
-}
-
-// MARK: - Cycling Stats Average
-extension HealthManager {
-    var averageDistanceInKm: Double {
-        guard filteredCyclingActivities.count != 0 else { return 0 }
-        return totalDistance / Double(filteredCyclingActivities.count)
-    }
-    
-    var averageElevationInM: Double {
-        guard filteredCyclingActivities.count != 0 else { return 0 }
-        return totalElevationAscended / Double(filteredCyclingActivities.count)
     }
 }
 
@@ -376,65 +295,6 @@ extension HealthManager {
         
         let maxSpeedInKilometersPerHour = maxSpeed * 3.6
         return maxSpeedInKilometersPerHour
-    }
-    
-}
-
-// MARK: - Cycling Activity Route
-extension HealthManager {
-    
-    func getWorkoutRoute(workout: HKWorkout) async -> [HKWorkoutRoute]? {
-        let byWorkout = HKQuery.predicateForObjects(from: workout)
-        
-        let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-            healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
-                if let hasError = error {
-                    continuation.resume(throwing: hasError)
-                    return
-                }
-                
-                guard let samples = samples else {
-                    return
-                }
-                
-                continuation.resume(returning: samples)
-            }))
-        }
-        
-        guard let workouts = samples as? [HKWorkoutRoute] else {
-            return nil
-        }
-        
-        return workouts
-    }
-    
-    func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
-        let locations = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
-            var allLocations: [CLLocation] = []
-            
-            // Create the route query.
-            let query = HKWorkoutRouteQuery(route: givenRoute) { (query, locationsOrNil, done, errorOrNil) in
-                
-                if let error = errorOrNil {
-                    continuation.resume(throwing: error)
-                    return
-                }
-                
-                guard let currentLocationBatch = locationsOrNil else {
-                    return
-                }
-                
-                allLocations.append(contentsOf: currentLocationBatch)
-                
-                if done {
-                    continuation.resume(returning: allLocations)
-                }
-            }
-            
-            healthStore.execute(query)
-        }
-        
-        return locations
     }
     
 }
