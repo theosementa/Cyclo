@@ -11,6 +11,7 @@
 		D91644CC2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CB2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift */; };
 		D91644CE2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */; };
 		D91644D02C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */; };
+		D91644D22C9AFB970047A8C8 /* ZoneRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644D12C9AFB970047A8C8 /* ZoneRow.swift */; };
 		D92639FD2C3C5252004837E2 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92639FC2C3C5252004837E2 /* App.swift */; };
 		D9263A012C3C5253004837E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A002C3C5253004837E2 /* Assets.xcassets */; };
 		D9263A042C3C5253004837E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A032C3C5253004837E2 /* Preview Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		D91644CB2C9ABEF70047A8C8 /* HealthManager+HeartRate+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+HeartRate+Extensions.swift"; sourceTree = "<group>"; };
 		D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Route+Extensions.swift"; sourceTree = "<group>"; };
 		D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Average+Extensions.swift"; sourceTree = "<group>"; };
+		D91644D12C9AFB970047A8C8 /* ZoneRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneRow.swift; sourceTree = "<group>"; };
 		D92639F92C3C5252004837E2 /* CycloStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycloStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92639FC2C3C5252004837E2 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D9263A002C3C5253004837E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				D958A6062C4114B5004C2A1D /* MapView.swift */,
 				D9A73F0D2C424F1D008E39DC /* CustomButton.swift */,
 				D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */,
+				D91644D12C9AFB970047A8C8 /* ZoneRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -391,7 +394,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					D92639F82C3C5252004837E2 = {
 						CreatedOnToolsVersion = 15.4;
@@ -485,6 +488,7 @@
 				D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */,
 				D92639FD2C3C5252004837E2 /* App.swift in Sources */,
 				D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */,
+				D91644D22C9AFB970047A8C8 /* ZoneRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +512,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -571,6 +576,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

@@ -11,6 +11,7 @@ import MapKit
 final class CyclingActivityDetailViewModel: ObservableObject {
     @Published var locations: [CLLocation] = []
     @Published var heartRates: [HeartRateEntry] = []
+    @Published var zones: [HeartRateZone] = []
     @Published var showFullMap: Bool = false
 }
 
@@ -26,8 +27,9 @@ extension CyclingActivityDetailViewModel {
         }
         
         do {
-            let heartRates = try await healthManager.getHeartRateForActivity(activity: activity)
-            self.heartRates = heartRates
+            let heartRatesAndZones = try await healthManager.getHeartRateForActivity(activity: activity)
+            self.heartRates = heartRatesAndZones.0
+            self.zones = heartRatesAndZones.1
         } catch { }
     }
     

@@ -58,9 +58,10 @@ struct ActivityElevationChart: View {
             }
             
             HStack(spacing: 24) {
-                Text("\(Word.min) : \(minYAxisValue.formatWith(num: 2))m")
-                Text("\(Word.max) : \(maxYAxisValue.formatWith(num: 2))m")
-                Spacer()
+                Text("\(Word.min): \(minYAxisValue.formatWith(num: 2))m")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("\(Word.max): \(maxYAxisValue.formatWith(num: 2))m")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(.system(size: 20, weight: .semibold, design: .rounded))
         }

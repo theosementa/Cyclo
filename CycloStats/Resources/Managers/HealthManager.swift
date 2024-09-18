@@ -15,14 +15,16 @@ enum HealthKitError: Error {
     case unexpectedSampleType
 }
 
-struct HeartRateEntry: Hashable, Identifiable {
-    var heartRate: Double
-    var date: Date
-    var id = UUID()
-}
-
 final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
+    
+    let zones: [HeartRateZone] = [
+        HeartRateZone(id: 1, range: 0...138, color: .blue),
+        HeartRateZone(id: 2, range: 139...151, color: .green),
+        HeartRateZone(id: 3, range: 152...165, color: .yellow),
+        HeartRateZone(id: 4, range: 166...179, color: .orange),
+        HeartRateZone(id: 5, range: 180...Double.infinity, color: .red)
+    ]
     
     @Published var selectedPeriod: Period = .month
     @Published var cyclingActivities: [CyclingActivity] = []

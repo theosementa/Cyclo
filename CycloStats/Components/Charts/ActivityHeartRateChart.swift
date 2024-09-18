@@ -12,6 +12,7 @@ struct ActivityHeartRateChart: View {
     
     // Builder
     var heartRates: [HeartRateEntry]
+    var zones: [HeartRateZone]
     
     // Computed
     var minYAxisValue: Double {
@@ -35,13 +36,14 @@ struct ActivityHeartRateChart: View {
             
             Chart {
                 ForEach(heartRates, id: \.self) { heartRate in
-                    LineMark(
+                    RectangleMark(
                         x: .value("X", heartRate.date),
-                        y: .value("Y", heartRate.heartRate)
+                        y: .value("Y", heartRate.heartRate),
+                        width: 3
                     )
-                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                    .clipShape(Capsule())
                     .interpolationMethod(.catmullRom)
-                    .foregroundStyle(Color.green)
+                    .foregroundStyle(colorByHeartRate(value: heartRate.heartRate))
                 }
             }
             .frame(height: 200)
@@ -57,12 +59,27 @@ struct ActivityHeartRateChart: View {
             }
             
             HStack(spacing: 24) {
-                Text("\(Word.min) : \(minYAxisValue.formatWith(num: 0))bpm")
-                Text("\(Word.max) : \(maxYAxisValue.formatWith(num: 0))bpm")
+                Text("\(Word.min): \(minYAxisValue.formatWith(num: 0)) BPM")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("\(Word.max): \(maxYAxisValue.formatWith(num: 0)) BPM")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
             .font(.system(size: 20, weight: .semibold, design: .rounded))
+            
+            ForEach(zones) { zone in
+                Divider()
+                ZoneRow(zone: zone)
+            }
         }
         .backgroundComponent()
     } // End body
+    
+    func colorByHeartRate(value: Double) -> Color {
+        for zone in zones {
+            if value > zone.range.lowerBound && value < zone.range.upperBound {
+                return zone.color
+            }
+        }
+        return .clear
+    }
 } // End struct
