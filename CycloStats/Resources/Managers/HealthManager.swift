@@ -15,6 +15,8 @@ enum HealthKitError: Error {
     case unexpectedSampleType
 }
 
+
+
 final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
     

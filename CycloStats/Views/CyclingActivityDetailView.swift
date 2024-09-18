@@ -20,19 +20,39 @@ struct CyclingActivityDetailView: View {
         ScrollView {
             MapView(locations: viewModel.locations)
                 .frame(height: viewModel.showFullMap ? UIScreen.main.bounds.height : 400)
-                .overlay(alignment: .topTrailing) {
-                    CustomButton(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
-                        Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                            .foregroundStyle(Color.white)
-                            .rotationEffect(.degrees(90))
-                            .padding(8)
-                            .background {
-                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .fill(Color.black)
+                .overlay(alignment: .top) {
+                    HStack(spacing: 16) {
+                        if viewModel.showLegend {
+                            SpeedLegendsRow()
+                                .frame(maxWidth: .infinity)
+                        }
+                        
+                        VStack(spacing: 16) {
+                            CustomButton(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
+                                Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                                    .foregroundStyle(Color.white)
+                                    .rotationEffect(.degrees(90))
+                                    .padding(12)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.black)
+                                    }
                             }
+                            
+                            CustomButton(animation: .smooth) { viewModel.showLegend.toggle() } label: {
+                                Image(systemName: "doc.plaintext")
+                                    .foregroundStyle(Color.white)
+                                    .padding(12)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                            .fill(Color.black)
+                                    }
+                            }
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding()
-                }  
+                }
                         
             if !viewModel.showFullMap {
                 VStack(spacing: 16) {

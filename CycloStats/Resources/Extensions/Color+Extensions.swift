@@ -43,6 +43,29 @@ extension Color {
         })
     }
     
+    public static var customRed: Color {
+        return Color(hex: "F43D3D")
+    }
+    
+    public static var customOrange: Color {
+        return Color(hex: "F48A3D")
+    }
+    
+    public static var customYellow: Color {
+        return Color(hex: "F4E23D")
+    }
+    
+    public static var customGreen: Color {
+        return Color(hex: "1AD247")
+    }
+    
+    public static var customBlue: Color {
+        return Color(hex: "266AED")
+    }
+    
+    public static var customPurple: Color {
+        return Color(hex: "D081FF")
+    }
 }
 
 extension Color {

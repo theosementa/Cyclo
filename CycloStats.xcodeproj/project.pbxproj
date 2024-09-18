@@ -12,6 +12,8 @@
 		D91644CE2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */; };
 		D91644D02C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */; };
 		D91644D22C9AFB970047A8C8 /* ZoneRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644D12C9AFB970047A8C8 /* ZoneRow.swift */; };
+		D91644D42C9B09260047A8C8 /* SpeedZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644D32C9B09260047A8C8 /* SpeedZone.swift */; };
+		D91644D62C9B0EC40047A8C8 /* SpeedLegendsRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644D52C9B0EC40047A8C8 /* SpeedLegendsRow.swift */; };
 		D92639FD2C3C5252004837E2 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92639FC2C3C5252004837E2 /* App.swift */; };
 		D9263A012C3C5253004837E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A002C3C5253004837E2 /* Assets.xcassets */; };
 		D9263A042C3C5253004837E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A032C3C5253004837E2 /* Preview Assets.xcassets */; };
@@ -69,6 +71,8 @@
 		D91644CD2C9ABF420047A8C8 /* HealthManager+Route+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Route+Extensions.swift"; sourceTree = "<group>"; };
 		D91644CF2C9ABFB20047A8C8 /* HealthManager+Average+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HealthManager+Average+Extensions.swift"; sourceTree = "<group>"; };
 		D91644D12C9AFB970047A8C8 /* ZoneRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneRow.swift; sourceTree = "<group>"; };
+		D91644D32C9B09260047A8C8 /* SpeedZone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedZone.swift; sourceTree = "<group>"; };
+		D91644D52C9B0EC40047A8C8 /* SpeedLegendsRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedLegendsRow.swift; sourceTree = "<group>"; };
 		D92639F92C3C5252004837E2 /* CycloStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycloStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92639FC2C3C5252004837E2 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D9263A002C3C5253004837E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				D9263A132C3C537A004837E2 /* CyclingActivity.swift */,
+				D91644D32C9B09260047A8C8 /* SpeedZone.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 				D9A73F0D2C424F1D008E39DC /* CustomButton.swift */,
 				D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */,
 				D91644D12C9AFB970047A8C8 /* ZoneRow.swift */,
+				D91644D52C9B0EC40047A8C8 /* SpeedLegendsRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -443,8 +449,10 @@
 				D958A6072C4114B5004C2A1D /* MapView.swift in Sources */,
 				D9263A0E2C3C52F1004837E2 /* HomeView.swift in Sources */,
 				D958A5FA2C3EFE7E004C2A1D /* CyclingStatsAverageView.swift in Sources */,
+				D91644D62C9B0EC40047A8C8 /* SpeedLegendsRow.swift in Sources */,
 				D9A73F0E2C424F1D008E39DC /* CustomButton.swift in Sources */,
 				D958A6132C412081004C2A1D /* Push.swift in Sources */,
+				D91644D42C9B09260047A8C8 /* SpeedZone.swift in Sources */,
 				D958A6142C412081004C2A1D /* NavigationDirection.swift in Sources */,
 				D9F0221E2C45127300A84881 /* CyclingElevationChartView.swift in Sources */,
 				D932067B2C8E049100F34A0E /* PersistenceController.swift in Sources */,

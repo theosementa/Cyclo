@@ -13,6 +13,7 @@ final class CyclingActivityDetailViewModel: ObservableObject {
     @Published var heartRates: [HeartRateEntry] = []
     @Published var zones: [HeartRateZone] = []
     @Published var showFullMap: Bool = false
+    @Published var showLegend: Bool = false
 }
 
 extension CyclingActivityDetailViewModel {

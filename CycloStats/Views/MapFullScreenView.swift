@@ -20,9 +20,6 @@ struct MapFullScreenView: View {
         NavigationStack {
             MapView(locations: locations)
                 .frame(height: UIScreen.main.bounds.height)
-                .toolbar {
-                    
-                }
         }
     } // End body
 } // End struct
