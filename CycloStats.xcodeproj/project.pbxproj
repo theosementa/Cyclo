@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D91644C92C9ABB690047A8C8 /* ActivityHeartRateChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91644C82C9ABB690047A8C8 /* ActivityHeartRateChart.swift */; };
 		D92639FD2C3C5252004837E2 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92639FC2C3C5252004837E2 /* App.swift */; };
 		D9263A012C3C5253004837E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A002C3C5253004837E2 /* Assets.xcassets */; };
 		D9263A042C3C5253004837E2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9263A032C3C5253004837E2 /* Preview Assets.xcassets */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D91644C82C9ABB690047A8C8 /* ActivityHeartRateChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeartRateChart.swift; sourceTree = "<group>"; };
 		D92639F92C3C5252004837E2 /* CycloStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycloStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D92639FC2C3C5252004837E2 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		D9263A002C3C5253004837E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				D9F0221D2C45127300A84881 /* CyclingElevationChartView.swift */,
 				D92C4CB52C7A036C003C9C49 /* CyclingHeartRateChart.swift */,
 				D9F0221F2C45160200A84881 /* ActivityElevationChart.swift */,
+				D91644C82C9ABB690047A8C8 /* ActivityHeartRateChart.swift */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				D92C4CB62C7A036C003C9C49 /* CyclingHeartRateChart.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
+				D91644C92C9ABB690047A8C8 /* ActivityHeartRateChart.swift in Sources */,
 				D93C60EB2C9059DE00DA2A9E /* CyclingActivityEntity.swift in Sources */,
 				D93206752C8DEE3000F34A0E /* HealthManager+BestEfforts+Extensions.swift in Sources */,
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,

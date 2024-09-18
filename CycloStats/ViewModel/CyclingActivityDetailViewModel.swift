@@ -9,11 +9,9 @@ import Foundation
 import MapKit
 
 final class CyclingActivityDetailViewModel: ObservableObject {
-    
     @Published var locations: [CLLocation] = []
-    
+    @Published var heartRates: [HeartRateEntry] = []
     @Published var showFullMap: Bool = false
-    
 }
 
 extension CyclingActivityDetailViewModel {
@@ -26,6 +24,11 @@ extension CyclingActivityDetailViewModel {
                 self.locations.append(contentsOf: location)
             }
         }
+        
+        do {
+            let heartRates = try await healthManager.getHeartRateForActivity(activity: activity)
+            self.heartRates = heartRates
+        } catch { }
     }
     
 }

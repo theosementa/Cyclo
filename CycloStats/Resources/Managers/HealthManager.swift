@@ -10,14 +10,27 @@ import HealthKit
 import SwiftUI
 import CoreLocation
 
+enum HealthKitError: Error {
+    case sampleTypeNotAvailable
+    case unexpectedSampleType
+}
+
+struct HeartRateEntry: Hashable, Identifiable {
+    var heartRate: Double
+    var date: Date
+    var id = UUID()
+}
+
 final class HealthManager: ObservableObject {
     let healthStore = HKHealthStore()
     
     @Published var selectedPeriod: Period = .month
     @Published var cyclingActivities: [CyclingActivity] = []
-
+    
     @Published var startDatePeriod: Date = Date().startOfMonth ?? .now
     @Published var endDatePeriod: Date = Date().endOfMonth ?? .now
+    
+    var queryAnchor: HKQueryAnchor?
     
     var filteredCyclingActivities: [CyclingActivity] {
         return self.cyclingActivities
@@ -30,13 +43,14 @@ extension HealthManager {
     func requestAutorisation() async -> Bool {
         let distanceCycling = HKQuantityType(.distanceCycling)
         let speedCycling = HKQuantityType(.cyclingSpeed)
+        let heartRate = HKQuantityType(.heartRate)
         
         let workouts = HKObjectType.workoutType()
         let summary = HKSeriesType.activitySummaryType()
         let routes = HKSeriesType.workoutRoute()
         let types = HKSeriesType.workoutType()
         
-        let read: Set = [distanceCycling, speedCycling, workouts, summary, routes, types]
+        let read: Set = [distanceCycling, speedCycling, heartRate, workouts, summary, routes, types]
         
         do {
             try await healthStore.requestAuthorization(toShare: [], read: read)
@@ -45,7 +59,7 @@ extension HealthManager {
             return false
         }
     }
-
+    
 }
 
 extension HealthManager {
@@ -85,7 +99,7 @@ extension HealthManager {
     
     var activitiesForCharts: [ChartData] {
         var dailyData: [Date: (distance: Double, elevation: Double, heartRateSum: Int, activityCount: Int)] = [:]
-
+        
         for activity in filteredCyclingActivities {
             let date = Calendar.current.startOfDay(for: activity.date)
             
@@ -101,7 +115,7 @@ extension HealthManager {
         
         return dailyData.map { date, data in
             let averageHeartRate = data.activityCount > 0 ? data.heartRateSum / data.activityCount : 0
-
+            
             return ChartData(
                 date: date,
                 distanceInKm: data.distance,
@@ -128,6 +142,54 @@ extension HealthManager {
         let totalHearthRate = activitiesForCharts.reduce(0) { $0 + $1.averageHeartRate }
         return totalHearthRate / activitiesForCharts.count
     }
+}
+
+// MARK: - HeathRate
+extension HealthManager {
+    
+    func getHeartRateForActivity(activity: CyclingActivity) async throws -> [HeartRateEntry] {
+        guard let sampleType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
+            throw HealthKitError.sampleTypeNotAvailable
+        }
+        
+        let predicate = HKQuery.predicateForSamples(
+            withStart: activity.startDate,
+            end: activity.endDate,
+            options: .strictEndDate
+        )
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            let query = HKSampleQuery(
+                sampleType: sampleType,
+                predicate: predicate,
+                limit: HKObjectQueryNoLimit,
+                sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]
+            ) { _, samples, error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let samples = samples as? [HKQuantitySample] else {
+                    continuation.resume(throwing: HealthKitError.unexpectedSampleType)
+                    return
+                }
+                
+                let unit = HKUnit(from: "count/min")
+                let heartRateEntries = samples.map { sample in
+                    HeartRateEntry(
+                        heartRate: sample.quantity.doubleValue(for: unit),
+                        date: sample.startDate
+                    )
+                }
+                
+                continuation.resume(returning: heartRateEntries)
+            }
+            
+            self.healthStore.execute(query)
+        }
+    }
+    
 }
 
 // MARK: - Cycling
@@ -183,7 +245,7 @@ extension HealthManager {
         let timePredicate = HKQuery.predicateForSamples(withStart: .iPhoneReleaseDate, end: .now)
         let workoutPredicate = HKQuery.predicateForWorkouts(with: .cycling)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [timePredicate, workoutPredicate])
-
+        
         let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, sample, error in
                 guard let workouts = sample as? [HKWorkout], error == nil else { return }
@@ -192,17 +254,17 @@ extension HealthManager {
             
             healthStore.execute(query)
         }
-
+        
         guard let workouts = samples as? [HKWorkout] else { return }
         
         let activities = await mapWorkoutsToCyclingActivities(workouts: workouts)
         self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
     }
-
+    
     private func mapWorkoutsToCyclingActivities(workouts: [HKWorkout]) async -> [CyclingActivity] {
         var activities = [CyclingActivity]()
         let cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
-
+        
         for workout in workouts {
             let durationInMin: Double = Double(workout.duration) / 60
             var distanceInKm: Double = 0
@@ -263,13 +325,13 @@ extension HealthManager {
                 averageHeartRate: averageHeartRate,
                 maxHeartRate: maxHeartRate
             )
-        
+            
             activities.append(activity)
         }
         
         return activities
     }
-        
+    
 }
 
 extension HealthManager {
@@ -323,55 +385,55 @@ extension HealthManager {
     
     func getWorkoutRoute(workout: HKWorkout) async -> [HKWorkoutRoute]? {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
-
+        
         let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
             healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (query, samples, deletedObjects, anchor, error) in
                 if let hasError = error {
                     continuation.resume(throwing: hasError)
                     return
                 }
-
+                
                 guard let samples = samples else {
                     return
                 }
-
+                
                 continuation.resume(returning: samples)
             }))
         }
-
+        
         guard let workouts = samples as? [HKWorkoutRoute] else {
             return nil
         }
-
+        
         return workouts
     }
     
     func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
         let locations = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
             var allLocations: [CLLocation] = []
-
+            
             // Create the route query.
             let query = HKWorkoutRouteQuery(route: givenRoute) { (query, locationsOrNil, done, errorOrNil) in
-
+                
                 if let error = errorOrNil {
                     continuation.resume(throwing: error)
                     return
                 }
-
+                
                 guard let currentLocationBatch = locationsOrNil else {
                     return
                 }
-
+                
                 allLocations.append(contentsOf: currentLocationBatch)
-
+                
                 if done {
                     continuation.resume(returning: allLocations)
                 }
             }
-
+            
             healthStore.execute(query)
         }
-
+        
         return locations
     }
     

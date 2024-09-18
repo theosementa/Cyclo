@@ -119,6 +119,7 @@ struct CyclingActivityDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     VStack(spacing: 16) {
                         ActivityElevationChart(locations: viewModel.locations)
+                        ActivityHeartRateChart(heartRates: viewModel.heartRates)
                     }
                 }
                 .padding()
