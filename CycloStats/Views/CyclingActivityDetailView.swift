@@ -14,6 +14,7 @@ struct CyclingActivityDetailView: View {
     
     @EnvironmentObject private var healthManager: HealthManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
+    @StateObject private var weatherManager: WeatherManager = .init()
         
     // MARK: -
     var body: some View {
@@ -56,12 +57,23 @@ struct CyclingActivityDetailView: View {
                         
             if !viewModel.showFullMap {
                 VStack(spacing: 16) {
-                    CyclingStatsRow(
-                        icon: "calendar",
-                        title: Word.date,
-                        value: activity.date.formatted(date: .numeric, time: .omitted),
-                        withBackground: true
-                    )
+                    HStack(spacing: 16) {
+                        CyclingStatsRow(
+                            icon: "calendar",
+                            title: Word.date,
+                            value: activity.date.formatted(date: .numeric, time: .omitted),
+                            withBackground: true
+                        )
+                        
+                        if let dayWeather = weatherManager.dayWeather {
+                            CyclingStatsRow(
+                                icon: dayWeather.symbolName,
+                                title: Word.temperature,
+                                value: dayWeather.highTemperature.value.formatWith(num: 2) + " °C",
+                                withBackground: true
+                            )
+                        }
+                    }
                     
                     LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
                         CyclingStatsRow(
@@ -149,6 +161,13 @@ struct CyclingActivityDetailView: View {
         .background(Color.Apple.background.ignoresSafeArea())
         .task {
             await viewModel.setupDetailView(activity: activity, healthManager: healthManager)
+            if let firstLocation = viewModel.locations.first {
+                await weatherManager.getWeather(
+                    lat: firstLocation.coordinate.latitude,
+                    long: firstLocation.coordinate.longitude,
+                    date: activity.startDate
+                )
+            }
         }
     } // End body
 } // End struct

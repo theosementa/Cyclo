@@ -29,6 +29,17 @@ extension Date {
     
 }
 
+extension Date {
+    var startOfDay: Date {
+        Calendar.current.startOfDay(for: self)
+    }
+    
+    var endOfDay: Date {
+        let components = DateComponents(day: 1, second: -1)
+        return Calendar.current.date(byAdding: components, to: startOfDay) ?? self
+    }
+}
+
 // MARK: - Week
 extension Date {
     

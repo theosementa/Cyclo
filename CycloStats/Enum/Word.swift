@@ -32,6 +32,7 @@ struct Word {
     static var traveled = "word_traveled".localized
     static var trips = "word_trips".localized
     static var nothingToSee = "word_nothingToSee".localized
+    static var temperature = "word_temperature".localized
     
     struct Period {
         static var week = "word_week".localized
