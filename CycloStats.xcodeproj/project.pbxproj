@@ -54,6 +54,8 @@
 		D958A6152C412081004C2A1D /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A60E2C412081004C2A1D /* NavigationStack.swift */; };
 		D958A6162C412081004C2A1D /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A60F2C412081004C2A1D /* Router.swift */; };
 		D958A6182C412E26004C2A1D /* Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = D958A6172C412E26004C2A1D /* Conditional.swift */; };
+		D95D50CC2D254F2400544200 /* SharedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95D50CB2D254F2400544200 /* SharedCard.swift */; };
+		D95D50CE2D25608600544200 /* MapSnapshotManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95D50CD2D25608600544200 /* MapSnapshotManager.swift */; };
 		D98986162D188F5E009E2E2F /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98986152D188F5E009E2E2F /* WeatherManager.swift */; };
 		D9A73F0A2C42418C008E39DC /* CyclingActivityDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F092C42418C008E39DC /* CyclingActivityDetailViewModel.swift */; };
 		D9A73F0C2C4248CA008E39DC /* MapFullScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9A73F0B2C4248CA008E39DC /* MapFullScreenView.swift */; };
@@ -117,6 +119,8 @@
 		D958A60E2C412081004C2A1D /* NavigationStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationStack.swift; sourceTree = "<group>"; };
 		D958A60F2C412081004C2A1D /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D958A6172C412E26004C2A1D /* Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conditional.swift; sourceTree = "<group>"; };
+		D95D50CB2D254F2400544200 /* SharedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedCard.swift; sourceTree = "<group>"; };
+		D95D50CD2D25608600544200 /* MapSnapshotManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapSnapshotManager.swift; sourceTree = "<group>"; };
 		D98986152D188F5E009E2E2F /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
 		D9A73F092C42418C008E39DC /* CyclingActivityDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyclingActivityDetailViewModel.swift; sourceTree = "<group>"; };
 		D9A73F0B2C4248CA008E39DC /* MapFullScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFullScreenView.swift; sourceTree = "<group>"; };
@@ -231,6 +235,7 @@
 		D9263A0F2C3C5345004837E2 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D95D50CD2D25608600544200 /* MapSnapshotManager.swift */,
 				D9263A102C3C5351004837E2 /* HealthManager.swift */,
 				D98986152D188F5E009E2E2F /* WeatherManager.swift */,
 			);
@@ -284,6 +289,7 @@
 				D93206722C8DE77C00F34A0E /* BestEffortsRow.swift */,
 				D91644D12C9AFB970047A8C8 /* ZoneRow.swift */,
 				D91644D52C9B0EC40047A8C8 /* SpeedLegendsRow.swift */,
+				D95D50CB2D254F2400544200 /* SharedCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -491,6 +497,7 @@
 				D93C60EE2C905A4B00DA2A9E /* CyclingActivityEntityRepo.swift in Sources */,
 				D98986162D188F5E009E2E2F /* WeatherManager.swift in Sources */,
 				D92C4CB62C7A036C003C9C49 /* CyclingHeartRateChart.swift in Sources */,
+				D95D50CE2D25608600544200 /* MapSnapshotManager.swift in Sources */,
 				D9263A172C3C541E004837E2 /* Date+Extensions.swift in Sources */,
 				D958A5F62C3EEE28004C2A1D /* ActivitiesProgressView.swift in Sources */,
 				D91644C92C9ABB690047A8C8 /* ActivityHeartRateChart.swift in Sources */,
@@ -499,6 +506,7 @@
 				D958A6012C4056F5004C2A1D /* FilterByPeriodView.swift in Sources */,
 				D9263A262C3C55BD004837E2 /* Double+Extensions.swift in Sources */,
 				D92639FD2C3C5252004837E2 /* App.swift in Sources */,
+				D95D50CC2D254F2400544200 /* SharedCard.swift in Sources */,
 				D9A73F192C44505E008E39DC /* TappableButtonStyle.swift in Sources */,
 				D91644D22C9AFB970047A8C8 /* ZoneRow.swift in Sources */,
 			);
@@ -655,6 +663,7 @@
 				INFOPLIST_FILE = CycloStats/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Cyclo Stats";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CycloStats need access for display stats";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Download shared card";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -693,6 +702,7 @@
 				INFOPLIST_FILE = CycloStats/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Cyclo Stats";
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "CycloStats need access for display stats";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Download shared card";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -12,6 +12,9 @@ struct CyclingActivityDetailView: View {
     // Builder
     @ObservedObject var activity: CyclingActivity
     
+    @Environment(\.displayScale) var displayScale
+    @Environment(\.colorScheme) var colorScheme
+
     @EnvironmentObject private var healthManager: HealthManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
     @StateObject private var weatherManager: WeatherManager = .init()
@@ -54,7 +57,7 @@ struct CyclingActivityDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding()
                 }
-                        
+            
             if !viewModel.showFullMap {
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
@@ -159,6 +162,40 @@ struct CyclingActivityDetailView: View {
         } // End ScrollView
         .scrollIndicators(.hidden)
         .background(Color.Apple.background.ignoresSafeArea())
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    let size = CGSize(
+                        width: UIScreen.main.bounds.width - 48,
+                        height: UIScreen.main.bounds.width - 48
+                    )
+                    
+                    MapSnapshotManager.generateSnapshot(
+                        for: viewModel.locations,
+                        size: size
+                    ) { image in
+                        if let image = image {
+                            let renderer = ImageRenderer(
+                                content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image)
+                                    .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
+                            )
+                            renderer.scale = displayScale
+                            
+//                            if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
+//                                UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
+//                            }
+                            
+                            if let image = renderer.uiImage {
+                                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+        }
         .task {
             await viewModel.setupDetailView(activity: activity, healthManager: healthManager)
             if let firstLocation = viewModel.locations.first {
