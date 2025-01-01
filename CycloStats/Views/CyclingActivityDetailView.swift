@@ -176,55 +176,11 @@ struct CyclingActivityDetailView: View {
             "Télécharger",
             isPresented: $showActionSheet,
             actions: {
-                Button {
-                    let size = CGSize(
-                        width: UIScreen.main.bounds.width - 48,
-                        height: UIScreen.main.bounds.width - 48
-                    )
-                    
-                    MapSnapshotManager.generateSnapshot(
-                        for: viewModel.locations,
-                        size: size
-                    ) { image in
-                        if let image = image {
-                            let renderer = ImageRenderer(
-                                content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image)
-                                    .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
-                            )
-                            renderer.scale = UIScreen.main.scale
-                            
-                            if let image = renderer.uiImage {
-                                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-                            }
-                        }
-                    }
-                } label: {
+                Button { saveSharedCard(isInPngFormat: false) } label: {
                     Text("Enregistrer en JPEG")
                 }
 
-                Button {
-                    let size = CGSize(
-                        width: UIScreen.main.bounds.width - 48,
-                        height: UIScreen.main.bounds.width - 48
-                    )
-                    
-                    MapSnapshotManager.generateSnapshot(
-                        for: viewModel.locations,
-                        size: size
-                    ) { image in
-                        if let image = image {
-                            let renderer = ImageRenderer(
-                                content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image, isInJpegFormat: false)
-                                    .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
-                            )
-                            renderer.scale = UIScreen.main.scale
-                            
-                            if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
-                                UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
-                            }
-                        }
-                    }
-                } label: {
+                Button { saveSharedCard(isInPngFormat: true) } label: {
                     Text("Enregistrer en PNG")
                 }
             }
@@ -239,8 +195,39 @@ struct CyclingActivityDetailView: View {
                 )
             }
         }
-    } // End body
-} // End struct
+    } // body
+    
+    private func saveSharedCard(isInPngFormat: Bool) {
+        let size = CGSize(
+            width: UIScreen.main.bounds.width - 48,
+            height: UIScreen.main.bounds.width - 48
+        )
+        
+        MapSnapshotManager.generateSnapshot(
+            for: viewModel.locations,
+            size: size
+        ) { image in
+            if let image = image {
+                let renderer = ImageRenderer(
+                    content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image, isInJpegFormat: !isInPngFormat)
+                        .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
+                )
+                renderer.scale = UIScreen.main.scale
+                
+                if isInPngFormat {
+                    if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
+                        UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
+                    }
+                } else {
+                    if let image = renderer.uiImage {
+                        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+                    }
+                }
+            }
+        }
+    }
+    
+} // struct
 
 // MARK: - Preview
 #Preview {
