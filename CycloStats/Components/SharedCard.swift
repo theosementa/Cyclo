@@ -13,6 +13,7 @@ struct SharedCard: View {
     var activity: CyclingActivity
     var viewModel: CyclingActivityDetailViewModel
     var uiImage: UIImage?
+    var isInJpegFormat: Bool = true
         
     // MARK: -
     var body: some View {
@@ -72,8 +73,11 @@ struct SharedCard: View {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .fill(Color.Apple.background)
         }
-        .padding(56)
-        .background(Color.green)
+        .if(isInJpegFormat, transform: { view in
+            view
+                .padding(56)
+                .background(Color.green)
+        })
     } // body
 } // struct
 

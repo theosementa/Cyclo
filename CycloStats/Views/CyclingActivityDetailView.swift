@@ -12,13 +12,14 @@ struct CyclingActivityDetailView: View {
     // Builder
     @ObservedObject var activity: CyclingActivity
     
-    @Environment(\.displayScale) var displayScale
     @Environment(\.colorScheme) var colorScheme
 
     @EnvironmentObject private var healthManager: HealthManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
     @StateObject private var weatherManager: WeatherManager = .init()
-        
+
+    @State private var showActionSheet: Bool = false
+
     // MARK: -
     var body: some View {
         ScrollView {
@@ -165,6 +166,17 @@ struct CyclingActivityDetailView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
+                    showActionSheet.toggle()
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+        }
+        .confirmationDialog(
+            "Télécharger",
+            isPresented: $showActionSheet,
+            actions: {
+                Button {
                     let size = CGSize(
                         width: UIScreen.main.bounds.width - 48,
                         height: UIScreen.main.bounds.width - 48
@@ -179,23 +191,44 @@ struct CyclingActivityDetailView: View {
                                 content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image)
                                     .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
                             )
-                            renderer.scale = displayScale
-                            
-//                            if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
-//                                UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
-//                            }
+                            renderer.scale = UIScreen.main.scale
                             
                             if let image = renderer.uiImage {
                                 UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                             }
                         }
                     }
-                    
                 } label: {
-                    Image(systemName: "square.and.arrow.up")
+                    Text("Enregistrer en JPEG")
+                }
+
+                Button {
+                    let size = CGSize(
+                        width: UIScreen.main.bounds.width - 48,
+                        height: UIScreen.main.bounds.width - 48
+                    )
+                    
+                    MapSnapshotManager.generateSnapshot(
+                        for: viewModel.locations,
+                        size: size
+                    ) { image in
+                        if let image = image {
+                            let renderer = ImageRenderer(
+                                content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image, isInJpegFormat: false)
+                                    .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
+                            )
+                            renderer.scale = UIScreen.main.scale
+                            
+                            if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
+                                UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Enregistrer en PNG")
                 }
             }
-        }
+        )
         .task {
             await viewModel.setupDetailView(activity: activity, healthManager: healthManager)
             if let firstLocation = viewModel.locations.first {
