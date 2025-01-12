@@ -23,7 +23,7 @@ struct BackgroundComponentViewModifier: ViewModifier {
                         .fill((isInSheet ?? false) ? Color.Apple.backgroundComponentSheet : Color.Apple.backgroundComponent)
                     
                     RoundedRectangle(cornerRadius: radius ?? 16, style: .continuous)
-                        .stroke(lineWidth: 2)
+                        .stroke(lineWidth: 1)
                         .fill(Color.Apple.componentInComponent)
                 }
             }

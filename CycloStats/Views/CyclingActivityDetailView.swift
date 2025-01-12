@@ -60,8 +60,8 @@ struct CyclingActivityDetailView: View {
                 }
             
             if !viewModel.showFullMap {
-                VStack(spacing: 16) {
-                    HStack(spacing: 16) {
+                VStack(spacing: 12) {
+                    HStack(spacing: 12) {
                         CyclingStatsRow(
                             icon: "calendar",
                             title: Word.date,
@@ -79,7 +79,7 @@ struct CyclingActivityDetailView: View {
                         }
                     }
                     
-                    LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
+                    LazyVGrid(columns: [GridItem(spacing: 12), GridItem(spacing: 12)], spacing: 12) {
                         CyclingStatsRow(
                             icon: "timer",
                             title: Word.duration,
@@ -153,7 +153,8 @@ struct CyclingActivityDetailView: View {
                     Text(Word.charts)
                         .font(.system(size: 22, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    VStack(spacing: 16) {
+                    
+                    VStack(spacing: 12) {
                         ActivityElevationChart(locations: viewModel.locations)
                         ActivityHeartRateChart(heartRates: viewModel.heartRates, zones: viewModel.zones)
                     }
