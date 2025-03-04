@@ -7,9 +7,8 @@
 
 import SwiftUI
 
-
 class NavigationManager: Router {
-    
+
     // Build view
     override func view(direction: NavigationDirection, route: Route) -> AnyView {
         AnyView(buildView(direction: direction, route: route))
@@ -28,7 +27,7 @@ private extension NavigationManager {
                 ActivitiesView()
             case .progress:
                 ActivitiesProgressView()
-                
+
             case .detail(let activity):
                 CyclingActivityDetailView(activity: activity)
             }

@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct CycloStatsApp: App {
-    
+
     @StateObject private var healthManager: HealthManager = .init()
     @StateObject private var cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
-    
+
     private let homeRouter: NavigationManager = .init(isPresented: .constant(.home))
     private let activitiesRouter: NavigationManager = .init(isPresented: .constant(.activities))
     private let progressRouter: NavigationManager = .init(isPresented: .constant(.progress))
@@ -27,19 +27,19 @@ struct CycloStatsApp: App {
                     .tabItem {
                         Label(Word.home, systemImage: "house.fill")
                     }
-                
+
                 ActivitiesView()
                     .environmentObject(activitiesRouter)
                     .tabItem {
                         Label(Word.activities, systemImage: "figure.outdoor.cycle")
                     }
-                
+
                 ActivitiesProgressView()
                     .environmentObject(progressRouter)
                     .tabItem {
                         Label(Word.progress, systemImage: "chart.bar.xaxis.ascending")
                     }
-                
+
                 BestEffortsView()
                     .environmentObject(bestEffortsRouter)
                     .tabItem {

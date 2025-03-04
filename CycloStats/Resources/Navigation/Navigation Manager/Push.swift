@@ -8,9 +8,9 @@
 import Foundation
 
 extension NavigationManager {
-    
+
     func pushDetail(activity: CyclingActivity) {
         navigateTo(.detail(activity: activity))
     }
-    
+
 }

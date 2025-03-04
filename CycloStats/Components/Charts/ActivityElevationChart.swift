@@ -10,19 +10,19 @@ import Charts
 import MapKit
 
 struct ActivityElevationChart: View {
-    
+
     // Builder
     var locations: [CLLocation]
-    
+
     // Computed
     var minYAxisValue: Double {
         locations.map { $0.altitude }.min() ?? 0
     }
-    
+
     var maxYAxisValue: Double {
         locations.map { $0.altitude }.max() ?? 0
     }
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
@@ -33,7 +33,7 @@ struct ActivityElevationChart: View {
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
-            
+
             Chart {
                 ForEach(locations, id: \.self) { location in
                     LineMark(
@@ -56,7 +56,7 @@ struct ActivityElevationChart: View {
                     AxisGridLine()
                 }
             }
-            
+
             HStack(spacing: 24) {
                 Text("\(Word.min): \(minYAxisValue.formatWith(num: 2))m")
                     .frame(maxWidth: .infinity, alignment: .leading)

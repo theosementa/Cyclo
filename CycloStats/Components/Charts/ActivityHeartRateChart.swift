@@ -9,20 +9,20 @@ import SwiftUI
 import Charts
 
 struct ActivityHeartRateChart: View {
-    
+
     // Builder
     var heartRates: [HeartRateEntry]
     var zones: [HeartRateZone]
-    
+
     // Computed
     var minYAxisValue: Double {
         heartRates.map { $0.heartRate }.min() ?? 0
     }
-    
+
     var maxYAxisValue: Double {
         heartRates.map { $0.heartRate }.max() ?? 0
     }
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
@@ -33,7 +33,7 @@ struct ActivityHeartRateChart: View {
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
-            
+
             Chart {
                 ForEach(heartRates, id: \.self) { heartRate in
                     RectangleMark(
@@ -57,7 +57,7 @@ struct ActivityHeartRateChart: View {
                     AxisGridLine()
                 }
             }
-            
+
             HStack(spacing: 24) {
                 Text("\(Word.min): \(minYAxisValue.formatWith(num: 0)) BPM")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -65,7 +65,7 @@ struct ActivityHeartRateChart: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(.system(size: 20, weight: .semibold, design: .rounded))
-            
+
             ForEach(zones) { zone in
                 Divider()
                 ZoneRow(zone: zone)
@@ -73,7 +73,7 @@ struct ActivityHeartRateChart: View {
         }
         .backgroundComponent()
     } // End body
-    
+
     func colorByHeartRate(value: Double) -> Color {
         for zone in zones {
             if value > zone.range.lowerBound && value < zone.range.upperBound {

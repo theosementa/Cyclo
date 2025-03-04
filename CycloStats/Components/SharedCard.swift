@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct SharedCard: View {
-    
+
     // builder
     var activity: CyclingActivity
     var viewModel: CyclingActivityDetailViewModel
     var uiImage: UIImage?
     var isInJpegFormat: Bool = true
-        
+
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
@@ -28,7 +28,7 @@ struct SharedCard: View {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
-            
+
             VStack(spacing: 16) {
                 LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
                     CyclingStatsRow(
@@ -37,21 +37,21 @@ struct SharedCard: View {
                         value: activity.date.formatted(date: .numeric, time: .omitted),
                         withBackground: true
                     )
-                    
+
                     CyclingStatsRow(
                         icon: "timer",
                         title: Word.duration,
                         value: activity.durationInMin.asHoursMinutesAndSeconds,
                         withBackground: true
                     )
-                    
+
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
                         title: Word.distance,
                         value: activity.distanceInKm.formatWith(num: 2) + " km",
                         withBackground: true
                     )
-                    
+
                     CyclingStatsRow(
                         icon: "mountain.2.fill",
                         title: Word.elevation,
@@ -59,7 +59,7 @@ struct SharedCard: View {
                         withBackground: true
                     )
                 }
-                
+
                 CyclingStatsRow(
                     icon: "gauge.with.dots.needle.67percent",
                     title: Word.maxSpeed,

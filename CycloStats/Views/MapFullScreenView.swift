@@ -9,12 +9,12 @@ import SwiftUI
 import MapKit
 
 struct MapFullScreenView: View {
-    
+
     // Builder
     var locations: [CLLocation]
-    
+
     @Environment(\.dismiss) private var dismiss
-    
+
     // MARK: -
     var body: some View {
         NavigationStack {

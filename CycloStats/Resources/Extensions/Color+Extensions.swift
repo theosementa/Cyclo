@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 extension Color {
-    
+
     public init(hex: String) {
         var int: UInt64 = 0
         Scanner(string: hex).scanHexInt64(&int)
@@ -32,76 +32,76 @@ extension Color {
             opacity: CGFloat(a) / 255
         )
     }
-    
+
 }
 
 extension Color {
-    
+
     public static var label: Color {
         return Color(uiColor: UIColor { traitCollection in
             return traitCollection.userInterfaceStyle == .dark ? UIColor(Color.white) : UIColor(Color.black)
         })
     }
-    
+
     public static var customRed: Color {
         return Color(hex: "F43D3D")
     }
-    
+
     public static var customOrange: Color {
         return Color(hex: "F48A3D")
     }
-    
+
     public static var customYellow: Color {
         return Color(hex: "F4E23D")
     }
-    
+
     public static var customGreen: Color {
         return Color(hex: "1AD247")
     }
-    
+
     public static var customBlue: Color {
         return Color(hex: "266AED")
     }
-    
+
     public static var customPurple: Color {
         return Color(hex: "D081FF")
     }
 }
 
 extension Color {
-    
+
     public struct Apple {
-        
+
         public static var background: Color {
             return Color(uiColor: UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? UIColor(Color(hex: "000000")) : UIColor(Color(hex: "F2F2F7"))
             })
         }
-        
+
         public static var backgroundComponent: Color {
             return Color(uiColor: UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? UIColor(Color(hex: "1C1C1E")) : UIColor(Color(hex: "FFFFFF"))
             })
         }
-        
+
         public static var backgroundComponentSheet: Color {
             return Color(uiColor: UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? UIColor(Color(hex: "2C2C2E")) : UIColor(Color(hex: "F2F2F7"))
             })
         }
-        
+
         public static var backgroundSheet: Color {
             return Color(uiColor: UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? UIColor(Color(hex: "1C1C1E")) : UIColor(Color(hex: "FFFFFF"))
             })
         }
-        
+
         public static var componentInComponent: Color {
             return Color(uiColor: UIColor { traitCollection in
                 return traitCollection.userInterfaceStyle == .dark ? UIColor(Color(hex: "39393D")) : UIColor(Color(hex: "D9D9DE"))
             })
         }
-    
+
     }
-    
+
 }

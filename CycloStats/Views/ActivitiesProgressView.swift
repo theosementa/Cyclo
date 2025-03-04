@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActivitiesProgressView: View {
-        
+
     @EnvironmentObject private var healthManager: HealthManager
 
     // MARK: -
@@ -25,7 +25,7 @@ struct ActivitiesProgressView: View {
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
                 .contentMargins(.top, 16, for: .scrollContent)
-                
+
                 if healthManager.selectedPeriod != .total {
                     FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
                         .padding(.horizontal)

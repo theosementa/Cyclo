@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CyclingTargetView: View {
-    
+
     // Builder
     var target: ActivityTarget
-    
+
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     // MARK: -
     var body: some View {
         let numberOfTime = target.numberOfTime(distance: healthManager.totalDistance)
@@ -26,14 +26,14 @@ struct CyclingTargetView: View {
                     Text(target.value.formatWith(num: 2) + "km")
                         .font(.system(size: 18, weight: .semibold, design: .rounded))
                 }
-                
+
                 Text("\(Word.traveled) \(numberOfTime.time) fois")
                     .italic()
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(Color(uiColor: .label).opacity(0.7))
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             VStack(alignment: .leading, spacing: 8) {
                 Capsule()
                     .frame(height: 30)
@@ -61,7 +61,7 @@ struct CyclingTargetView: View {
                                 .foregroundStyle(Color.green)
                         }
                     }
-                
+
                 let progressAlreadyDoInKm = numberOfTime.progress * target.value
                 let progressRemainingInKm = target.value - (numberOfTime.progress * target.value)
                 HStack {

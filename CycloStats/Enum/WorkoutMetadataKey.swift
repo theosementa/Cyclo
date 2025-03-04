@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WorkoutMetadataKey: String{
+enum WorkoutMetadataKey: String {
     case HKElevationAscended
     case HKMetadataKeyMaximumSpeed
 }

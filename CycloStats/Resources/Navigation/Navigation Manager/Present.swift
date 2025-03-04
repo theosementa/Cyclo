@@ -8,9 +8,9 @@
 import Foundation
 
 extension NavigationManager {
-    
+
 //    func presentDetail(text: String, dismissAction: (() -> Void)? = nil) {
 //        presentSheet(.detail(text: text), dismissAction)
 //    }
-    
+
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActivitiesView: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
     @EnvironmentObject private var router: NavigationManager
 
@@ -22,7 +22,7 @@ struct ActivitiesView: View {
                             .listRowSeparator(.hidden)
                             .listRowBackground(Color.clear)
                             .listRowInsets(.init(top: 24, leading: 16, bottom: 8, trailing: 16))
-                        
+
                         VStack(spacing: 12) {
                             Text(Word.activities)
                                 .font(.system(size: 22, weight: .semibold, design: .rounded))
@@ -39,7 +39,7 @@ struct ActivitiesView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .scrollIndicators(.hidden)
-                
+
                 if healthManager.selectedPeriod != .total {
                     FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
                         .padding(.horizontal)
@@ -55,7 +55,7 @@ struct ActivitiesView: View {
                             .scaledToFit()
                             .padding(.horizontal, 32)
                             .padding(.bottom)
-                        
+
                         Text(Word.nothingToSee)
                             .font(.system(size: 18, weight: .semibold, design: .rounded))
                     }

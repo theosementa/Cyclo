@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CyclingStatsTotalView: View {
-    
+
     // EnvironmentObject
     @EnvironmentObject private var healthManager: HealthManager
 
@@ -18,7 +18,7 @@ struct CyclingStatsTotalView: View {
             Text(Word.Period.title)
                 .font(.system(size: 22, weight: .semibold, design: .rounded))
                 .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             LazyVGrid(columns: [GridItem(spacing: 12), GridItem(spacing: 12)], spacing: 12) {
                 CyclingStatsRow(
                     icon: "number",

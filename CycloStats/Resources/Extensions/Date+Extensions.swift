@@ -14,7 +14,7 @@ extension Date {
         formatter.locale = Locale.current
         return formatter.string(from: self).replacingOccurrences(of: ".", with: "").capitalized
     }
-    
+
     static var iPhoneReleaseDate: Date? {
         var components = DateComponents()
         components.year = 2007
@@ -23,17 +23,17 @@ extension Date {
         components.hour = 9
         components.minute = 41
         components.timeZone = TimeZone(abbreviation: "PST")
-        
+
         return Calendar.current.date(from: components)
     }
-    
+
 }
 
 extension Date {
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
     }
-    
+
     var endOfDay: Date {
         let components = DateComponents(day: 1, second: -1)
         return Calendar.current.date(byAdding: components, to: startOfDay) ?? self
@@ -42,19 +42,19 @@ extension Date {
 
 // MARK: - Week
 extension Date {
-    
+
     var startOfWeek: Date? {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
         return calendar.date(from: components)
     }
-    
+
     var endOfWeek: Date? {
         let calendar = Calendar.current
         guard let startOfWeek = self.startOfWeek else { return nil }
         return calendar.date(byAdding: DateComponents(day: 7, second: -1), to: startOfWeek)
     }
-    
+
     var oneWeekAgo: Date {
         return Calendar.current.date(byAdding: .weekOfYear, value: -1, to: self)!
     }
@@ -62,24 +62,24 @@ extension Date {
     var inOneWeek: Date {
         return Calendar.current.date(byAdding: .weekOfYear, value: 1, to: self)!
     }
-    
+
 }
 
 // MARK: - Month
 extension Date {
-    
+
     var startOfMonth: Date? {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: self)
         return calendar.date(from: components)
     }
-    
+
     var endOfMonth: Date? {
         let calendar = Calendar.current
         guard let startOfMonth = self.startOfMonth else { return nil }
         return calendar.date(byAdding: DateComponents(month: 1, second: -1), to: startOfMonth)
     }
-    
+
     var oneMonthAgo: Date {
         return Calendar.current.date(byAdding: .month, value: -1, to: self)!
     }
@@ -87,28 +87,28 @@ extension Date {
     var inOneMonth: Date {
         return Calendar.current.date(byAdding: .month, value: 1, to: self)!
     }
-    
+
 }
 
 // MARK: - Year
 extension Date {
-    
+
     var startOfYear: Date? {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year], from: self)
         return calendar.date(from: components)
     }
-    
+
     var endOfYear: Date? {
         let calendar = Calendar.current
         guard let startOfYear = self.startOfYear else { return nil }
         return calendar.date(byAdding: DateComponents(year: 1, second: -1), to: startOfYear)
     }
-    
+
     var inOneYear: Date {
         return Calendar.current.date(byAdding: .year, value: 1, to: self)!
     }
-    
+
     var oneYearAgo: Date {
         return Calendar.current.date(byAdding: .year, value: -1, to: self)!
     }
@@ -116,7 +116,7 @@ extension Date {
 
 // MARK: - Custom with Period
 extension Date {
-    
+
     func newDateByPeriodInPast(_ period: Period, _ status: PeriodStatus) -> Date {
         let isStart = status == .start
         switch period {
@@ -130,7 +130,7 @@ extension Date {
             return Date.iPhoneReleaseDate ?? .now
         }
     }
-    
+
     func newDateByPeriodInFuture(_ period: Period, _ status: PeriodStatus) -> Date {
         let isStart = status == .start
         switch period {
@@ -144,6 +144,5 @@ extension Date {
             return .now
         }
     }
-    
-}
 
+}

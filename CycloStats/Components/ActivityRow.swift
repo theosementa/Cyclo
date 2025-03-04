@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ActivityRow: View {
-    
+
     // Builder
     @ObservedObject var activity: CyclingActivity
     @EnvironmentObject private var router: NavigationManager
@@ -23,14 +23,14 @@ struct ActivityRow: View {
                         title: Word.date,
                         value: activity.date.dayMonthAbbreviated
                     )
-                    
+
                     CyclingStatsRow(
                         icon: "timer",
                         title: Word.duration,
                         value: activity.durationInMin.asHoursMinutesAndSeconds
                     )
                 }
-                
+
                 HStack {
                     CyclingStatsRow(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",

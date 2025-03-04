@@ -17,7 +17,7 @@ final class CyclingActivityDetailViewModel: ObservableObject {
 }
 
 extension CyclingActivityDetailViewModel {
-    
+
     @MainActor
     func setupDetailView(activity: CyclingActivity, healthManager: HealthManager) async {
         if let workout = activity.originalWorkout, let routes = await healthManager.getWorkoutRoute(workout: workout) {
@@ -26,12 +26,12 @@ extension CyclingActivityDetailViewModel {
                 self.locations.append(contentsOf: location)
             }
         }
-        
+
         do {
             let heartRatesAndZones = try await healthManager.getHeartRateForActivity(activity: activity)
             self.heartRates = heartRatesAndZones.0
             self.zones = heartRatesAndZones.1
         } catch { }
     }
-    
+
 }

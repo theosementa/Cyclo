@@ -9,18 +9,18 @@ import SwiftUI
 import Charts
 
 struct CyclingHeartRateChart: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     // Computed
     var minYAxisValue: Int {
         healthManager.activitiesForCharts.map { $0.averageHeartRate }.min() ?? 0
     }
-    
+
     var maxYAxisValue: Int {
         healthManager.activitiesForCharts.map { $0.averageHeartRate }.max() ?? 0
     }
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
@@ -31,7 +31,7 @@ struct CyclingHeartRateChart: View {
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
-            
+
             Chart {
                 ForEach(healthManager.activitiesForCharts, id: \.self) { activity in
                     LineMark(
@@ -41,7 +41,7 @@ struct CyclingHeartRateChart: View {
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color.green)
-                    
+
                     RuleMark(y: .value("Average Heart rate", healthManager.averageHeartRatePerDay))
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .foregroundStyle(Color.white)

@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct BestEffortsView: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
     @EnvironmentObject private var router: NavigationManager
-    
+
     // MARK: -
     var body: some View {
         NavStack(router: router) {
@@ -37,7 +37,7 @@ struct BestEffortsView: View {
                         values: distanceBestEffortsValues,
                         unit: "km"
                     )
-                    
+
                     let maxSpeedBestEfforts: [CyclingActivity] = Array(healthManager.maxSpeedBestEfforts.prefix(3))
                     let maxSpeedBestEffortsValues = maxSpeedBestEfforts.map(\.maxSpeedInKMH)
                     BestEffortsRow(
@@ -47,7 +47,7 @@ struct BestEffortsView: View {
                         values: maxSpeedBestEffortsValues,
                         unit: "km/h"
                     )
-                    
+
                     let averageBestEfforts: [CyclingActivity] = Array(healthManager.averageSpeedBestEfforts.prefix(3))
                     let averageBestEffortsValues = averageBestEfforts.map(\.averageSpeedInKMH)
                     BestEffortsRow(

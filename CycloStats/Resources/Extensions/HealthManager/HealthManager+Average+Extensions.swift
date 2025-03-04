@@ -14,13 +14,13 @@ extension HealthManager {
         let totalDistance = activitiesForCharts.reduce(0) { $0 + $1.distanceInKm }
         return totalDistance / Double(activitiesForCharts.count)
     }
-    
+
     var averageElevationPerDay: Double {
         guard activitiesForCharts.count != 0 else { return 0 }
         let totalElevation = activitiesForCharts.reduce(0) { $0 + $1.elevationInM }
         return totalElevation / Double(activitiesForCharts.count)
     }
-    
+
     var averageHeartRatePerDay: Int {
         guard activitiesForCharts.count != 0 else { return 0 }
         let totalHearthRate = activitiesForCharts.reduce(0) { $0 + $1.averageHeartRate }
@@ -33,7 +33,7 @@ extension HealthManager {
         guard filteredCyclingActivities.count != 0 else { return 0 }
         return totalDistance / Double(filteredCyclingActivities.count)
     }
-    
+
     var averageElevationInM: Double {
         guard filteredCyclingActivities.count != 0 else { return 0 }
         return totalElevationAscended / Double(filteredCyclingActivities.count)

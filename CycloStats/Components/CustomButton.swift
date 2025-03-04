@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CustomButton<Label: View>: View {
-    
+
     // Builder
     var animation: Animation
     var action: () -> Void
     var label: () -> Label
-    
+
     // MARK: -
     var body: some View {
         Button(action: {

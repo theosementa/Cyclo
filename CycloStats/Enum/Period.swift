@@ -9,7 +9,7 @@ import Foundation
 
 enum Period: CaseIterable {
     case week, month, year, total
-    
+
     var name: String {
         switch self {
         case .week:     return Word.Period.week

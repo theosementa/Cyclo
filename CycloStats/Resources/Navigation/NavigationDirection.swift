@@ -8,13 +8,12 @@
 import Foundation
 import SwiftUI
 
-
 enum NavigationDirection: Identifiable {
-        
+
     case home
     case activities
     case progress
-    
+
     case detail(activity: CyclingActivity)
 
     var id: String {
@@ -25,8 +24,8 @@ enum NavigationDirection: Identifiable {
             return "activities"
         case .progress:
             return "progress"
-            
-        case .detail(_):
+
+        case .detail:
             return "detail"
         }
     }
@@ -38,7 +37,7 @@ extension NavigationDirection: Equatable {
         case (.home, .home),
             (.activities, .activities),
             (.progress, .progress),
-            
+
             (.detail(_), .detail(_)):
             return true
 

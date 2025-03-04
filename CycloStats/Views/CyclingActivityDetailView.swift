@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CyclingActivityDetailView: View {
-    
+
     // Builder
     @ObservedObject var activity: CyclingActivity
-    
+
     @Environment(\.colorScheme) var colorScheme
 
     @EnvironmentObject private var healthManager: HealthManager
@@ -31,7 +31,7 @@ struct CyclingActivityDetailView: View {
                             SpeedLegendsRow()
                                 .frame(maxWidth: .infinity)
                         }
-                        
+
                         VStack(spacing: 16) {
                             CustomButton(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
                                 Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
@@ -43,7 +43,7 @@ struct CyclingActivityDetailView: View {
                                             .fill(Color.black)
                                     }
                             }
-                            
+
                             CustomButton(animation: .smooth) { viewModel.showLegend.toggle() } label: {
                                 Image(systemName: "doc.plaintext")
                                     .foregroundStyle(Color.white)
@@ -58,7 +58,7 @@ struct CyclingActivityDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding()
                 }
-            
+
             if !viewModel.showFullMap {
                 VStack(spacing: 12) {
                     HStack(spacing: 12) {
@@ -68,7 +68,7 @@ struct CyclingActivityDetailView: View {
                             value: activity.date.formatted(date: .numeric, time: .omitted),
                             withBackground: true
                         )
-                        
+
                         if let dayWeather = weatherManager.dayWeather {
                             CyclingStatsRow(
                                 icon: dayWeather.symbolName,
@@ -78,7 +78,7 @@ struct CyclingActivityDetailView: View {
                             )
                         }
                     }
-                    
+
                     LazyVGrid(columns: [GridItem(spacing: 12), GridItem(spacing: 12)], spacing: 12) {
                         CyclingStatsRow(
                             icon: "timer",
@@ -86,14 +86,14 @@ struct CyclingActivityDetailView: View {
                             value: activity.durationInMin.asHoursMinutesAndSeconds,
                             withBackground: true
                         )
-                        
+
                         CyclingStatsRow(
                             icon: "playpause.fill",
                             title: Word.pause,
                             value: activity.pauseTime.asHoursMinutesAndSeconds,
                             withBackground: true
                         )
-                        
+
                         CyclingStatsRow(
                             icon: "play.fill",
                             title: Word.departure,
@@ -106,7 +106,7 @@ struct CyclingActivityDetailView: View {
                             value: activity.endDate.formatted(date: .omitted, time: .shortened),
                             withBackground: true
                         )
-                        
+
                         CyclingStatsRow(
                             icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
                             title: Word.distance,
@@ -119,7 +119,7 @@ struct CyclingActivityDetailView: View {
                             value: activity.elevationAscendedInM.formatWith(num: 2) + " m",
                             withBackground: true
                         )
-                        
+
                         CyclingStatsRow(
                             icon: "figure.outdoor.cycle",
                             title: Word.averageSpeed,
@@ -132,7 +132,7 @@ struct CyclingActivityDetailView: View {
                             value: activity.maxSpeedInKMH.formatWith(num: 2) + " km/h",
                             withBackground: true
                         )
-                        
+
                         CyclingStatsRow(
                             icon: "heart",
                             title: Word.averageBPM,
@@ -148,12 +148,12 @@ struct CyclingActivityDetailView: View {
                     }
                 }
                 .padding()
-                
+
                 VStack(spacing: 12) {
                     Text(Word.charts)
                         .font(.system(size: 22, weight: .semibold, design: .rounded))
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    
+
                     VStack(spacing: 12) {
                         ActivityElevationChart(locations: viewModel.locations)
                         ActivityHeartRateChart(heartRates: viewModel.heartRates, zones: viewModel.zones)
@@ -197,13 +197,13 @@ struct CyclingActivityDetailView: View {
             }
         }
     } // body
-    
+
     private func saveSharedCard(isInPngFormat: Bool) {
         let size = CGSize(
             width: UIScreen.main.bounds.width - 48,
             height: UIScreen.main.bounds.width - 48
         )
-        
+
         MapSnapshotManager.generateSnapshot(
             for: viewModel.locations,
             size: size
@@ -214,7 +214,7 @@ struct CyclingActivityDetailView: View {
                         .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
                 )
                 renderer.scale = UIScreen.main.scale
-                
+
                 if isInPngFormat {
                     if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
                         UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
@@ -227,7 +227,7 @@ struct CyclingActivityDetailView: View {
             }
         }
     }
-    
+
 } // struct
 
 // MARK: - Preview

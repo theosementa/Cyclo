@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct FilterByPeriodView: View {
-    
+
     // Builder
     var selectedPeriod: Period
-    
+
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     @State private var dragOffset: CGSize = .zero
-    
+
     // MARK: -
     var body: some View {
         HStack {
@@ -32,12 +32,12 @@ struct FilterByPeriodView: View {
             }
 
             Spacer()
-            
+
             dateDisplay()
                 .contentTransition(.numericText())
-            
+
             Spacer()
-            
+
             CustomButton(animation: .smooth) { changePeriodDate(inPast: false) } label: {
                 Image(systemName: "chevron.right")
                     .frame(width: 14, height: 14)
@@ -71,7 +71,7 @@ struct FilterByPeriodView: View {
                 }
         )
     } // End body
-    
+
     @ViewBuilder
     func dateDisplay() -> some View {
         Group {
@@ -92,7 +92,7 @@ struct FilterByPeriodView: View {
         }
         .fontWeight(.semibold)
     }
-    
+
     func changePeriodDate(inPast: Bool) {
         if inPast {
             healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInPast(selectedPeriod, .start)
@@ -100,7 +100,7 @@ struct FilterByPeriodView: View {
         } else {
             healthManager.startDatePeriod = healthManager.startDatePeriod.newDateByPeriodInFuture(selectedPeriod, .start)
             healthManager.endDatePeriod = healthManager.endDatePeriod.newDateByPeriodInFuture(selectedPeriod, .end)
-        }        
+        }
     }
 
 } // End struct

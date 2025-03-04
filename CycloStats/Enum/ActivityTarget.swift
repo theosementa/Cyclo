@@ -22,7 +22,7 @@ enum ActivityTarget: CaseIterable {
     case parisToDubai
     case circumferenceMoon
     case circumferenceEarth
-    
+
     var title: String {
         switch self {
         case .montVentoux:          return "Mont ventoux"
@@ -36,7 +36,7 @@ enum ActivityTarget: CaseIterable {
         case .circumferenceEarth:   return "Tour de la Terre"
         }
     }
-    
+
     var value: Double {
         switch self {
         case .montVentoux:          return 20.8
@@ -50,7 +50,7 @@ enum ActivityTarget: CaseIterable {
         case .circumferenceEarth:   return 40_075
         }
     }
-    
+
     var explanationValue: String {
         switch self {
         case .montVentoux:          return ExplanationValue.reel.rawValue
@@ -64,7 +64,7 @@ enum ActivityTarget: CaseIterable {
         case .circumferenceEarth:   return ExplanationValue.reel.rawValue
         }
     }
-    
+
     var elevation: Double? {
         switch self {
         case .montVentoux:          return 1594
@@ -78,7 +78,7 @@ enum ActivityTarget: CaseIterable {
         case .circumferenceEarth:   return nil
         }
     }
-    
+
     var explanationElevation: String? {
         switch self {
         case .montVentoux:          return ExplanationValue.reel.rawValue
@@ -92,16 +92,16 @@ enum ActivityTarget: CaseIterable {
         case .circumferenceEarth:   return nil
         }
     }
-    
+
 }
 
 extension ActivityTarget {
-    
+
     func numberOfTime(distance: Double) -> (time: Int, progress: Double) {
         let time = distance / self.value
         let timeInt = Int(time)
         let progress = time - Double(timeInt)
         return (time: timeInt, progress: progress)
     }
-    
+
 }

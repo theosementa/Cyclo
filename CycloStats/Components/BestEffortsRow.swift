@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct BestEffortsRow: View {
-    
+
     // Builder
     var icon: String
     var title: String
     var activities: [CyclingActivity]
     var values: [Double]
     var unit: String
-    
+
     // EnvironmentObject
     @EnvironmentObject private var router: NavigationManager
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 24) {
@@ -29,7 +29,7 @@ struct BestEffortsRow: View {
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
-            
+
             VStack(spacing: 8) {
                 ForEach(activities.indices, id: \.self) { index in
                     let activity = activities[index]
@@ -40,7 +40,7 @@ struct BestEffortsRow: View {
         }
         .backgroundComponent()
     } // End body
-    
+
     // MARK: - ViewBuilder
     @ViewBuilder
     func activityRow(index: Int, value: Double, activity: CyclingActivity) -> some View {
@@ -48,7 +48,7 @@ struct BestEffortsRow: View {
             let medals = ["🥇", "🥈", "🥉"]
             return index < medals.count ? medals[index] : ""
         }
-        
+
         HStack {
             Text("\(emoji) \(String(format: "%.2f", value))\(unit)")
             Spacer()
@@ -64,7 +64,7 @@ struct BestEffortsRow: View {
         }
         .onTapGesture { router.pushDetail(activity: activity) }
     }
-    
+
 } // End struct
 
 // MARK: - Preview

@@ -9,18 +9,18 @@ import SwiftUI
 import Charts
 
 struct CyclingElevationChartView: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     // Computed
     var minYAxisValue: Double {
         healthManager.activitiesForCharts.map { $0.elevationInM }.min() ?? 0
     }
-    
+
     var maxYAxisValue: Double {
         healthManager.activitiesForCharts.map { $0.elevationInM }.max() ?? 0
     }
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
@@ -31,7 +31,7 @@ struct CyclingElevationChartView: View {
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
-            
+
             Chart {
                 ForEach(healthManager.activitiesForCharts, id: \.self) { activity in
                     LineMark(
@@ -41,7 +41,7 @@ struct CyclingElevationChartView: View {
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                     .interpolationMethod(.catmullRom)
                     .foregroundStyle(Color.green)
-                    
+
                     RuleMark(y: .value("Average Elevation", healthManager.averageElevationPerDay))
                         .lineStyle(StrokeStyle(lineWidth: 2, dash: [5, 5]))
                         .foregroundStyle(Color.white)

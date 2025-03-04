@@ -44,7 +44,7 @@ class Router: ObservableObject {
         AnyView(EmptyView())
     }
 }
- 
+
 extension Router {
 
     func navigateTo(_ direction: NavigationDirection) {

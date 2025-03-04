@@ -11,7 +11,7 @@ struct SpeedZone: Identifiable {
     var id: Int
     var range: ClosedRange<Double>
     var color: Color
-    
+
     var stringRange: String {
         switch id {
         case 1: return "<12 KM/H"
@@ -25,7 +25,7 @@ struct SpeedZone: Identifiable {
 }
 
 extension SpeedZone {
-    
+
     static var zone1: SpeedZone {
         return SpeedZone(id: 1, range: 0...12, color: .customRed)
     }
@@ -44,5 +44,5 @@ extension SpeedZone {
     static var zone6: SpeedZone {
         return SpeedZone(id: 6, range: 50...Double.infinity, color: .customPurple)
     }
-    
+
 }

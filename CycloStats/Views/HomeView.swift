@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     // MARK: -
     var body: some View {
         NavigationStack {
@@ -20,7 +20,7 @@ struct HomeView: View {
                         Text(Word.charts)
                             .font(.system(size: 22, weight: .semibold, design: .rounded))
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        
+
                         VStack(spacing: 16) {
                             CyclingDistanceChartView()
                             CyclingElevationChartView()
@@ -30,7 +30,7 @@ struct HomeView: View {
                     .padding()
                 }
                 .scrollIndicators(.hidden)
-                
+
                 if healthManager.selectedPeriod != .total {
                     FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
                         .padding(.horizontal)

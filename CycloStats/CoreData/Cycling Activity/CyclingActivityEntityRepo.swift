@@ -9,12 +9,12 @@ import Foundation
 
 final class CyclingActivityEntityRepo: ObservableObject {
     static let shared = CyclingActivityEntityRepo()
-    
+
     @Published var activities: [CyclingActivityEntity] = []
 }
 
 extension CyclingActivityEntityRepo {
-    
+
     @MainActor
     func fetchActivities() async {
         let request = CyclingActivityEntity.fetchRequest()
@@ -22,8 +22,8 @@ extension CyclingActivityEntityRepo {
             let results = try viewContext.fetch(request)
             self.activities = results
         } catch {
-            
+
         }
     }
-    
+
 }

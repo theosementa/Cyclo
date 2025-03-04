@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FilterMenu: View {
-    
+
     @EnvironmentObject private var healthManager: HealthManager
 
     // MARK: -

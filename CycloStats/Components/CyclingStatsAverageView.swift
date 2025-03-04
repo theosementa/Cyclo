@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct CyclingStatsAverageView: View {
-    
+
     // EnvironmentObject
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     // MARK: -
     var body: some View {
         VStack(spacing: 12) {
@@ -26,7 +26,7 @@ struct CyclingStatsAverageView: View {
                         value: healthManager.averageDistanceInKm.formatWith(num: 2) + " km",
                         withBackground: true
                     )
-                    
+
                     CyclingStatsRow(
                         icon: "mountain.2.fill",
                         title: Word.elevation,
