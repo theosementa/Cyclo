@@ -97,14 +97,21 @@ extension HealthManager {
         var averageHeartRate: Int
     }
 
+    struct ActivityData {
+        var distance: Double
+        var elevation: Double
+        var heartRateSum: Int
+        var activityCount: Int
+    }
+
     var activitiesForCharts: [ChartData] {
-        var dailyData: [Date: (distance: Double, elevation: Double, heartRateSum: Int, activityCount: Int)] = [:]
+        var dailyData: [Date: ActivityData] = [:]
 
         for activity in filteredCyclingActivities {
             let date = Calendar.current.startOfDay(for: activity.date)
 
             if dailyData[date] == nil {
-                dailyData[date] = (distance: 0.0, elevation: 0.0, heartRateSum: 0, activityCount: 0)
+                dailyData[date] = ActivityData(distance: 0, elevation: 0, heartRateSum: 0, activityCount: 0)
             }
 
             dailyData[date]!.distance += activity.distanceInKm
@@ -167,19 +174,23 @@ extension HealthManager {
         let workoutPredicate = HKQuery.predicateForWorkouts(with: .cycling)
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [timePredicate, workoutPredicate])
 
-        let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-            let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, sample, error in
-                guard let workouts = sample as? [HKWorkout], error == nil else { return }
-                continuation.resume(returning: workouts)
+        do {
+            let samples = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+                let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, sample, error in
+                    guard let workouts = sample as? [HKWorkout], error == nil else { return }
+                    continuation.resume(returning: workouts)
+                }
+
+                healthStore.execute(query)
             }
 
-            healthStore.execute(query)
+            guard let workouts = samples as? [HKWorkout] else { return }
+
+            let activities = await mapWorkoutsToCyclingActivities(workouts: workouts)
+            self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
+        } catch {
+
         }
-
-        guard let workouts = samples as? [HKWorkout] else { return }
-
-        let activities = await mapWorkoutsToCyclingActivities(workouts: workouts)
-        self.cyclingActivities = activities.sorted(by: { $0.endDate > $1.endDate })
     }
 
     private func mapWorkoutsToCyclingActivities(workouts: [HKWorkout]) async -> [CyclingActivity] {

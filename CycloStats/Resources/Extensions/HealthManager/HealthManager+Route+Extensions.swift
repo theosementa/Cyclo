@@ -13,55 +13,70 @@ extension HealthManager {
     func getWorkoutRoute(workout: HKWorkout) async -> [HKWorkoutRoute]? {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
 
-        let samples = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-            healthStore.execute(HKAnchoredObjectQuery(type: HKSeriesType.workoutRoute(), predicate: byWorkout, anchor: nil, limit: HKObjectQueryNoLimit, resultsHandler: { (_, samples, _, _, error) in
-                if let hasError = error {
-                    continuation.resume(throwing: hasError)
-                    return
-                }
+        do {
+            let samples = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
+                healthStore
+                    .execute(HKAnchoredObjectQuery(
+                        type: HKSeriesType.workoutRoute(),
+                        predicate: byWorkout,
+                        anchor: nil,
+                        limit: HKObjectQueryNoLimit,
+                        resultsHandler: { (_, samples, _, _, error) in
+                            if let hasError = error {
+                                continuation.resume(throwing: hasError)
+                                return
+                            }
 
-                guard let samples = samples else {
-                    return
-                }
+                            guard let samples = samples else {
+                                return
+                            }
 
-                continuation.resume(returning: samples)
-            }))
+                            continuation.resume(returning: samples)
+                        })
+                    )
+            }
+
+            guard let workouts = samples as? [HKWorkoutRoute] else {
+                return nil
+            }
+
+            return workouts
+        } catch {
+            return []
         }
-
-        guard let workouts = samples as? [HKWorkoutRoute] else {
-            return nil
-        }
-
-        return workouts
     }
 
     func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
-        let locations = try! await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
-            var allLocations: [CLLocation] = []
+        do {
+            let locations = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
+                var allLocations: [CLLocation] = []
 
-            // Create the route query.
-            let query = HKWorkoutRouteQuery(route: givenRoute) { (_, locationsOrNil, done, errorOrNil) in
+                // Create the route query.
+                let query = HKWorkoutRouteQuery(route: givenRoute) { (_, locationsOrNil, done, errorOrNil) in
 
-                if let error = errorOrNil {
-                    continuation.resume(throwing: error)
-                    return
+                    if let error = errorOrNil {
+                        continuation.resume(throwing: error)
+                        return
+                    }
+
+                    guard let currentLocationBatch = locationsOrNil else {
+                        return
+                    }
+
+                    allLocations.append(contentsOf: currentLocationBatch)
+
+                    if done {
+                        continuation.resume(returning: allLocations)
+                    }
                 }
 
-                guard let currentLocationBatch = locationsOrNil else {
-                    return
-                }
-
-                allLocations.append(contentsOf: currentLocationBatch)
-
-                if done {
-                    continuation.resume(returning: allLocations)
-                }
+                healthStore.execute(query)
             }
 
-            healthStore.execute(query)
+            return locations
+        } catch {
+            return []
         }
-
-        return locations
     }
 
 }

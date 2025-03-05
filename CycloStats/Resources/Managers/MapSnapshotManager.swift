@@ -84,9 +84,9 @@ class MapSnapshotManager {
 
                 // Dessiner les lignes entre les locations
                 if locations.count > 1 {
-                    for i in 0..<(locations.count - 1) {
-                        let start = locations[i]
-                        let end = locations[i + 1]
+                    for index in 0..<(locations.count - 1) {
+                        let start = locations[index]
+                        let end = locations[index + 1]
 
                         let startPoint = snapshot.point(for: start.coordinate)
                         let endPoint = snapshot.point(for: end.coordinate)

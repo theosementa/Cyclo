@@ -25,9 +25,9 @@ struct MapView: UIViewRepresentable {
 
         var polylines: [MKPolyline] = []
 
-        for i in 0..<locations.count - 1 {
-            let start = locations[i]
-            let end = locations[i + 1]
+        for index in 0..<locations.count - 1 {
+            let start = locations[index]
+            let end = locations[index + 1]
 
             let coordinates = [start.coordinate, end.coordinate]
             let polyline = MKPolyline(coordinates: coordinates, count: 2)

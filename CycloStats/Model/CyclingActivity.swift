@@ -15,7 +15,20 @@ class CyclingActivity: Identifiable, ObservableObject, Hashable {
     @Published var averageHeartRate: Int
     @Published var maxHeartRate: Int
 
-    init(id: UUID, originalWorkout: HKWorkout? = nil, startDate: Date, endDate: Date, durationInMin: Double, pauseTime: Double, distanceInKm: Double, averageSpeedInKMH: Double, maxSpeedInKMH: Double, elevationAscendedInM: Double, averageHeartRate: Int, maxHeartRate: Int) {
+    init(
+        id: UUID,
+        originalWorkout: HKWorkout? = nil,
+        startDate: Date,
+        endDate: Date,
+        durationInMin: Double,
+        pauseTime: Double,
+        distanceInKm: Double,
+        averageSpeedInKMH: Double,
+        maxSpeedInKMH: Double,
+        elevationAscendedInM: Double,
+        averageHeartRate: Int,
+        maxHeartRate: Int
+    ) {
         self.id = id
         self.originalWorkout = originalWorkout
         self.startDate = startDate

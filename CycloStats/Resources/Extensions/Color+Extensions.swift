@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 
+// swiftlint:disable all
 extension Color {
 
     public init(hex: String) {

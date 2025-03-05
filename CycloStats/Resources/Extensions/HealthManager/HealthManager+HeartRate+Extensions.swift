@@ -88,9 +88,9 @@ extension HealthManager {
         private func analyzeHeartRateZones(entries: [HeartRateEntry], activityDuration: TimeInterval) -> [HeartRateZone] {
             var analyzedZones = zones
 
-            for i in 0..<entries.count - 1 {
-                let currentEntry = entries[i]
-                let nextEntry = entries[i + 1]
+            for index in 0..<entries.count - 1 {
+                let currentEntry = entries[index]
+                let nextEntry = entries[index + 1]
                 let duration = nextEntry.date.timeIntervalSince(currentEntry.date)
 
                 if let zoneIndex = analyzedZones.firstIndex(where: { $0.range.contains(currentEntry.heartRate) }) {
@@ -99,8 +99,8 @@ extension HealthManager {
             }
 
             // Calculate percentages
-            for i in 0..<analyzedZones.count {
-                analyzedZones[i].percentage = (analyzedZones[i].timeSpent / activityDuration) * 100
+            for index in 0..<analyzedZones.count {
+                analyzedZones[index].percentage = (analyzedZones[index].timeSpent / activityDuration) * 100
             }
 
             return analyzedZones
