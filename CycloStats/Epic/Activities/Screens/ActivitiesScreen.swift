@@ -1,5 +1,5 @@
 //
-//  ActivitiesView.swift
+//  ActivitiesScreen.swift
 //  CycloStats
 //
 //  Created by KaayZenn on 10/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActivitiesView: View {
+struct ActivitiesScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
     @EnvironmentObject private var router: NavigationManager
@@ -77,7 +77,7 @@ struct ActivitiesView: View {
 
 // MARK: - Preview
 #Preview {
-    ActivitiesView()
+    ActivitiesScreen()
         .environmentObject(HealthManager())
         .environmentObject(NavigationManager(isPresented: .constant(nil)))
 }

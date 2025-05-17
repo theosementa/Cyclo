@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SpeedLegendsRow: View {
+struct SpeedLegendsRowView: View {
 
     // MARK: -
     var body: some View {
@@ -40,5 +40,5 @@ struct SpeedLegendsRow: View {
 
 // MARK: - Preview
 #Preview {
-    SpeedLegendsRow()
+    SpeedLegendsRowView()
 }

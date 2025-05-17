@@ -1,5 +1,5 @@
 //
-//  CyclingActivityDetailView.swift
+//  CyclingActivityDetailScreen.swift
 //  CycloStats
 //
 //  Created by KaayZenn on 12/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CyclingActivityDetailView: View {
+struct CyclingActivityDetailScreen: View {
 
     // Builder
     @ObservedObject var activity: CyclingActivity
@@ -28,12 +28,12 @@ struct CyclingActivityDetailView: View {
                 .overlay(alignment: .top) {
                     HStack(spacing: 16) {
                         if viewModel.showLegend {
-                            SpeedLegendsRow()
+                            SpeedLegendsRowView()
                                 .frame(maxWidth: .infinity)
                         }
 
                         VStack(spacing: 16) {
-                            CustomButton(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
+                            CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
                                 Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
                                     .foregroundStyle(Color.white)
                                     .rotationEffect(.degrees(90))
@@ -44,7 +44,7 @@ struct CyclingActivityDetailView: View {
                                     }
                             }
 
-                            CustomButton(animation: .smooth) { viewModel.showLegend.toggle() } label: {
+                            CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
                                 Image(systemName: "doc.plaintext")
                                     .foregroundStyle(Color.white)
                                     .padding(12)
@@ -155,8 +155,8 @@ struct CyclingActivityDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     VStack(spacing: 12) {
-                        ActivityElevationChart(locations: viewModel.locations)
-                        ActivityHeartRateChart(heartRates: viewModel.heartRates, zones: viewModel.zones)
+                        ActivityElevationChartView(locations: viewModel.locations)
+                        ActivityHeartRateChartView(heartRates: viewModel.heartRates, zones: viewModel.zones)
                     }
                 }
                 .padding()
@@ -232,6 +232,6 @@ struct CyclingActivityDetailView: View {
 
 // MARK: - Preview
 #Preview {
-    CyclingActivityDetailView(activity: .preview)
+    CyclingActivityDetailScreen(activity: .preview)
         .environmentObject(HealthManager())
 }

@@ -19,7 +19,7 @@ struct FilterByPeriodView: View {
     // MARK: -
     var body: some View {
         HStack {
-            CustomButton(animation: .smooth) { changePeriodDate(inPast: true) } label: {
+            CustomButtonView(animation: .smooth) { changePeriodDate(inPast: true) } label: {
                 Image(systemName: "chevron.left")
                     .frame(width: 14, height: 14)
                     .font(.system(size: 12, weight: .bold, design: .rounded))
@@ -38,7 +38,7 @@ struct FilterByPeriodView: View {
 
             Spacer()
 
-            CustomButton(animation: .smooth) { changePeriodDate(inPast: false) } label: {
+            CustomButtonView(animation: .smooth) { changePeriodDate(inPast: false) } label: {
                 Image(systemName: "chevron.right")
                     .frame(width: 14, height: 14)
                     .font(.system(size: 12, weight: .bold, design: .rounded))

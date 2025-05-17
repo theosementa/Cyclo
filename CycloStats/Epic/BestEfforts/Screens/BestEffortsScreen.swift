@@ -1,5 +1,5 @@
 //
-//  BestEffortsView.swift
+//  BestEffortsScreen.swift
 //  CycloStats
 //
 //  Created by Theo Sementa on 08/09/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BestEffortsView: View {
+struct BestEffortsScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
     @EnvironmentObject private var router: NavigationManager
@@ -79,5 +79,5 @@ struct BestEffortsView: View {
 
 // MARK: - Preview
 #Preview {
-    BestEffortsView()
+    BestEffortsScreen()
 }

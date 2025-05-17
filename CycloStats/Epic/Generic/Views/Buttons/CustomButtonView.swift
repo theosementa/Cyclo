@@ -1,5 +1,5 @@
 //
-//  CustomButton.swift
+//  CustomButtonView.swift
 //  CycloStats
 //
 //  Created by KaayZenn on 13/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomButton<Label: View>: View {
+struct CustomButtonView<Label: View>: View {
 
     // Builder
     var animation: Animation
@@ -28,7 +28,7 @@ struct CustomButton<Label: View>: View {
 
 // MARK: - Preview
 #Preview {
-    CustomButton(animation: .smooth) { } label: {
+    CustomButtonView(animation: .smooth) { } label: {
         Text("COUCOU")
     }
 

@@ -1,5 +1,5 @@
 //
-//  HomeView.swift
+//  HomeScreen.swift
 //  CycloStats
 //
 //  Created by KaayZenn on 08/07/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct HomeScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
 
@@ -24,7 +24,7 @@ struct HomeView: View {
                         VStack(spacing: 16) {
                             CyclingDistanceChartView()
                             CyclingElevationChartView()
-                            CyclingHeartRateChart()
+                            CyclingHeartRateChartView()
                         }
                     }
                     .padding()
@@ -54,5 +54,5 @@ struct HomeView: View {
 
 // MARK: - Preview
 #Preview {
-    HomeView()
+    HomeScreen()
 }

@@ -1,5 +1,5 @@
 //
-//  ZoneRow.swift
+//  ZoneRowView.swift
 //  CycloStats
 //
 //  Created by Theo Sementa on 18/09/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ZoneRow: View {
+struct ZoneRowView: View {
 
     // Builder
     var zone: HeartRateZone
@@ -43,5 +43,5 @@ struct ZoneRow: View {
 
 // MARK: - Preview
 #Preview {
-    ZoneRow(zone: .preview)
+    ZoneRowView(zone: .preview)
 }

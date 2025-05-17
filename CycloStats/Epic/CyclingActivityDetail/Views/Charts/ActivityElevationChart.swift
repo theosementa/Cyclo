@@ -1,49 +1,48 @@
 //
-//  ActivityHeartRateChart.swift
+//  ActivityElevationChart.swift
 //  CycloStats
 //
-//  Created by Theo Sementa on 18/09/2024.
+//  Created by KaayZenn on 15/07/2024.
 //
 
 import SwiftUI
 import Charts
+import MapKit
 
-struct ActivityHeartRateChart: View {
+struct ActivityElevationChartView: View {
 
     // Builder
-    var heartRates: [HeartRateEntry]
-    var zones: [HeartRateZone]
+    var locations: [CLLocation]
 
     // Computed
     var minYAxisValue: Double {
-        heartRates.map { $0.heartRate }.min() ?? 0
+        locations.map { $0.altitude }.min() ?? 0
     }
 
     var maxYAxisValue: Double {
-        heartRates.map { $0.heartRate }.max() ?? 0
+        locations.map { $0.altitude }.max() ?? 0
     }
 
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
             HStack(spacing: 8) {
-                Image(systemName: "bolt.heart")
+                Image(systemName: "mountain.2.fill")
                     .font(.system(size: 18, weight: .semibold, design: .rounded))
-                Text("BPM")
+                Text(Word.elevation)
                     .font(.system(size: 22, weight: .semibold, design: .rounded))
                 Spacer()
             }
 
             Chart {
-                ForEach(heartRates, id: \.self) { heartRate in
-                    RectangleMark(
-                        x: .value("X", heartRate.date),
-                        y: .value("Y", heartRate.heartRate),
-                        width: 3
+                ForEach(locations, id: \.self) { location in
+                    LineMark(
+                        x: .value("X", location.timestamp),
+                        y: .value("Y", location.altitude)
                     )
-                    .clipShape(Capsule())
+                    .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                     .interpolationMethod(.catmullRom)
-                    .foregroundStyle(colorByHeartRate(value: heartRate.heartRate))
+                    .foregroundStyle(Color.green)
                 }
             }
             .frame(height: 200)
@@ -59,27 +58,13 @@ struct ActivityHeartRateChart: View {
             }
 
             HStack(spacing: 24) {
-                Text("\(Word.min): \(minYAxisValue.formatWith(num: 0)) BPM")
+                Text("\(Word.min): \(minYAxisValue.formatWith(num: 2))m")
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(Word.max): \(maxYAxisValue.formatWith(num: 0)) BPM")
+                Text("\(Word.max): \(maxYAxisValue.formatWith(num: 2))m")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .font(.system(size: 20, weight: .semibold, design: .rounded))
-
-            ForEach(zones) { zone in
-                Divider()
-                ZoneRow(zone: zone)
-            }
         }
         .backgroundComponent()
     } // End body
-
-    func colorByHeartRate(value: Double) -> Color {
-        for zone in zones {
-            if value > zone.range.lowerBound && value < zone.range.upperBound {
-                return zone.color
-            }
-        }
-        return .clear
-    }
 } // End struct

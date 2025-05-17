@@ -22,14 +22,14 @@ private extension NavigationManager {
         Group {
             switch direction {
             case .home:
-                HomeView()
+                HomeScreen()
             case .activities:
-                ActivitiesView()
+                ActivitiesScreen()
             case .progress:
-                ActivitiesProgressView()
+                ActivitiesProgressScreen()
 
             case .detail(let activity):
-                CyclingActivityDetailView(activity: activity)
+                CyclingActivityDetailScreen(activity: activity)
             }
         }
     }

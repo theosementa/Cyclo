@@ -22,25 +22,25 @@ struct CycloStatsApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
-                HomeView()
+                HomeScreen()
                     .environmentObject(homeRouter)
                     .tabItem {
                         Label(Word.home, systemImage: "house.fill")
                     }
 
-                ActivitiesView()
+                ActivitiesScreen()
                     .environmentObject(activitiesRouter)
                     .tabItem {
                         Label(Word.activities, systemImage: "figure.outdoor.cycle")
                     }
 
-                ActivitiesProgressView()
+                ActivitiesProgressScreen()
                     .environmentObject(progressRouter)
                     .tabItem {
                         Label(Word.progress, systemImage: "chart.bar.xaxis.ascending")
                     }
 
-                BestEffortsView()
+                BestEffortsScreen()
                     .environmentObject(bestEffortsRouter)
                     .tabItem {
                         Label(Word.bestEfforts, systemImage: "rosette")

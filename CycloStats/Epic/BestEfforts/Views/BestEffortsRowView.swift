@@ -1,5 +1,5 @@
 //
-//  BestEffortsRow.swift
+//  BestEffortsRowView.swift
 //  CycloStats
 //
 //  Created by Theo Sementa on 08/09/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BestEffortsRow: View {
+struct BestEffortsRowView: View {
 
     // Builder
     var icon: String
@@ -69,7 +69,7 @@ struct BestEffortsRow: View {
 
 // MARK: - Preview
 #Preview {
-    BestEffortsRow(
+    BestEffortsRowView(
         icon: "person.fill",
         title: "Preview",
         activities: [.preview, .preview, .preview],

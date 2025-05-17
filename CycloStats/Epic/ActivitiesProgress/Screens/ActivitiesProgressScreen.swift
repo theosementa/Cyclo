@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ActivitiesProgressView: View {
+struct ActivitiesProgressScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
 
@@ -49,5 +49,5 @@ struct ActivitiesProgressView: View {
 
 // MARK: - Preview
 #Preview {
-    ActivitiesProgressView()
+    ActivitiesProgressScreen()
 }

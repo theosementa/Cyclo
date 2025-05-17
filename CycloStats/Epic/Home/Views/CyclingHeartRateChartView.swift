@@ -1,5 +1,5 @@
 //
-//  CyclingHeartRateChart.swift
+//  CyclingHeartRateChartView.swift
 //  CycloStats
 //
 //  Created by Theo Sementa on 24/08/2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Charts
 
-struct CyclingHeartRateChart: View {
+struct CyclingHeartRateChartView: View {
 
     @EnvironmentObject private var healthManager: HealthManager
 
@@ -70,5 +70,5 @@ struct CyclingHeartRateChart: View {
 
 // MARK: - Preview
 #Preview {
-    CyclingHeartRateChart()
+    CyclingHeartRateChartView()
 }
