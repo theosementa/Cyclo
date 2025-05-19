@@ -10,11 +10,10 @@ import SwiftUI
 struct ActivitiesScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
-    @EnvironmentObject private var router: NavigationManager
 
     // MARK: -
     var body: some View {
-        NavStack(router: router) {
+        NavigationStack {
             VStack(spacing: 2) {
                 List {
                     if !healthManager.filteredCyclingActivities.isEmpty {

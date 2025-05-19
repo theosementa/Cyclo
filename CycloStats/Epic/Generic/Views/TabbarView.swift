@@ -12,9 +12,9 @@ struct TabbarView: View {
 
     // MARK: Dependencies
     @Binding var selectedTab: CGFloat
-    
+
     let icons: [ImageResource] = [.iconHouse, .iconBike, .iconStats, .iconTrophy]
-    
+
     // MARK: - View
     var body: some View {
         HStack(spacing: TKDesignSystem.Spacing.small) {
@@ -39,10 +39,10 @@ struct TabbarView: View {
                 let outerPadding = TKDesignSystem.Padding.extraSmall
                 let spacing = TKDesignSystem.Spacing.small
                 let width = geo.size.width
-                
+
                 let tabWidth = (width - (2 * outerPadding) - (spacing * CGFloat(icons.count - 1))) / CGFloat(icons.count)
                 let xPosition = outerPadding + (selectedTab * (tabWidth + spacing))
-                
+
                 RoundedRectangle(cornerRadius: TKDesignSystem.Radius.small, style: .continuous)
                     .fill(Color.appGreen)
                     .frame(width: tabWidth)

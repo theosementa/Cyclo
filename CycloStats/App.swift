@@ -6,47 +6,35 @@
 //
 
 import SwiftUI
+import TheoKit
 
 @main
 struct CycloStatsApp: App {
 
     @StateObject private var healthManager: HealthManager = .init()
     @StateObject private var cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
+    @StateObject private var appManager: AppManager = .shared
 
-    private let homeRouter: NavigationManager = .init(isPresented: .constant(.home))
-    private let activitiesRouter: NavigationManager = .init(isPresented: .constant(.activities))
-    private let progressRouter: NavigationManager = .init(isPresented: .constant(.progress))
-    private let bestEffortsRouter: NavigationManager = .init(isPresented: .constant(.home))
-
-    // MARK: -
+    // MARK: - View
     var body: some Scene {
         WindowGroup {
-            TabView {
-                HomeScreen()
-                    .environmentObject(homeRouter)
-                    .tabItem {
-                        Label(Word.home, systemImage: "house.fill")
-                    }
+            ZStack(alignment: .bottom) {
+                switch appManager.selectedTab {
+                case 0:
+                    HomeScreen()
+                case 1:
+                    ActivitiesScreen()
+                case 2:
+                    ActivitiesProgressScreen()
+                case 3:
+                    BestEffortsScreen()
+                default:
+                    EmptyView()
+                }
 
-                ActivitiesScreen()
-                    .environmentObject(activitiesRouter)
-                    .tabItem {
-                        Label(Word.activities, systemImage: "figure.outdoor.cycle")
-                    }
-
-                ActivitiesProgressScreen()
-                    .environmentObject(progressRouter)
-                    .tabItem {
-                        Label(Word.progress, systemImage: "chart.bar.xaxis.ascending")
-                    }
-
-                BestEffortsScreen()
-                    .environmentObject(bestEffortsRouter)
-                    .tabItem {
-                        Label(Word.bestEfforts, systemImage: "rosette")
-                    }
-            } // End TabView
-            .accentColor(.green)
+                TabbarView(selectedTab: $appManager.selectedTab)
+                    .padding(TKDesignSystem.Padding.large)
+            }
             .environmentObject(healthManager)
             .task {
                 if await healthManager.requestAutorisation() {
@@ -55,5 +43,5 @@ struct CycloStatsApp: App {
                 }
             }
         }
-    } // End body
-} // End struct
+    }
+}

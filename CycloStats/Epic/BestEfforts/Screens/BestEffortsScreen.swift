@@ -10,11 +10,10 @@ import SwiftUI
 struct BestEffortsScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
-    @EnvironmentObject private var router: NavigationManager
 
     // MARK: -
     var body: some View {
-        NavStack(router: router) {
+        NavigationStack {
             List {
                 Group {
                     let elevationBestEfforts: [CyclingActivity] = Array(healthManager.elevationBestEfforts.prefix(3))
