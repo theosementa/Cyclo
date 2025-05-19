@@ -6,6 +6,11 @@
 	objectVersion = 70;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D95B7E4F2DDB456A00033FE0 /* TheoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D95B7E4E2DDB456A00033FE0 /* TheoKit */; };
+		D9AFED4A2DDB49F10042CEE4 /* NavigationKit in Frameworks */ = {isa = PBXBuildFile; productRef = D9AFED492DDB49F10042CEE4 /* NavigationKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D92639F92C3C5252004837E2 /* CycloStats.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CycloStats.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -29,6 +34,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D95B7E4F2DDB456A00033FE0 /* TheoKit in Frameworks */,
+				D9AFED4A2DDB49F10042CEE4 /* NavigationKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +107,10 @@
 				fr,
 			);
 			mainGroup = D92639F02C3C5252004837E2;
+			packageReferences = (
+				D95B7E4D2DDB456A00033FE0 /* XCRemoteSwiftPackageReference "TheoKit" */,
+				D9AFED482DDB49F10042CEE4 /* XCRemoteSwiftPackageReference "NavigationKit" */,
+			);
 			productRefGroup = D92639FA2C3C5252004837E2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -375,6 +386,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D95B7E4D2DDB456A00033FE0 /* XCRemoteSwiftPackageReference "TheoKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/theosementa/TheoKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
+		D9AFED482DDB49F10042CEE4 /* XCRemoteSwiftPackageReference "NavigationKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/theosementa/NavigationKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D95B7E4E2DDB456A00033FE0 /* TheoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D95B7E4D2DDB456A00033FE0 /* XCRemoteSwiftPackageReference "TheoKit" */;
+			productName = TheoKit;
+		};
+		D9AFED492DDB49F10042CEE4 /* NavigationKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9AFED482DDB49F10042CEE4 /* XCRemoteSwiftPackageReference "NavigationKit" */;
+			productName = NavigationKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D92639F12C3C5252004837E2 /* Project object */;
 }

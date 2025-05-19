@@ -38,11 +38,11 @@ extension Color {
 
 extension Color {
 
-    public static var label: Color {
-        return Color(uiColor: UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? UIColor(Color.white) : UIColor(Color.black)
-        })
-    }
+//    public static var label: Color {
+//        return Color(uiColor: UIColor { traitCollection in
+//            return traitCollection.userInterfaceStyle == .dark ? UIColor(Color.white) : UIColor(Color.black)
+//        })
+//    }
 
     public static var customRed: Color {
         return Color(hex: "F43D3D")

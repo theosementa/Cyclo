@@ -19,7 +19,7 @@ struct BestEffortsScreen: View {
                 Group {
                     let elevationBestEfforts: [CyclingActivity] = Array(healthManager.elevationBestEfforts.prefix(3))
                     let elevationBestEffortsValues = elevationBestEfforts.map(\.elevationAscendedInM)
-                    BestEffortsRow(
+                    BestEffortsRowView(
                         icon: "mountain.2.fill",
                         title: Word.elevation,
                         activities: elevationBestEfforts,
@@ -30,7 +30,7 @@ struct BestEffortsScreen: View {
 
                     let distanceBestEfforts: [CyclingActivity] = Array(healthManager.distanceBestEfforts.prefix(3))
                     let distanceBestEffortsValues = distanceBestEfforts.map(\.distanceInKm)
-                    BestEffortsRow(
+                    BestEffortsRowView(
                         icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
                         title: Word.distance,
                         activities: distanceBestEfforts,
@@ -40,7 +40,7 @@ struct BestEffortsScreen: View {
 
                     let maxSpeedBestEfforts: [CyclingActivity] = Array(healthManager.maxSpeedBestEfforts.prefix(3))
                     let maxSpeedBestEffortsValues = maxSpeedBestEfforts.map(\.maxSpeedInKMH)
-                    BestEffortsRow(
+                    BestEffortsRowView(
                         icon: "gauge.with.dots.needle.67percent",
                         title: Word.maxSpeed,
                         activities: maxSpeedBestEfforts,
@@ -50,7 +50,7 @@ struct BestEffortsScreen: View {
 
                     let averageBestEfforts: [CyclingActivity] = Array(healthManager.averageSpeedBestEfforts.prefix(3))
                     let averageBestEffortsValues = averageBestEfforts.map(\.averageSpeedInKMH)
-                    BestEffortsRow(
+                    BestEffortsRowView(
                         icon: "figure.outdoor.cycle",
                         title: Word.averageSpeed,
                         activities: averageBestEfforts,
