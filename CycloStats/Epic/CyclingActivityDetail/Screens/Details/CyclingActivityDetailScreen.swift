@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct CyclingActivityDetailScreen: View {
 
@@ -16,154 +17,73 @@ struct CyclingActivityDetailScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
-    @StateObject private var weatherManager: WeatherManager = .init()
 
     @State private var showActionSheet: Bool = false
 
     // MARK: -
     var body: some View {
         ScrollView {
-            MapView(locations: viewModel.locations)
-                .frame(height: viewModel.showFullMap ? UIScreen.main.bounds.height : 400)
-                .overlay(alignment: .top) {
-                    HStack(spacing: 16) {
-                        if viewModel.showLegend {
-                            SpeedLegendsRowView()
-                                .frame(maxWidth: .infinity)
-                        }
-
-                        VStack(spacing: 16) {
-                            CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
-                                Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                                    .foregroundStyle(Color.white)
-                                    .rotationEffect(.degrees(90))
-                                    .padding(12)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                            .fill(Color.black)
-                                    }
+            VStack(spacing: TKDesignSystem.Spacing.medium) {
+                MapView(locations: viewModel.locations)
+                    .frame(
+                        width: viewModel.showFullMap ? UIScreen.main.bounds.width : UIScreen.main.bounds.width - 48,
+                        height: viewModel.showFullMap ? UIScreen.main.bounds.height : UIScreen.main.bounds.width - 48
+                    )
+                    .clipShape(RoundedRectangle(cornerRadius: TKDesignSystem.Radius.small, style: .continuous))
+                    .overlay(alignment: .top) {
+                        HStack(spacing: 16) {
+                            if viewModel.showLegend {
+                                SpeedLegendsRowView()
+                                    .fullWidth()
                             }
 
-                            CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
-                                Image(systemName: "doc.plaintext")
-                                    .foregroundStyle(Color.white)
-                                    .padding(12)
-                                    .background {
-                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                            .fill(Color.black)
-                                    }
+                            VStack(spacing: 16) {
+                                CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
+                                    Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                                        .foregroundStyle(Color.white)
+                                        .rotationEffect(.degrees(90))
+                                        .padding(12)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                .fill(Color.black)
+                                        }
+                                }
+
+                                CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
+                                    Image(systemName: "doc.plaintext")
+                                        .foregroundStyle(Color.white)
+                                        .padding(12)
+                                        .background {
+                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                .fill(Color.black)
+                                        }
+                                }
                             }
                         }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding()
                     }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding()
+
+                if !viewModel.showFullMap {
+
+                    // TODO: Better itégration
+                    if let coordinate = viewModel.locations.first?.coordinate {
+                        GeneralActivityDetailView(activity: activity, coordinate: coordinate)
+                    }
+
+                    DistanceAndSpeedActivityDetailView(activity: activity)
+
+                    HeartActivityDetailView(activity: activity)
+
+                    ActivityElevationChartView(locations: viewModel.locations)
+                    ActivityHeartRateChartView(heartRates: viewModel.heartRates, zones: viewModel.zones)
+
                 }
-
-            if !viewModel.showFullMap {
-                VStack(spacing: 12) {
-                    HStack(spacing: 12) {
-                        CyclingStatsRow(
-                            icon: "calendar",
-                            title: Word.date,
-                            value: activity.date.formatted(date: .numeric, time: .omitted),
-                            withBackground: true
-                        )
-
-                        if let dayWeather = weatherManager.dayWeather {
-                            CyclingStatsRow(
-                                icon: dayWeather.symbolName,
-                                title: Word.temperature,
-                                value: dayWeather.highTemperature.value.formatWith(num: 2) + " °C",
-                                withBackground: true
-                            )
-                        }
-                    }
-
-                    LazyVGrid(columns: [GridItem(spacing: 12), GridItem(spacing: 12)], spacing: 12) {
-                        CyclingStatsRow(
-                            icon: "timer",
-                            title: Word.duration,
-                            value: activity.durationInMin.asHoursMinutesAndSeconds,
-                            withBackground: true
-                        )
-
-                        CyclingStatsRow(
-                            icon: "playpause.fill",
-                            title: Word.pause,
-                            value: activity.pauseTime.asHoursMinutesAndSeconds,
-                            withBackground: true
-                        )
-
-                        CyclingStatsRow(
-                            icon: "play.fill",
-                            title: Word.departure,
-                            value: activity.startDate.formatted(date: .omitted, time: .shortened),
-                            withBackground: true
-                        )
-                        CyclingStatsRow(
-                            icon: "flag.checkered",
-                            title: Word.arrival,
-                            value: activity.endDate.formatted(date: .omitted, time: .shortened),
-                            withBackground: true
-                        )
-
-                        CyclingStatsRow(
-                            icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
-                            title: Word.distance,
-                            value: activity.distanceInKm.formatWith(num: 2) + " km",
-                            withBackground: true
-                        )
-                        CyclingStatsRow(
-                            icon: "mountain.2.fill",
-                            title: Word.elevation,
-                            value: activity.elevationAscendedInM.formatWith(num: 2) + " m",
-                            withBackground: true
-                        )
-
-                        CyclingStatsRow(
-                            icon: "figure.outdoor.cycle",
-                            title: Word.averageSpeed,
-                            value: activity.averageSpeedInKMH.formatWith(num: 2) + " km/h",
-                            withBackground: true
-                        )
-                        CyclingStatsRow(
-                            icon: "gauge.with.dots.needle.67percent",
-                            title: Word.maxSpeed,
-                            value: activity.maxSpeedInKMH.formatWith(num: 2) + " km/h",
-                            withBackground: true
-                        )
-
-                        CyclingStatsRow(
-                            icon: "heart",
-                            title: Word.averageBPM,
-                            value: activity.averageHeartRate.formatted() + " bpm",
-                            withBackground: true
-                        )
-                        CyclingStatsRow(
-                            icon: "bolt.heart",
-                            title: Word.maxBPM,
-                            value: activity.maxHeartRate.formatted() + " bpm",
-                            withBackground: true
-                        )
-                    }
-                }
-                .padding()
-
-                VStack(spacing: 12) {
-                    Text(Word.charts)
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-
-                    VStack(spacing: 12) {
-                        ActivityElevationChartView(locations: viewModel.locations)
-                        ActivityHeartRateChartView(heartRates: viewModel.heartRates, zones: viewModel.zones)
-                    }
-                }
-                .padding()
             }
+            .padding(viewModel.showFullMap ? 0 : TKDesignSystem.Padding.large)
         } // End ScrollView
         .scrollIndicators(.hidden)
-        .background(Color.Apple.background.ignoresSafeArea())
+        .background(TKDesignSystem.Colors.Background.Theme.bg50)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
@@ -188,13 +108,6 @@ struct CyclingActivityDetailScreen: View {
         )
         .task {
             await viewModel.setupDetailView(activity: activity, healthManager: healthManager)
-            if let firstLocation = viewModel.locations.first {
-                await weatherManager.getWeather(
-                    lat: firstLocation.coordinate.latitude,
-                    long: firstLocation.coordinate.longitude,
-                    date: activity.startDate
-                )
-            }
         }
     } // body
 

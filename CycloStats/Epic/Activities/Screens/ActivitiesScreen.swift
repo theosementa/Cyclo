@@ -25,9 +25,10 @@ struct ActivitiesScreen: View {
                         VStack(spacing: 12) {
                             Text(Word.activities)
                                 .font(.system(size: 22, weight: .semibold, design: .rounded))
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .fullWidth(.leading)
+
                             ForEach(healthManager.filteredCyclingActivities) { activity in
-                                ActivityRow(activity: activity)
+                                ActivityRowView(activity: activity)
                             }
                         }
                         .listRowSeparator(.hidden)

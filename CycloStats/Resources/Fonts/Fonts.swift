@@ -15,12 +15,12 @@ struct ExtendedUIFont {
 }
 
 struct Fonts {
-    
+
     static var fontRegular: String = "Satoshi-Regular"
     static var fontMedium: String = "Satoshi-Medium"
     static var fontBold: String = "Satoshi-Bold"
     static var fontBlack: String = "Satoshi-Black"
-    
+
     public struct Display {
         /// `This font is in "Bold 48" style`
         public static let huge: ExtendedUIFont = ExtendedUIFont(name: fontBlack, size: 48, lineHeight: 65)
@@ -32,17 +32,17 @@ struct Fonts {
         public static let medium: ExtendedUIFont = ExtendedUIFont(name: fontBold, size: 32, lineHeight: 43.2)
         /// `This font is in "Bold 28" style`
         public static let small: ExtendedUIFont = ExtendedUIFont(name: fontBold, size: 28, lineHeight: 37.8)
-        
+
     }
-    
+
     public struct Title {
         /// `This font is in "Bold 24" style`
         public static let large: ExtendedUIFont = ExtendedUIFont(name: fontBold, size: 24, lineHeight: 32.4)
         /// `This font is in "Medium 20" style`
         public static let medium: ExtendedUIFont = ExtendedUIFont(name: fontMedium, size: 20, lineHeight: 27)
-        
+
     }
-    
+
     public struct Body {
         /// `This font is in "Bold 18" style`
         public static let large: ExtendedUIFont = ExtendedUIFont(name: fontBold, size: 18, lineHeight: 24.3)
@@ -52,9 +52,9 @@ struct Fonts {
         public static let medium: ExtendedUIFont = ExtendedUIFont(name: fontMedium, size: 16, lineHeight: 21.6)
         /// `This font is in "Medium 14" style`
         public static let small: ExtendedUIFont = ExtendedUIFont(name: fontMedium, size: 14, lineHeight: 18.9)
-        
+
     }
-    
+
     public struct Label {
         /// `This font is in "Medium 12" style`
         public static let large: ExtendedUIFont = ExtendedUIFont(name: fontMedium, size: 12, lineHeight: 16.2)

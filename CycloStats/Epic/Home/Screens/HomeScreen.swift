@@ -6,49 +6,53 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct HomeScreen: View {
 
+    // MARK: Environments
     @EnvironmentObject private var healthManager: HealthManager
 
     // MARK: -
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 2) {
-                ScrollView {
-                    VStack(spacing: 12) {
-                        Text(Word.charts)
-                            .font(.system(size: 22, weight: .semibold, design: .rounded))
-                            .frame(maxWidth: .infinity, alignment: .leading)
+        ScrollView {
+            VStack(spacing: TKDesignSystem.Spacing.extraLarge) {
+                VStack(spacing: TKDesignSystem.Spacing.medium) {
+                    Text("Ce mois-ci") // TODO: TBL
+                        .fontWithLineHeight(Fonts.Title.medium)
+                        .fullWidth(.leading)
 
-                        VStack(spacing: 16) {
-                            CyclingDistanceChartView()
-                            CyclingElevationChartView()
-                            CyclingHeartRateChartView()
+                    ResumeStatsView(
+                        distanceValue: healthManager.currentMonthDistance,
+                        elevationValue: healthManager.currentMonthElevationAscended,
+                        timeValue: healthManager.currentMonthTime,
+                        outValue: healthManager.numberOfCyclingWorkoutThisMonth
+                    )
+
+    //                VStack(spacing: 16) { // TODO: TODO
+    //                    CyclingDistanceChartView()
+    //                    CyclingElevationChartView()
+    //                    CyclingHeartRateChartView()
+    //                }
+                }
+
+                VStack(spacing: TKDesignSystem.Spacing.medium) {
+                    Text("Dernières activités") // TODO: TBL
+                        .fontWithLineHeight(Fonts.Title.medium)
+                        .fullWidth(.leading)
+
+                    ForEach(healthManager.cyclingActivities.prefix(5)) { activity in
+                        NavigationLink(destination: CyclingActivityDetailScreen(activity: activity)) {
+                            ActivityRowView(activity: activity)
                         }
                     }
-                    .padding()
                 }
-                .scrollIndicators(.hidden)
 
-                if healthManager.selectedPeriod != .total {
-                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
-                }
             }
-            .background(Color.Apple.background.ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(Word.home)
-                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    FilterMenu()
-                }
-            }
-        } // End NavigationStack
+            .padding(TKDesignSystem.Padding.large)
+        }
+        .scrollIndicators(.hidden)
+        .background(TKDesignSystem.Colors.Background.Theme.bg50)
     } // End body
 } // End struct
 

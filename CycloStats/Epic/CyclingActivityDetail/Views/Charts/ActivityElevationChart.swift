@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 import MapKit
+import TheoKit
 
 struct ActivityElevationChartView: View {
 
@@ -65,6 +66,10 @@ struct ActivityElevationChartView: View {
             }
             .font(.system(size: 20, weight: .semibold, design: .rounded))
         }
-        .backgroundComponent()
+        .padding(TKDesignSystem.Padding.medium)
+        .roundedRectangleBorder(
+            TKDesignSystem.Colors.Background.Theme.bg100,
+            radius: TKDesignSystem.Radius.small
+        )
     } // End body
 } // End struct

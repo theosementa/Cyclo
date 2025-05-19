@@ -15,25 +15,35 @@ struct CycloStatsApp: App {
     @StateObject private var cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
     @StateObject private var appManager: AppManager = .shared
 
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+
     // MARK: - View
     var body: some Scene {
         WindowGroup {
-            ZStack(alignment: .bottom) {
-                switch appManager.selectedTab {
-                case 0:
-                    HomeScreen()
-                case 1:
-                    ActivitiesScreen()
-                case 2:
-                    ActivitiesProgressScreen()
-                case 3:
-                    BestEffortsScreen()
-                default:
-                    EmptyView()
-                }
+            NavigationStack {
+                ZStack(alignment: .bottom) {
+                    switch appManager.selectedTab {
+                    case 0:
+                        HomeScreen()
+                    case 1:
+                        ActivitiesScreen()
+                    case 2:
+                        ActivitiesProgressScreen()
+                    case 3:
+                        BestEffortsScreen()
+                    default:
+                        EmptyView()
+                    }
 
-                TabbarView(selectedTab: $appManager.selectedTab)
-                    .padding(TKDesignSystem.Padding.large)
+                    TabbarView(selectedTab: $appManager.selectedTab)
+                        .padding(TKDesignSystem.Padding.large)
+                        .padding(.bottom, safeAreaInsets.bottom)
+                        .background {
+                            VariableBlurView(maxBlurRadius: 10, direction: .blurredBottomClearTop)
+                        }
+                }
+                .ignoresSafeArea(.all, edges: .bottom)
+                .topBlur()
             }
             .environmentObject(healthManager)
             .task {

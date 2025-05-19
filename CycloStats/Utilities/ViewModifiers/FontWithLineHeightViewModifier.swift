@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FontWithLineHeightViewModifier: ViewModifier {
     let font: ExtendedUIFont
-    
+
     var uiFont: UIFont {
         return UIFont(name: font.name, size: font.size) ?? UIFont.systemFont(ofSize: font.size)
     }

@@ -140,13 +140,31 @@ extension HealthManager {
             .map { $0.distanceInKm }.reduce(0, +)
     }
 
+    var currentMonthDistance: Double {
+        return self.cyclingActivities
+            .filter { $0.date >= Date().startOfMonth ?? .now && $0.date <= Date().endOfMonth ?? .now }
+            .map { $0.distanceInKm }.reduce(0, +)
+    }
+
     var totalElevationAscended: Double {
         return filteredCyclingActivities
             .map { $0.elevationAscendedInM }.reduce(0, +)
     }
 
+    var currentMonthElevationAscended: Double {
+        return self.cyclingActivities
+            .filter { $0.date >= Date().startOfMonth ?? .now && $0.date <= Date().endOfMonth ?? .now }
+            .map { $0.elevationAscendedInM }.reduce(0, +)
+    }
+
     var totalTime: Double {
         return filteredCyclingActivities
+            .map { $0.durationInMin }.reduce(0, +)
+    }
+
+    var currentMonthTime: Double {
+        return self.cyclingActivities
+            .filter { $0.date >= Date().startOfMonth ?? .now && $0.date <= Date().endOfMonth ?? .now }
             .map { $0.durationInMin }.reduce(0, +)
     }
 
@@ -162,6 +180,12 @@ extension HealthManager {
 
     var numberOfCyclingWorkout: Int {
         return filteredCyclingActivities.count
+    }
+
+    var numberOfCyclingWorkoutThisMonth: Int {
+        return self.cyclingActivities
+            .filter { $0.date >= Date().startOfMonth ?? .now && $0.date <= Date().endOfMonth ?? .now }
+            .count
     }
 }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Charts
+import TheoKit
 
 struct ActivityHeartRateChartView: View {
 
@@ -71,7 +72,11 @@ struct ActivityHeartRateChartView: View {
                 ZoneRowView(zone: zone)
             }
         }
-        .backgroundComponent()
+        .padding(TKDesignSystem.Padding.medium)
+        .roundedRectangleBorder(
+            TKDesignSystem.Colors.Background.Theme.bg100,
+            radius: TKDesignSystem.Radius.small
+        )
     } // End body
 
     func colorByHeartRate(value: Double) -> Color {

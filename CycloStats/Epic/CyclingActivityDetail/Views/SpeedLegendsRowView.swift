@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct SpeedLegendsRowView: View {
 
@@ -20,7 +21,11 @@ struct SpeedLegendsRowView: View {
             row(zone: .zone3)
             row(zone: .zone6)
         }
-        .backgroundComponent()
+        .padding(8)
+        .roundedRectangleBorder(
+            TKDesignSystem.Colors.Background.Theme.bg100,
+            radius: TKDesignSystem.Radius.small
+        )
     } // End body
 
     // MARK: - ViewBuilder
