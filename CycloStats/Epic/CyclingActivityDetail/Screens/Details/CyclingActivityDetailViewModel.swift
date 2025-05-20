@@ -14,24 +14,64 @@ final class CyclingActivityDetailViewModel: ObservableObject {
     @Published var zones: [HeartRateZone] = []
     @Published var showFullMap: Bool = false
     @Published var showLegend: Bool = false
+    @Published var isLoading: Bool = false
+    @Published var error: Error?
 }
 
 extension CyclingActivityDetailViewModel {
-
-    @MainActor
     func setupDetailView(activity: CyclingActivity, healthManager: HealthManager) async {
-        if let workout = activity.originalWorkout, let routes = await healthManager.getWorkoutRoute(workout: workout) {
-            for route in routes {
-                let location = await healthManager.getLocationDataForRoute(givenRoute: route)
-                self.locations.append(contentsOf: location)
-            }
-        }
+        await MainActor.run { isLoading = true }
+
+        async let locationsTask: [CLLocation] = loadLocations(activity: activity, healthManager: healthManager)
+        async let heartRateTask: (entries: [HeartRateEntry], zoneAnalysis: [HeartRateZone]) = loadHeartRates(activity: activity, healthManager: healthManager)
 
         do {
-            let heartRatesAndZones = try await healthManager.getHeartRateForActivity(activity: activity)
-            self.heartRates = heartRatesAndZones.0
-            self.zones = heartRatesAndZones.1
-        } catch { }
+            let (locations, (heartRates, zones)) = try await (locationsTask, heartRateTask)
+
+            await MainActor.run {
+                self.locations = locations
+                self.heartRates = heartRates
+                self.zones = zones
+                self.isLoading = false
+            }
+        } catch {
+            await MainActor.run {
+                self.error = error
+                self.isLoading = false
+            }
+        }
     }
 
+    private func loadLocations(activity: CyclingActivity, healthManager: HealthManager) async throws -> [CLLocation] {
+        guard let workout = activity.originalWorkout,
+              let routes = await healthManager.getWorkoutRoute(workout: workout) else {
+            return []
+        }
+
+        // Process routes in parallel
+        let locationArrays = await withTaskGroup(of: [CLLocation].self) { group in
+            for route in routes {
+                group.addTask {
+                    await healthManager.getLocationDataForRoute(givenRoute: route)
+                }
+            }
+
+            var results: [[CLLocation]] = []
+            for await locations in group {
+                results.append(locations)
+            }
+            return results
+        }
+
+        // Flatten the array of arrays
+        return locationArrays.flatMap { $0 }
+    }
+
+    private func loadHeartRates(activity: CyclingActivity, healthManager: HealthManager) async throws -> (entries: [HeartRateEntry], zoneAnalysis: [HeartRateZone]) {
+        do {
+            return try await healthManager.getHeartRateForActivity(activity: activity)
+        } catch {
+            throw error
+        }
+    }
 }

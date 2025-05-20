@@ -10,7 +10,7 @@ import TheoKit
 
 struct SpeedLegendsRowView: View {
 
-    // MARK: -
+    // MARK: - View
     var body: some View {
         LazyVGrid(columns: [GridItem(), GridItem()], alignment: .leading) {
             row(zone: .zone1)

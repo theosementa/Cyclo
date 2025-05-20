@@ -6,91 +6,62 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct FilterByPeriodView: View {
 
-    // Builder
+    // MARK: Dependencies
     var selectedPeriod: Period
 
+    // MARK: Environment
     @EnvironmentObject private var healthManager: HealthManager
-
-    @State private var dragOffset: CGSize = .zero
 
     // MARK: -
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             CustomButtonView(animation: .smooth) { changePeriodDate(inPast: true) } label: {
-                Image(systemName: "chevron.left")
-                    .frame(width: 14, height: 14)
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.green)
-                    .padding(8)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.Apple.componentInComponent)
-                    }
+                Image(.iconArrowLeft)
+                    .renderingMode(.template)
+                    .padding(TKDesignSystem.Padding.small)
+                    .foregroundStyle(Color.label)
+                    .roundedRectangleBorder(
+                        TKDesignSystem.Colors.Background.Theme.bg100,
+                        radius: TKDesignSystem.Radius.small
+                    )
             }
 
-            Spacer()
-
-            dateDisplay()
+            Group {
+                switch selectedPeriod {
+                case .week:
+                    HStack(spacing: 8) {
+                        Text(healthManager.startDatePeriod.formatted(date: .numeric, time: .omitted))
+                        Text("word_to".localized)
+                        Text(healthManager.endDatePeriod.formatted(date: .numeric, time: .omitted))
+                    }
+                case .month:
+                    Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().month(.wide).year()).capitalized)
+                case .year:
+                    Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().year()))
+                case .total:
+                    EmptyView()
+                }
+            }
+            .fontWithLineHeight(Fonts.Body.medium)
+            .foregroundStyle(Color.label)
                 .contentTransition(.numericText())
-
-            Spacer()
+                .fullWidth()
 
             CustomButtonView(animation: .smooth) { changePeriodDate(inPast: false) } label: {
-                Image(systemName: "chevron.right")
-                    .frame(width: 14, height: 14)
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.green)
-                    .padding(8)
-                    .background {
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .fill(Color.Apple.componentInComponent)
-                    }
+                Image(.iconArrowRight)
+                    .renderingMode(.template)
+                    .padding(TKDesignSystem.Padding.small)
+                    .foregroundStyle(Color.label)
+                    .roundedRectangleBorder(
+                        TKDesignSystem.Colors.Background.Theme.bg100,
+                        radius: TKDesignSystem.Radius.small
+                    )
             }
         }
-        .padding(8)
-        .clipShape(Capsule())
-        .background {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(Color.Apple.backgroundComponent)
-        }
-        .gesture(
-            DragGesture()
-                .onChanged { gesture in
-                    dragOffset = gesture.translation
-                }
-                .onEnded { gesture in
-                    if gesture.translation.width > 80 {
-                        withAnimation(.smooth) { changePeriodDate(inPast: true) }
-                    } else if gesture.translation.width < -80 {
-                        withAnimation(.smooth) { changePeriodDate(inPast: false) }
-                    }
-                    dragOffset = .zero
-                }
-        )
-    } // End body
-
-    @ViewBuilder
-    func dateDisplay() -> some View {
-        Group {
-            switch selectedPeriod {
-            case .week:
-                HStack(spacing: 8) {
-                    Text(healthManager.startDatePeriod.formatted(date: .numeric, time: .omitted))
-                    Text("word_to".localized)
-                    Text(healthManager.endDatePeriod.formatted(date: .numeric, time: .omitted))
-                }
-            case .month:
-                Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().month(.wide).year()).capitalized)
-            case .year:
-                Text(healthManager.startDatePeriod.formatted(Date.FormatStyle().year()))
-            case .total:
-                EmptyView()
-            }
-        }
-        .fontWeight(.semibold)
     }
 
     func changePeriodDate(inPast: Bool) {
@@ -103,7 +74,7 @@ struct FilterByPeriodView: View {
         }
     }
 
-} // End struct
+}
 
 // MARK: - Preview
 #Preview {

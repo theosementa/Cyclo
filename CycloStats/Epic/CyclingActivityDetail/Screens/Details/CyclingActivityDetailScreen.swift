@@ -24,45 +24,50 @@ struct CyclingActivityDetailScreen: View {
     var body: some View {
         ScrollView {
             VStack(spacing: TKDesignSystem.Spacing.medium) {
-                MapView(locations: viewModel.locations)
-                    .frame(
-                        width: viewModel.showFullMap ? UIScreen.main.bounds.width : UIScreen.main.bounds.width - 48,
-                        height: viewModel.showFullMap ? UIScreen.main.bounds.height : UIScreen.main.bounds.width - 48
-                    )
-                    .clipShape(RoundedRectangle(cornerRadius: TKDesignSystem.Radius.small, style: .continuous))
-                    .overlay(alignment: .top) {
-                        HStack(spacing: 16) {
-                            if viewModel.showLegend {
-                                SpeedLegendsRowView()
-                                    .fullWidth()
-                            }
-
-                            VStack(spacing: 16) {
-                                CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
-                                    Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                                        .foregroundStyle(Color.white)
-                                        .rotationEffect(.degrees(90))
-                                        .padding(12)
-                                        .background {
-                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                .fill(Color.black)
-                                        }
+                if viewModel.isLoading {
+                    ProgressView()
+                        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+                } else {
+                    MapView(locations: viewModel.locations)
+                        .frame(
+                            width: viewModel.showFullMap ? UIScreen.main.bounds.width : UIScreen.main.bounds.width - 48,
+                            height: viewModel.showFullMap ? UIScreen.main.bounds.height : UIScreen.main.bounds.width - 48
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: TKDesignSystem.Radius.small, style: .continuous))
+                        .overlay(alignment: .top) {
+                            HStack(spacing: 16) {
+                                if viewModel.showLegend {
+                                    SpeedLegendsRowView()
+                                        .fullWidth()
                                 }
 
-                                CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
-                                    Image(systemName: "doc.plaintext")
-                                        .foregroundStyle(Color.white)
-                                        .padding(12)
-                                        .background {
-                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                .fill(Color.black)
-                                        }
+                                VStack(spacing: 16) {
+                                    CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
+                                        Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
+                                            .foregroundStyle(Color.white)
+                                            .rotationEffect(.degrees(90))
+                                            .padding(12)
+                                            .background {
+                                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                    .fill(Color.black)
+                                            }
+                                    }
+
+                                    CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
+                                        Image(systemName: "doc.plaintext")
+                                            .foregroundStyle(Color.white)
+                                            .padding(12)
+                                            .background {
+                                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                                    .fill(Color.black)
+                                            }
+                                    }
                                 }
                             }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding()
                         }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .padding()
-                    }
+                }
 
                 if !viewModel.showFullMap {
 

@@ -14,69 +14,70 @@ extension HealthManager {
         let byWorkout = HKQuery.predicateForObjects(from: workout)
 
         do {
-            let samples = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-                healthStore
-                    .execute(HKAnchoredObjectQuery(
-                        type: HKSeriesType.workoutRoute(),
-                        predicate: byWorkout,
-                        anchor: nil,
-                        limit: HKObjectQueryNoLimit,
-                        resultsHandler: { (_, samples, _, _, error) in
-                            if let hasError = error {
-                                continuation.resume(throwing: hasError)
-                                return
-                            }
+            let samples = try await withCheckedThrowingContinuation {
+                (continuation: CheckedContinuation<[HKSample], Error>) in
+                let query = HKAnchoredObjectQuery(
+                    type: HKSeriesType.workoutRoute(),
+                    predicate: byWorkout,
+                    anchor: nil,
+                    limit: HKObjectQueryNoLimit,
+                    resultsHandler: { (_, samples, _, _, error) in
+                        if let hasError = error {
+                            continuation.resume(throwing: hasError)
+                            return
+                        }
 
-                            guard let samples = samples else {
-                                return
-                            }
+                        guard let samples = samples else {
+                            return
+                        }
 
-                            continuation.resume(returning: samples)
-                        })
-                    )
+                        continuation.resume(returning: samples)
+                    }
+                )
+
+                healthStore.execute(query)
             }
 
-            guard let workouts = samples as? [HKWorkoutRoute] else {
-                return nil
-            }
-
-            return workouts
+            return samples as? [HKWorkoutRoute]
         } catch {
-            return []
+            return nil
         }
     }
 
     func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
         do {
-            let locations = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[CLLocation], Error>) in
-                var allLocations: [CLLocation] = []
+            return try await withCheckedThrowingContinuation {
+                (continuation: CheckedContinuation<[CLLocation], Error>) in
+                let allLocations = NSMutableArray()
 
-                // Create the route query.
-                let query = HKWorkoutRouteQuery(route: givenRoute) { (_, locationsOrNil, done, errorOrNil) in
+                let query = HKWorkoutRouteQuery(route: givenRoute) {
+                    (_, locationsOrNil, done, errorOrNil) in
 
+                    // Handle errors
                     if let error = errorOrNil {
                         continuation.resume(throwing: error)
                         return
                     }
 
+                    // Process location batch
                     guard let currentLocationBatch = locationsOrNil else {
                         return
                     }
 
-                    allLocations.append(contentsOf: currentLocationBatch)
+                    // Using thread-safe append method
+                    allLocations.addObjects(from: currentLocationBatch)
 
-                    if done {
-                        continuation.resume(returning: allLocations)
+                    // Resume continuation when complete
+                    if done, let locations = allLocations as? [CLLocation] {
+                        continuation.resume(returning: locations)
                     }
                 }
 
-                healthStore.execute(query)
+                self.healthStore.execute(query)
             }
-
-            return locations
         } catch {
+            // Consider logging the error here
             return []
         }
     }
-
 }

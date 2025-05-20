@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct ActivitiesScreen: View {
 
@@ -14,39 +15,29 @@ struct ActivitiesScreen: View {
     // MARK: -
     var body: some View {
         NavigationStack {
-            VStack(spacing: 2) {
-                List {
-                    if !healthManager.filteredCyclingActivities.isEmpty {
-                        CyclingStatsTotalView()
-                            .listRowSeparator(.hidden)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(.init(top: 24, leading: 16, bottom: 8, trailing: 16))
+            ListWithBluredHeader {
+                VStack(spacing: 8) {
+                    FilterMenu()
+                        .fullWidth(.trailing)
 
-                        VStack(spacing: 12) {
-                            Text(Word.activities)
-                                .font(.system(size: 22, weight: .semibold, design: .rounded))
-                                .fullWidth(.leading)
-
-                            ForEach(healthManager.filteredCyclingActivities) { activity in
-                                ActivityRowView(activity: activity)
-                            }
-                        }
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(.init(top: 32, leading: 16, bottom: 8, trailing: 16))
+                    if healthManager.selectedPeriod != .total {
+                        FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+                            .noDefaultStyle()
                     }
                 }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .scrollIndicators(.hidden)
-
-                if healthManager.selectedPeriod != .total {
-                    FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
+                .padding(.horizontal, TKDesignSystem.Padding.large)
+                .padding(.bottom, TKDesignSystem.Padding.large)
+            } content: {
+                if !healthManager.filteredCyclingActivities.isEmpty {
+                    ForEach(healthManager.filteredCyclingActivities) { activity in
+                        ActivityRowView(activity: activity)
+                    }
+                    .noDefaultStyle()
+                    .padding(.horizontal, TKDesignSystem.Padding.large)
+                    .padding(.bottom, TKDesignSystem.Padding.medium)
                 }
             }
-            .background(Color.Apple.background.ignoresSafeArea())
+            .background(TKDesignSystem.Colors.Background.Theme.bg50)
             .overlay {
                 if healthManager.filteredCyclingActivities.isEmpty {
                     VStack {
@@ -62,15 +53,15 @@ struct ActivitiesScreen: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(Word.activities)
-                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    FilterMenu()
-                }
-            }
+//            .toolbar {
+//                ToolbarItem(placement: .topBarLeading) {
+//                    Text(Word.activities)
+//                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
+//                }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    FilterMenu()
+//                }
+//            }
         }
     } // End body
 } // End struct
