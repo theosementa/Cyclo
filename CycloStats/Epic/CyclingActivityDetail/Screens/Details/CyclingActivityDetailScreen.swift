@@ -22,8 +22,20 @@ struct CyclingActivityDetailScreen: View {
 
     // MARK: -
     var body: some View {
-        ScrollView {
-            VStack(spacing: TKDesignSystem.Spacing.medium) {
+        BetterScrollView {
+            HStack {
+                BackButtonView()
+                    .fullWidth(.leading)
+
+                Button {
+                    showActionSheet.toggle()
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+            .padding(TKDesignSystem.Padding.large)
+        } content: { _ in
+            Group {
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
@@ -35,43 +47,11 @@ struct CyclingActivityDetailScreen: View {
                         )
                         .clipShape(RoundedRectangle(cornerRadius: TKDesignSystem.Radius.small, style: .continuous))
                         .overlay(alignment: .top) {
-                            HStack(spacing: 16) {
-                                if viewModel.showLegend {
-                                    SpeedLegendsRowView()
-                                        .fullWidth()
-                                }
-
-                                VStack(spacing: 16) {
-                                    CustomButtonView(animation: .smooth) { viewModel.showFullMap.toggle() } label: {
-                                        Image(systemName: viewModel.showFullMap ? "arrow.down.right.and.arrow.up.left" : "arrow.up.left.and.arrow.down.right")
-                                            .foregroundStyle(Color.white)
-                                            .rotationEffect(.degrees(90))
-                                            .padding(12)
-                                            .background {
-                                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                    .fill(Color.black)
-                                            }
-                                    }
-
-                                    CustomButtonView(animation: .smooth) { viewModel.showLegend.toggle() } label: {
-                                        Image(systemName: "doc.plaintext")
-                                            .foregroundStyle(Color.white)
-                                            .padding(12)
-                                            .background {
-                                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                    .fill(Color.black)
-                                            }
-                                    }
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding()
+                            MapToolbarView(showFullMap: $viewModel.showFullMap, showLegend: $viewModel.showLegend)
                         }
                 }
 
                 if !viewModel.showFullMap {
-
-                    // TODO: Better itégration
                     if let coordinate = viewModel.locations.first?.coordinate {
                         GeneralActivityDetailView(activity: activity, coordinate: coordinate)
                     }
@@ -82,22 +62,12 @@ struct CyclingActivityDetailScreen: View {
 
                     ActivityElevationChartView(locations: viewModel.locations)
                     ActivityHeartRateChartView(heartRates: viewModel.heartRates, zones: viewModel.zones)
-
                 }
             }
-            .padding(!viewModel.showFullMap ? TKDesignSystem.Padding.large : 0)
-        } // End ScrollView
-        .scrollIndicators(.hidden)
-        .background(TKDesignSystem.Colors.Background.Theme.bg50)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    showActionSheet.toggle()
-                } label: {
-                    Image(systemName: "square.and.arrow.up")
-                }
-            }
+            .padding(.horizontal, !viewModel.showFullMap ? TKDesignSystem.Padding.large : 0)
         }
+        .background(TKDesignSystem.Colors.Background.Theme.bg50)
+        .navigationBarBackButtonHidden(true)
         .confirmationDialog(
             "Télécharger",
             isPresented: $showActionSheet,
@@ -134,7 +104,9 @@ struct CyclingActivityDetailScreen: View {
                 renderer.scale = UIScreen.main.scale
 
                 if isInPngFormat {
-                    if let image = renderer.uiImage, let imageData = image.pngData(), let newImage = UIImage(data: imageData) {
+                    if let image = renderer.uiImage,
+                       let imageData = image.pngData(),
+                       let newImage = UIImage(data: imageData) {
                         UIImageWriteToSavedPhotosAlbum(newImage, nil, nil, nil)
                     }
                 } else {

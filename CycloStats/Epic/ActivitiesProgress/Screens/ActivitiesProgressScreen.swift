@@ -13,6 +13,19 @@ struct ActivitiesProgressScreen: View {
 
     // MARK: -
     var body: some View {
+//        VStack(spacing: TKDesignSystem.Spacing.medium) {
+//            ResumeStatsView(
+//                distanceValue: healthManager.totalDistance,
+//                elevationValue: healthManager.totalElevationAscended,
+//                timeValue: healthManager.totalTime,
+//                outValue: healthManager.numberOfCyclingWorkout
+//            )
+//            
+//            if healthManager.selectedPeriod != .total {
+//                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
+//                    .noDefaultStyle()
+//            }
+//        }
         NavigationStack {
             VStack(spacing: 2) {
                 List(ActivityTarget.allCases, id: \.self) { target in

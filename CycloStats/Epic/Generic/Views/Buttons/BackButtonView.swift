@@ -10,18 +10,25 @@ import TheoKit
 
 struct BackButtonView: View {
 
+    @Environment(\.dismiss) private var dismiss
+
     // MARK: - View
     var body: some View {
-        HStack(spacing: TKDesignSystem.Spacing.extraSmall) {
-            Image(.iconArrowLeft)
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 20, height: 20)
+        Button {
+            dismiss()
+        } label: {
+            HStack(spacing: TKDesignSystem.Spacing.extraSmall) {
+                Image(.iconArrowLeft)
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 20, height: 20)
 
-            Text("Retour") // TODO: TBL
-                .fontWithLineHeight(Fonts.Body.medium)
+                Text("Retour") // TODO: TBL
+                    .fontWithLineHeight(Fonts.Body.medium)
+            }
+            .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg600)
         }
-        .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg600)
+
     }
 }
 

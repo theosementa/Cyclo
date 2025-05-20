@@ -11,15 +11,22 @@ import TheoKit
 struct ActivitiesScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
+    
+    @State private var searchText: String = ""
 
     // MARK: -
     var body: some View {
         NavigationStack {
             ListWithBluredHeader {
-                VStack(spacing: 8) {
+                VStack(spacing: TKDesignSystem.Spacing.small) {
                     FilterMenu()
                         .fullWidth(.trailing)
-
+                    
+                    Text(Word.activities)
+                        .fullWidth(.leading)
+                    
+                    SearchBarView("Recherche", searchText: $searchText) // TODO: TBL
+                    
                     if healthManager.selectedPeriod != .total {
                         FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
                             .noDefaultStyle()
@@ -31,6 +38,10 @@ struct ActivitiesScreen: View {
                 if !healthManager.filteredCyclingActivities.isEmpty {
                     ForEach(healthManager.filteredCyclingActivities) { activity in
                         ActivityRowView(activity: activity)
+                            .background(
+                                NavigationLink("", destination: CyclingActivityDetailScreen(activity: activity))
+                                    .opacity(0)
+                            )
                     }
                     .noDefaultStyle()
                     .padding(.horizontal, TKDesignSystem.Padding.large)
@@ -53,18 +64,9 @@ struct ActivitiesScreen: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-//            .toolbar {
-//                ToolbarItem(placement: .topBarLeading) {
-//                    Text(Word.activities)
-//                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
-//                }
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    FilterMenu()
-//                }
-//            }
         }
-    } // End body
-} // End struct
+    }
+}
 
 // MARK: - Preview
 #Preview {

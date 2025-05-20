@@ -26,9 +26,11 @@ struct FilterMenu: View {
         } label: {
             HStack {
                 Text(healthManager.selectedPeriod.name)
+                    .fontWithLineHeight(Fonts.Body.large)
                 Image(systemName: "chevron.up.chevron.down")
             }
         }
+        .tint(Color.appGreen)
         .onChange(of: healthManager.selectedPeriod) {
             healthManager.changeDateWhenChangePeriod()
         }
