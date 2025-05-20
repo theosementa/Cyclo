@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct BestEffortsScreen: View {
 
@@ -14,23 +15,28 @@ struct BestEffortsScreen: View {
     // MARK: -
     var body: some View {
         NavigationStack {
-            List {
-                Group {
+            BetterScrollView(maxBlurRadius: 32) {
+                Text(Word.bestEfforts)
+                    .fontWithLineHeight(Fonts.Title.large)
+                    .fullWidth(.leading)
+                    .padding(.horizontal, TKDesignSystem.Padding.large)
+                    .padding(.bottom, TKDesignSystem.Padding.large)
+            } content: { _ in
+                VStack(spacing: TKDesignSystem.Spacing.medium) {
                     let elevationBestEfforts: [CyclingActivity] = Array(healthManager.elevationBestEfforts.prefix(3))
                     let elevationBestEffortsValues = elevationBestEfforts.map(\.elevationAscendedInM)
-                    BestEffortsRowView(
-                        icon: "mountain.2.fill",
+                    BestEffortChartView(
+                        icon: .iconMountain,
                         title: Word.elevation,
                         activities: elevationBestEfforts,
                         values: elevationBestEffortsValues,
                         unit: "m"
                     )
-                    .listRowInsets(.init(top: 32, leading: 16, bottom: 8, trailing: 16))
 
                     let distanceBestEfforts: [CyclingActivity] = Array(healthManager.distanceBestEfforts.prefix(3))
                     let distanceBestEffortsValues = distanceBestEfforts.map(\.distanceInKm)
-                    BestEffortsRowView(
-                        icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                    BestEffortChartView(
+                        icon: .iconRoute,
                         title: Word.distance,
                         activities: distanceBestEfforts,
                         values: distanceBestEffortsValues,
@@ -39,8 +45,8 @@ struct BestEffortsScreen: View {
 
                     let maxSpeedBestEfforts: [CyclingActivity] = Array(healthManager.maxSpeedBestEfforts.prefix(3))
                     let maxSpeedBestEffortsValues = maxSpeedBestEfforts.map(\.maxSpeedInKMH)
-                    BestEffortsRowView(
-                        icon: "gauge.with.dots.needle.67percent",
+                    BestEffortChartView(
+                        icon: .iconGauge,
                         title: Word.maxSpeed,
                         activities: maxSpeedBestEfforts,
                         values: maxSpeedBestEffortsValues,
@@ -49,29 +55,24 @@ struct BestEffortsScreen: View {
 
                     let averageBestEfforts: [CyclingActivity] = Array(healthManager.averageSpeedBestEfforts.prefix(3))
                     let averageBestEffortsValues = averageBestEfforts.map(\.averageSpeedInKMH)
-                    BestEffortsRowView(
-                        icon: "figure.outdoor.cycle",
+                    BestEffortChartView(
+                        icon: .iconBike,
                         title: Word.averageSpeed,
                         activities: averageBestEfforts,
                         values: averageBestEffortsValues,
                         unit: "km/h"
                     )
                 }
-                .listRowSeparator(.hidden)
-                .listRowBackground(Color.clear)
-                .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .padding(.horizontal, TKDesignSystem.Padding.large)
+
+                Rectangle()
+                    .frame(height: 140)
+                    .foregroundStyle(Color.clear)
             }
-            .listStyle(.plain)
             .scrollContentBackground(.hidden)
             .scrollIndicators(.hidden)
-            .background(Color.Apple.background.ignoresSafeArea())
+            .background(TKDesignSystem.Colors.Background.Theme.bg50)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(Word.bestEfforts)
-                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                }
-            }
         }
     } // End body
 } // Ens struct
