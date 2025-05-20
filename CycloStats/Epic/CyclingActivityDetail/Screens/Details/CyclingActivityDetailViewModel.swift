@@ -23,7 +23,13 @@ extension CyclingActivityDetailViewModel {
         await MainActor.run { isLoading = true }
 
         async let locationsTask: [CLLocation] = loadLocations(activity: activity, healthManager: healthManager)
-        async let heartRateTask: (entries: [HeartRateEntry], zoneAnalysis: [HeartRateZone]) = loadHeartRates(activity: activity, healthManager: healthManager)
+        async let heartRateTask: (
+            entries: [HeartRateEntry],
+            zoneAnalysis: [HeartRateZone]
+        ) = loadHeartRates(
+            activity: activity,
+            healthManager: healthManager
+        )
 
         do {
             let (locations, (heartRates, zones)) = try await (locationsTask, heartRateTask)
@@ -67,7 +73,13 @@ extension CyclingActivityDetailViewModel {
         return locationArrays.flatMap { $0 }
     }
 
-    private func loadHeartRates(activity: CyclingActivity, healthManager: HealthManager) async throws -> (entries: [HeartRateEntry], zoneAnalysis: [HeartRateZone]) {
+    private func loadHeartRates(
+        activity: CyclingActivity,
+        healthManager: HealthManager
+    ) async throws -> (
+        entries: [HeartRateEntry],
+        zoneAnalysis: [HeartRateZone]
+    ) {
         do {
             return try await healthManager.getHeartRateForActivity(activity: activity)
         } catch {

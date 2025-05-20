@@ -17,7 +17,9 @@ struct ToolbarDismissKeyboardButtonView: ToolbarContent {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Button(action: {
-                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                    UIApplication.shared.sendAction(
+                        #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil
+                    )
                 }, label: {
                     Image(systemName: "keyboard.chevron.compact.down.fill")
                         .foregroundStyle(Color.appGreen)

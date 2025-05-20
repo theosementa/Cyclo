@@ -5,28 +5,27 @@
 //  Created by Theo Sementa on 20/05/2025.
 //
 
-
 import SwiftUI
 import TheoKit
 
 struct SearchBarView: View {
-    
+
     // MARK: Dependencies
     var placeholder: String
     @Binding var searchText: String
-        
+
     @FocusState private var isFocused: Bool
-    
+
     // MARK: init
     init(_ placeholder: String, searchText: Binding<String>) {
         self.placeholder = placeholder
         self._searchText = searchText
     }
-    
+
     var isSearching: Bool {
         return !searchText.isEmpty
     }
-    
+
     // MARK: - View
     var body: some View {
         HStack(spacing: 8) {
@@ -35,7 +34,7 @@ struct SearchBarView: View {
                 .renderingMode(.template)
                 .frame(width: 20, height: 20)
                 .foregroundStyle(isSearching ? Color.appGreen : TKDesignSystem.Colors.Background.Theme.bg500)
-            
+
             TextField(placeholder, text: $searchText)
                 .focused($isFocused)
                 .fontWithLineHeight(Fonts.Body.medium)
@@ -43,7 +42,7 @@ struct SearchBarView: View {
                 .toolbar {
                     ToolbarDismissKeyboardButtonView()
                 }
-            
+
             if isSearching {
                 Button {
                     searchText = ""

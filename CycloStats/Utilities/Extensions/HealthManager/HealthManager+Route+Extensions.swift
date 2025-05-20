@@ -46,12 +46,10 @@ extension HealthManager {
 
     func getLocationDataForRoute(givenRoute: HKWorkoutRoute) async -> [CLLocation] {
         do {
-            return try await withCheckedThrowingContinuation {
-                (continuation: CheckedContinuation<[CLLocation], Error>) in
+            return try await withCheckedThrowingContinuation { continuation in
                 let allLocations = NSMutableArray()
 
-                let query = HKWorkoutRouteQuery(route: givenRoute) {
-                    (_, locationsOrNil, done, errorOrNil) in
+                let query = HKWorkoutRouteQuery(route: givenRoute) { _, locationsOrNil, done, errorOrNil in
 
                     // Handle errors
                     if let error = errorOrNil {

@@ -199,8 +199,13 @@ extension HealthManager {
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [timePredicate, workoutPredicate])
 
         do {
-            let samples = try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<[HKSample], Error>) in
-                let query = HKSampleQuery(sampleType: workout, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, sample, error in
+            let samples = try await withCheckedThrowingContinuation { continuation in
+                let query = HKSampleQuery(
+                    sampleType: workout,
+                    predicate: predicate,
+                    limit: HKObjectQueryNoLimit,
+                    sortDescriptors: nil
+                ) { _, sample, error in
                     guard let workouts = sample as? [HKWorkout], error == nil else { return }
                     continuation.resume(returning: workouts)
                 }
@@ -237,11 +242,15 @@ extension HealthManager {
             }
 
             if let workoutAverageHeartRate = workout.statistics(for: .init(.heartRate))?.averageQuantity() {
-                averageHeartRate = Int(workoutAverageHeartRate.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
+                averageHeartRate = Int(workoutAverageHeartRate.doubleValue(
+                    for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+                )
             }
 
             if let workoutHeartRateMax = workout.statistics(for: .init(.heartRate))?.maximumQuantity() {
-                maxHeartRate = Int(workoutHeartRateMax.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute())))
+                maxHeartRate = Int(workoutHeartRateMax.doubleValue(
+                    for: HKUnit.count().unitDivided(by: HKUnit.minute()))
+                )
             }
 
             if let workoutMetadata = workout.metadata {

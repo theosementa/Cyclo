@@ -26,12 +26,18 @@ struct GeneralActivityDetailView: View {
 
             VStack(spacing: TKDesignSystem.Spacing.medium) {
                 HStack(spacing: TKDesignSystem.Spacing.small) {
-                    StatsRowView(title: Word.date, value: activity.date.formatted(date: .complete, time: .omitted).capitalized)
-                        .fullWidth(.leading)
+                    StatsRowView(
+                        title: Word.date,
+                        value: activity.date.formatted(date: .complete, time: .omitted).capitalized
+                    )
+                    .fullWidth(.leading)
 
                     if let dayWeather = weatherManager.dayWeather {
-                        StatsRowView(title: Word.temperature, value: dayWeather.highTemperature.value.formatWith(num: 2) + " °C")
-                            .fullWidth(.leading)
+                        StatsRowView(
+                            title: Word.temperature,
+                            value: dayWeather.highTemperature.value.formatWith(num: 2) + " °C"
+                        )
+                        .fullWidth(.leading)
                     }
                 }
 
@@ -44,11 +50,17 @@ struct GeneralActivityDetailView: View {
                 }
 
                 HStack(spacing: TKDesignSystem.Spacing.small) {
-                    StatsRowView(title: Word.departure, value: activity.startDate.formatted(date: .omitted, time: .shortened))
-                        .fullWidth(.leading)
+                    StatsRowView(
+                        title: Word.departure,
+                        value: activity.startDate.formatted(date: .omitted, time: .shortened)
+                    )
+                    .fullWidth(.leading)
 
-                    StatsRowView(title: Word.arrival, value: activity.endDate.formatted(date: .omitted, time: .shortened))
-                        .fullWidth(.leading)
+                    StatsRowView(
+                        title: Word.arrival,
+                        value: activity.endDate.formatted(date: .omitted, time: .shortened)
+                    )
+                    .fullWidth(.leading)
                 }
             }
         }
