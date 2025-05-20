@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct ZoneRowView: View {
 
@@ -17,12 +18,14 @@ struct ZoneRowView: View {
         VStack(alignment: .leading, spacing: 2) {
             HStack {
                 Text("\(Word.zone) \(zone.id) - \(zone.percentage.formatWith(num: 1))%")
+                    .fontWithLineHeight(Fonts.Body.medium)
                     .foregroundStyle(zone.color)
 
                 Spacer()
 
                 Text(zone.stringRange)
-                    .foregroundStyle(Color(uiColor: .lightGray))
+                    .fontWithLineHeight(Fonts.Body.medium)
+                    .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg600)
             }
             .font(.system(size: 16, weight: .semibold, design: .rounded))
 
@@ -33,7 +36,7 @@ struct ZoneRowView: View {
                         .frame(width: geometry.size.width * (zone.percentage / 100), height: 10)
 
                     Text("\((zone.timeSpent / 60).asHoursMinutesAndSeconds)")
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .fontWithLineHeight(Fonts.Body.small)
                 }
             }
         }

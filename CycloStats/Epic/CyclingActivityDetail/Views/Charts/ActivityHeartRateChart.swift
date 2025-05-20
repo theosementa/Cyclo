@@ -27,13 +27,17 @@ struct ActivityHeartRateChartView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
-            HStack(spacing: 8) {
-                Image(systemName: "bolt.heart")
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+            HStack(spacing: TKDesignSystem.Spacing.extraSmall) {
+                Image(systemName: "heart.fill")
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 20, height: 20)
+
                 Text("BPM")
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
-                Spacer()
+                    .fullWidth(.leading)
+                    .fontWithLineHeight(Fonts.Title.medium)
             }
+            .foregroundStyle(Color.label)
 
             Chart {
                 ForEach(heartRates, id: \.self) { heartRate in
@@ -61,11 +65,11 @@ struct ActivityHeartRateChartView: View {
 
             HStack(spacing: 24) {
                 Text("\(Word.min): \(minYAxisValue.formatWith(num: 0)) BPM")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fullWidth(.leading)
                 Text("\(Word.max): \(maxYAxisValue.formatWith(num: 0)) BPM")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fullWidth(.leading)
             }
-            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .fontWithLineHeight(Fonts.Body.medium)
 
             ForEach(zones) { zone in
                 Divider()

@@ -35,7 +35,7 @@ struct CyclingActivityDetailScreen: View {
             }
             .padding(TKDesignSystem.Padding.large)
         } content: { _ in
-            Group {
+            VStack(spacing: TKDesignSystem.Spacing.medium) {
                 if viewModel.isLoading {
                     ProgressView()
                         .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
@@ -65,6 +65,7 @@ struct CyclingActivityDetailScreen: View {
                 }
             }
             .padding(.horizontal, !viewModel.showFullMap ? TKDesignSystem.Padding.large : 0)
+            .padding(.bottom, !viewModel.showFullMap ? TKDesignSystem.Padding.large : 0)
         }
         .background(TKDesignSystem.Colors.Background.Theme.bg50)
         .navigationBarBackButtonHidden(true)

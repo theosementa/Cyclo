@@ -27,13 +27,17 @@ struct ActivityElevationChartView: View {
     // MARK: -
     var body: some View {
         VStack(spacing: 16) {
-            HStack(spacing: 8) {
-                Image(systemName: "mountain.2.fill")
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+            HStack(spacing: TKDesignSystem.Spacing.extraSmall) {
+                Image(.iconMountain)
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 20, height: 20)
+
                 Text(Word.elevation)
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
-                Spacer()
+                    .fullWidth(.leading)
+                    .fontWithLineHeight(Fonts.Title.medium)
             }
+            .foregroundStyle(Color.label)
 
             Chart {
                 ForEach(locations, id: \.self) { location in
@@ -60,11 +64,11 @@ struct ActivityElevationChartView: View {
 
             HStack(spacing: 24) {
                 Text("\(Word.min): \(minYAxisValue.formatWith(num: 2))m")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fullWidth(.leading)
                 Text("\(Word.max): \(maxYAxisValue.formatWith(num: 2))m")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fullWidth(.leading)
             }
-            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .fontWithLineHeight(Fonts.Body.medium)
         }
         .padding(TKDesignSystem.Padding.medium)
         .roundedRectangleBorder(
