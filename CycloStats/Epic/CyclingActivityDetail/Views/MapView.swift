@@ -5,6 +5,9 @@ import SwiftUI
 struct MapView: UIViewRepresentable {
     var locations: [CLLocation]
 
+    // Maximum number of polylines to render
+    private let maxPolylines = 500
+
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
@@ -17,17 +20,29 @@ struct MapView: UIViewRepresentable {
         guard locations.count > 1 else {
             // If there are 0 or 1 locations, we can't draw any lines
             if let singleLocation = locations.first {
-                let region = MKCoordinateRegion(center: singleLocation.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+                let region = MKCoordinateRegion(
+                    center: singleLocation.coordinate,
+                    latitudinalMeters: 1000,
+                    longitudinalMeters: 1000
+                )
                 uiView.setRegion(region, animated: true)
             }
             return
         }
 
+        // Determine if we need to downsample
+        let strideSize = max(1, (locations.count - 1) / maxPolylines)
         var polylines: [MKPolyline] = []
 
-        for index in 0..<locations.count - 1 {
+        // Pre-allocate capacity
+        polylines.reserveCapacity(min(locations.count - 1, maxPolylines))
+
+        // Create polylines with appropriate stride
+        var index = 0
+        while index < locations.count - 1 {
             let start = locations[index]
-            let end = locations[index + 1]
+            let nextIndex = min(index + strideSize, locations.count - 1)
+            let end = locations[nextIndex]
 
             let coordinates = [start.coordinate, end.coordinate]
             let polyline = MKPolyline(coordinates: coordinates, count: 2)
@@ -36,8 +51,11 @@ struct MapView: UIViewRepresentable {
             polyline.title = String(speed)
 
             polylines.append(polyline)
+
+            index += strideSize
         }
 
+        // Add all polylines at once
         uiView.addOverlays(polylines)
 
         if let region = calculateRegion(locations: locations) {
@@ -59,6 +77,7 @@ struct MapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let polyline = overlay as? MKPolyline {
                 let renderer = MKPolylineRenderer(polyline: polyline)
+
                 if let speedString = polyline.title, let speed = Double(speedString) {
                     switch speed {
                     case SpeedZone.zone1.range: renderer.strokeColor = UIColor(SpeedZone.zone1.color)
@@ -70,8 +89,9 @@ struct MapView: UIViewRepresentable {
                     default: renderer.strokeColor = .black
                     }
                 } else {
-                    renderer.strokeColor = .black  // Default color if speed can't be determined
+                    renderer.strokeColor = .black
                 }
+
                 renderer.lineWidth = 4
                 return renderer
             }
@@ -82,16 +102,30 @@ struct MapView: UIViewRepresentable {
     func calculateRegion(locations: [CLLocation]) -> MKCoordinateRegion? {
         guard !locations.isEmpty else { return nil }
 
-        let latitudes = locations.map { $0.coordinate.latitude }
-        let longitudes = locations.map { $0.coordinate.longitude }
+        // Single-pass algorithm avoids creating arrays
+        var minLat = Double.greatestFiniteMagnitude
+        var maxLat = -Double.greatestFiniteMagnitude
+        var minLong = Double.greatestFiniteMagnitude
+        var maxLong = -Double.greatestFiniteMagnitude
 
-        let maxLat = latitudes.max()!
-        let minLat = latitudes.min()!
-        let maxLong = longitudes.max()!
-        let minLong = longitudes.min()!
+        for location in locations {
+            let lat = location.coordinate.latitude
+            let long = location.coordinate.longitude
 
-        let center = CLLocationCoordinate2D(latitude: (maxLat + minLat) / 2, longitude: (maxLong + minLong) / 2)
-        let span = MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.1, longitudeDelta: (maxLong - minLong) * 1.1)
+            minLat = min(minLat, lat)
+            maxLat = max(maxLat, lat)
+            minLong = min(minLong, long)
+            maxLong = max(maxLong, long)
+        }
+
+        let center = CLLocationCoordinate2D(
+            latitude: (maxLat + minLat) / 2,
+            longitude: (maxLong + minLong) / 2
+        )
+        let span = MKCoordinateSpan(
+            latitudeDelta: (maxLat - minLat) * 1.1,
+            longitudeDelta: (maxLong - minLong) * 1.1
+        )
 
         return MKCoordinateRegion(center: center, span: span)
     }
@@ -99,8 +133,8 @@ struct MapView: UIViewRepresentable {
     func calculateSpeed(start: CLLocation, end: CLLocation) -> Double {
         let distance = end.distance(from: start)
         let time = end.timestamp.timeIntervalSince(start.timestamp)
+        guard time > 0 else { return 0 }
         let speedMPS = distance / time
-        let speedKMH = speedMPS * 3.6
-        return speedKMH
+        return speedMPS * 3.6
     }
 }

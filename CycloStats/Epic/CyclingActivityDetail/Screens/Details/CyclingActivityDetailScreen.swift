@@ -85,7 +85,7 @@ struct CyclingActivityDetailScreen: View {
 
                 }
             }
-            .padding(viewModel.showFullMap ? 0 : TKDesignSystem.Padding.large)
+            .padding(!viewModel.showFullMap ? TKDesignSystem.Padding.large : 0)
         } // End ScrollView
         .scrollIndicators(.hidden)
         .background(TKDesignSystem.Colors.Background.Theme.bg50)
