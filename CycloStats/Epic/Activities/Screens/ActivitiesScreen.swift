@@ -11,22 +11,22 @@ import TheoKit
 struct ActivitiesScreen: View {
 
     @EnvironmentObject private var healthManager: HealthManager
-    
+
     @State private var searchText: String = ""
 
     // MARK: -
     var body: some View {
         NavigationStack {
-            ListWithBluredHeader {
+            ListWithBluredHeader(maxBlurRadius: 32) {
                 VStack(spacing: TKDesignSystem.Spacing.small) {
                     FilterMenu()
                         .fullWidth(.trailing)
-                    
+
                     Text(Word.activities)
                         .fullWidth(.leading)
-                    
+
                     SearchBarView("Recherche", searchText: $searchText) // TODO: TBL
-                    
+
                     if healthManager.selectedPeriod != .total {
                         FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
                             .noDefaultStyle()
@@ -46,6 +46,11 @@ struct ActivitiesScreen: View {
                     .noDefaultStyle()
                     .padding(.horizontal, TKDesignSystem.Padding.large)
                     .padding(.bottom, TKDesignSystem.Padding.medium)
+
+                    Rectangle()
+                        .frame(height: 140)
+                        .foregroundStyle(Color.clear)
+                        .noDefaultStyle()
                 }
             }
             .background(TKDesignSystem.Colors.Background.Theme.bg50)

@@ -72,5 +72,4 @@ struct SearchBarView: View {
     SearchBarView("kn", searchText: .constant("kn"))
         .padding()
         .background(Color.blue)
-        .environmentObject(ThemeManager())
 }

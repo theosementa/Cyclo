@@ -6,79 +6,81 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct CyclingTargetView: View {
 
-    // Builder
+    // MARK: Dependencies
     var target: ActivityTarget
 
+    // MARK: Environments
     @EnvironmentObject private var healthManager: HealthManager
 
     // MARK: -
     var body: some View {
         let numberOfTime = target.numberOfTime(distance: healthManager.totalDistance)
-        VStack(spacing: 16) {
-            VStack(alignment: .leading) {
-                HStack(alignment: .top) {
-                    Text(target.title)
-                        .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    Spacer()
-                    Text(target.value.formatWith(num: 2) + "km")
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                }
 
-                Text("\(Word.traveled) \(numberOfTime.time) fois")
-                    .italic()
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(Color(uiColor: .label).opacity(0.7))
+        VStack(alignment: .leading, spacing: TKDesignSystem.Spacing.medium) {
+            VStack(alignment: .leading, spacing: 0) {
+                Text(target.title)
+                    .fontWithLineHeight(.init(name: Fonts.fontMedium, size: 18, lineHeight: 24))
+                Text("\(Word.traveled) \(numberOfTime.time) fois") // TODO: TBL
+                    .fontWithLineHeight(Fonts.Body.small)
+                    .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg600)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
 
-            VStack(alignment: .leading, spacing: 8) {
-                Capsule()
-                    .frame(height: 30)
-                    .foregroundStyle(Color.Apple.componentInComponent)
+            VStack(alignment: .leading, spacing: 4) {
+                RoundedRectangle(cornerRadius: 4, style: .continuous)
+                    .frame(height: 24)
+                    .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg200)
                     .overlay(alignment: .leading) {
                         GeometryReader { geo in
-                            Capsule()
-                                .fill(.green)
+                            RoundedRectangle(cornerRadius: 4, style: .continuous)
+                                .fill(Color.appGreen)
                                 .frame(width: geo.size.width * numberOfTime.progress)
                                 .overlay(alignment: .leading) {
                                     if numberOfTime.progress >= 0.20 {
-                                        Text((numberOfTime.progress * 100).formatWith(num: 1) + "%")
-                                            .font(.system(size: 16, weight: .semibold))
+                                        Text((numberOfTime.progress * 100).toString(maxDigits: 1) + "%")
+                                            .fontWithLineHeight(Fonts.Body.small)
+                                            .foregroundStyle(Color.black)
                                             .padding(.leading)
                                     }
                                 }
                         }
                     }
-                    .clipShape(Capsule())
+                    .clipShape(RoundedRectangle(cornerRadius: 4, style: .continuous))
                     .overlay(alignment: .trailing) {
                         if numberOfTime.progress < 0.20 {
-                            Text((numberOfTime.progress * 100).formatWith(num: 1) + "%")
-                                .font(.system(size: 16, weight: .semibold))
+                            Text((numberOfTime.progress * 100).toString(maxDigits: 1) + "%")
+                                .fontWithLineHeight(Fonts.Body.small)
+                                .foregroundStyle(Color.appGreen)
                                 .padding(.trailing)
-                                .foregroundStyle(Color.green)
                         }
                     }
 
                 let progressAlreadyDoInKm = numberOfTime.progress * target.value
                 let progressRemainingInKm = target.value - (numberOfTime.progress * target.value)
                 HStack {
-                    Text("\(Word.traveled) \(progressAlreadyDoInKm.formatWith(num: 2)) km")
-                    Spacer()
-                    Text("\(Word.remaining) \(progressRemainingInKm.formatWith(num: 2)) km")
+                    Text("\(Word.traveled) \(progressAlreadyDoInKm.toString()) km")
+                        .fullWidth(.leading)
+                    Text("\(Word.remaining) \(progressRemainingInKm.toString()) km")
+                        .fullWidth(.trailing)
                 }
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .fontWithLineHeight(Fonts.Body.small)
             }
         }
-        .backgroundComponent()
-    } // End body
-} // End struct
+        .padding(TKDesignSystem.Padding.medium)
+        .roundedRectangleBorder(
+            TKDesignSystem.Colors.Background.Theme.bg100,
+            radius: TKDesignSystem.Radius.small
+        )
+    }
+}
 
 // MARK: - Preview
 #Preview {
     CyclingTargetView(target: .montVentoux)
         .padding()
         .environmentObject(HealthManager())
+        .preferredColorScheme(.dark)
 }

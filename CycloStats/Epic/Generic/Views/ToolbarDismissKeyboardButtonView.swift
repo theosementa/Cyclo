@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct ToolbarDismissKeyboardButtonView: ToolbarContent {
-        
+
     // MARK: - View
     var body: some ToolbarContent {
         ToolbarItem(placement: .keyboard) {
             HStack {
                 EmptyView()
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 Button(action: {
                     UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                 }, label: {

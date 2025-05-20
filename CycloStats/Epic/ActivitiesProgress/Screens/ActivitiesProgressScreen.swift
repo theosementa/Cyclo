@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TheoKit
 
 struct ActivitiesProgressScreen: View {
 
@@ -13,52 +14,47 @@ struct ActivitiesProgressScreen: View {
 
     // MARK: -
     var body: some View {
-//        VStack(spacing: TKDesignSystem.Spacing.medium) {
-//            ResumeStatsView(
-//                distanceValue: healthManager.totalDistance,
-//                elevationValue: healthManager.totalElevationAscended,
-//                timeValue: healthManager.totalTime,
-//                outValue: healthManager.numberOfCyclingWorkout
-//            )
-//            
-//            if healthManager.selectedPeriod != .total {
-//                FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-//                    .noDefaultStyle()
-//            }
-//        }
-        NavigationStack {
-            VStack(spacing: 2) {
-                List(ActivityTarget.allCases, id: \.self) { target in
-                    CyclingTargetView(target: target)
-                        .listRowSeparator(.hidden)
-                        .listRowBackground(Color.clear)
-                        .listRowInsets(.init(top: 8, leading: 16, bottom: 8, trailing: 16))
-                }
-                .listStyle(.plain)
-                .scrollContentBackground(.hidden)
-                .scrollIndicators(.hidden)
-                .contentMargins(.top, 16, for: .scrollContent)
+        ListWithBluredHeader(maxBlurRadius: 32) {
+            VStack(spacing: TKDesignSystem.Spacing.small) {
+                FilterMenu()
+                    .fullWidth(.trailing)
+
+                Text(Word.progress)
+                    .fontWithLineHeight(Fonts.Title.large)
+                    .fullWidth(.leading)
 
                 if healthManager.selectedPeriod != .total {
                     FilterByPeriodView(selectedPeriod: healthManager.selectedPeriod)
-                        .padding(.horizontal)
-                        .padding(.vertical, 4)
                 }
             }
-            .background(Color.Apple.background.ignoresSafeArea())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Text(Word.progress)
-                        .font(.system(.largeTitle, design: .rounded, weight: .bold))
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    FilterMenu()
-                }
+            .padding(.horizontal, TKDesignSystem.Padding.large)
+            .padding(.bottom, TKDesignSystem.Padding.large)
+        } content: {
+            ResumeStatsView(
+                distanceValue: healthManager.totalDistance,
+                elevationValue: healthManager.totalElevationAscended,
+                timeValue: healthManager.totalTime,
+                outValue: healthManager.numberOfCyclingWorkout
+            )
+            .noDefaultStyle()
+            .padding(.horizontal, TKDesignSystem.Padding.large)
+            .padding(.bottom, TKDesignSystem.Padding.large)
+
+            ForEach(ActivityTarget.allCases, id: \.self) { target in
+                CyclingTargetView(target: target)
+                    .padding(.bottom, TKDesignSystem.Padding.medium)
             }
+            .noDefaultStyle()
+            .padding(.horizontal, TKDesignSystem.Padding.large)
+
+            Rectangle()
+                .frame(height: 140)
+                .foregroundStyle(Color.clear)
+                .noDefaultStyle()
         }
-    } // End body
-} // End struct
+        .background(TKDesignSystem.Colors.Background.Theme.bg50)
+    }
+}
 
 // MARK: - Preview
 #Preview {
