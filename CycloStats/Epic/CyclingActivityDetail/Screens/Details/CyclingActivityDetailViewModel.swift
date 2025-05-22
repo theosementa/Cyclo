@@ -19,25 +19,23 @@ final class CyclingActivityDetailViewModel: ObservableObject {
 }
 
 extension CyclingActivityDetailViewModel {
-    func setupDetailView(activity: CyclingActivity, healthManager: HealthManager) async {
+    func setupDetailView(
+        activity: CyclingActivity,
+        healthManager: HealthManager,
+        heartRateManager: HeartRateManager
+    ) async {
         await MainActor.run { isLoading = true }
 
         async let locationsTask: [CLLocation] = loadLocations(activity: activity, healthManager: healthManager)
-        async let heartRateTask: (
-            entries: [HeartRateEntry],
-            zoneAnalysis: [HeartRateZone]
-        ) = loadHeartRates(
-            activity: activity,
-            healthManager: healthManager
-        )
+        async let heartRateTask: HeartRateModel = try await heartRateManager.getHeartRateForActivity(activity: activity)
 
         do {
-            let (locations, (heartRates, zones)) = try await (locationsTask, heartRateTask)
+            let (locations, heartRates) = try await (locationsTask, heartRateTask)
 
             await MainActor.run {
                 self.locations = locations
-                self.heartRates = heartRates
-                self.zones = zones
+                self.heartRates = heartRates.entries
+                self.zones = heartRates.zones
                 self.isLoading = false
             }
         } catch {
@@ -71,19 +69,5 @@ extension CyclingActivityDetailViewModel {
 
         // Flatten the array of arrays
         return locationArrays.flatMap { $0 }
-    }
-
-    private func loadHeartRates(
-        activity: CyclingActivity,
-        healthManager: HealthManager
-    ) async throws -> (
-        entries: [HeartRateEntry],
-        zoneAnalysis: [HeartRateZone]
-    ) {
-        do {
-            return try await healthManager.getHeartRateForActivity(activity: activity)
-        } catch {
-            throw error
-        }
     }
 }

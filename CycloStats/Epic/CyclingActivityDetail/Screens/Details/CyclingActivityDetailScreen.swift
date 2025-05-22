@@ -16,6 +16,7 @@ struct CyclingActivityDetailScreen: View {
     @Environment(\.colorScheme) var colorScheme
 
     @EnvironmentObject private var healthManager: HealthManager
+    @EnvironmentObject private var heartRateManager: HeartRateManager
     @StateObject private var viewModel: CyclingActivityDetailViewModel = .init()
 
     @State private var showActionSheet: Bool = false
@@ -83,7 +84,11 @@ struct CyclingActivityDetailScreen: View {
             }
         )
         .task {
-            await viewModel.setupDetailView(activity: activity, healthManager: healthManager)
+            await viewModel.setupDetailView(
+                activity: activity,
+                healthManager: healthManager,
+                heartRateManager: heartRateManager
+            )
         }
     } // body
 

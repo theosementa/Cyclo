@@ -29,81 +29,19 @@ struct HeartRateZone: Identifiable {
         case 4: return "166-179 BPM"
         default: return ">180 BPM"
         }
-     }
+    }
 
     static var preview: HeartRateZone {
         return HeartRateZone(id: 2, range: 139...151, color: .green)
     }
-}
 
-extension HealthManager {
-
-    func getHeartRateForActivity(activity: CyclingActivity) async throws -> (entries: [HeartRateEntry], zoneAnalysis: [HeartRateZone]) {
-            guard let sampleType = HKObjectType.quantityType(forIdentifier: .heartRate) else {
-                throw HealthKitError.sampleTypeNotAvailable
-            }
-
-            let predicate = HKQuery.predicateForSamples(
-                withStart: activity.startDate,
-                end: activity.endDate,
-                options: .strictEndDate
-            )
-
-            let entries: [HeartRateEntry] = try await withCheckedThrowingContinuation { continuation in
-                let query = HKSampleQuery(
-                    sampleType: sampleType,
-                    predicate: predicate,
-                    limit: HKObjectQueryNoLimit,
-                    sortDescriptors: [NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: true)]
-                ) { _, samples, error in
-                    if let error = error {
-                        continuation.resume(throwing: error)
-                        return
-                    }
-
-                    guard let samples = samples as? [HKQuantitySample] else {
-                        continuation.resume(throwing: HealthKitError.unexpectedSampleType)
-                        return
-                    }
-
-                    let unit = HKUnit(from: "count/min")
-                    let heartRateEntries = samples.map { sample in
-                        HeartRateEntry(
-                            heartRate: sample.quantity.doubleValue(for: unit),
-                            date: sample.startDate
-                        )
-                    }
-
-                    continuation.resume(returning: heartRateEntries)
-                }
-
-                self.healthStore.execute(query)
-            }
-
-            let zoneAnalysis = analyzeHeartRateZones(entries: entries, activityDuration: activity.endDate.timeIntervalSince(activity.startDate))
-
-            return (entries, zoneAnalysis)
-        }
-
-        private func analyzeHeartRateZones(entries: [HeartRateEntry], activityDuration: TimeInterval) -> [HeartRateZone] {
-            var analyzedZones = zones
-
-            for index in 0..<entries.count - 1 {
-                let currentEntry = entries[index]
-                let nextEntry = entries[index + 1]
-                let duration = nextEntry.date.timeIntervalSince(currentEntry.date)
-
-                if let zoneIndex = analyzedZones.firstIndex(where: { $0.range.contains(currentEntry.heartRate) }) {
-                    analyzedZones[zoneIndex].timeSpent += duration
-                }
-            }
-
-            // Calculate percentages
-            for index in 0..<analyzedZones.count {
-                analyzedZones[index].percentage = (analyzedZones[index].timeSpent / activityDuration) * 100
-            }
-
-            return analyzedZones
-        }
-
+    static var all: [HeartRateZone] {
+        return [
+            HeartRateZone(id: 1, range: 0...138, color: .blue),
+            HeartRateZone(id: 2, range: 139...151, color: .green),
+            HeartRateZone(id: 3, range: 152...165, color: .yellow),
+            HeartRateZone(id: 4, range: 166...179, color: .orange),
+            HeartRateZone(id: 5, range: 180...Double.infinity, color: .red)
+        ]
+    }
 }

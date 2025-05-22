@@ -12,6 +12,7 @@ import TheoKit
 struct CycloStatsApp: App {
 
     @StateObject private var healthManager: HealthManager = .init()
+    @StateObject private var heartRateManager: HeartRateManager = .init()
     @StateObject private var cyclingActivityEntityRepo: CyclingActivityEntityRepo = .shared
     @StateObject private var appManager: AppManager = .shared
 
@@ -46,6 +47,7 @@ struct CycloStatsApp: App {
                 .topBlur()
             }
             .environmentObject(healthManager)
+            .environmentObject(heartRateManager)
             .task {
                 if await healthManager.requestAutorisation() {
                     await cyclingActivityEntityRepo.fetchActivities()
