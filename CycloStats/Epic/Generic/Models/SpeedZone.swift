@@ -22,6 +22,10 @@ struct SpeedZone: Identifiable {
         default: return ">50 KM/H"
         }
      }
+
+    static var all: [SpeedZone] {
+        return [.zone1, .zone2, .zone3, .zone4, .zone5, .zone6]
+    }
 }
 
 extension SpeedZone {

@@ -25,15 +25,15 @@ enum ActivityTarget: CaseIterable {
 
     var title: String {
         switch self {
-        case .montVentoux:          return "Mont ventoux"
-        case .metzToThionvile:      return "Metz -> Thionville"
-        case .metzToNancy:          return "Metz -> Nancy"
-        case .stageTourOfFrance:    return "Étape du tour de France"
-        case .milanToRome:          return "Milan -> Rome"
-        case .parisToMarseille:     return "Paris -> Marseille"
-        case .parisToDubai:         return "Paris -> Dubai"
-        case .circumferenceMoon:    return "Tour de la Lune"
-        case .circumferenceEarth:   return "Tour de la Terre"
+        case .montVentoux:          return "Mont ventoux (20.8 km)"
+        case .metzToThionvile:      return "Metz - Thionville (29.2 km)"
+        case .metzToNancy:          return "Metz - Nancy (59.7 km)"
+        case .stageTourOfFrance:    return "Étape du tour de France (170 km)"
+        case .milanToRome:          return "Milan - Rome (573.1 km)"
+        case .parisToMarseille:     return "Paris - Marseille (773.1 km)"
+        case .parisToDubai:         return "Paris - Dubai (6 802.4 km)"
+        case .circumferenceMoon:    return "Tour de la Lune (10 921 km)"
+        case .circumferenceEarth:   return "Tour de la Terre (40 075 km)"
         }
     }
 

@@ -104,8 +104,13 @@ struct CyclingActivityDetailScreen: View {
         ) { image in
             if let image = image {
                 let renderer = ImageRenderer(
-                    content: SharedCard(activity: activity, viewModel: viewModel, uiImage: image, isInJpegFormat: !isInPngFormat)
-                        .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
+                    content: SharedCard(
+                        activity: activity,
+                        viewModel: viewModel,
+                        uiImage: image,
+                        isInJpegFormat: !isInPngFormat
+                    )
+                    .environment(\.colorScheme, colorScheme == .light ? .light : .dark)
                 )
                 renderer.scale = UIScreen.main.scale
 

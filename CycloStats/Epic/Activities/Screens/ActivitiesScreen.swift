@@ -23,6 +23,7 @@ struct ActivitiesScreen: View {
                         .fullWidth(.trailing)
 
                     Text(Word.activities)
+                        .fontWithLineHeight(Fonts.Title.large)
                         .fullWidth(.leading)
 
                     SearchBarView("Recherche", searchText: $searchText) // TODO: TBL

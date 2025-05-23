@@ -31,7 +31,7 @@ struct ZoneRowView: View {
 
             GeometryReader { geometry in
                 HStack {
-                    Capsule()
+                    RoundedRectangle(cornerRadius: 4, style: .continuous)
                         .foregroundStyle(zone.color)
                         .frame(width: geometry.size.width * (zone.percentage / 100), height: 10)
 

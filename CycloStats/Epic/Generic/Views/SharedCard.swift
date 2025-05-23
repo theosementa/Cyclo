@@ -30,42 +30,38 @@ struct SharedCard: View {
             }
 
             VStack(spacing: 16) {
+                StatsRowView(
+                    title: Word.date,
+                    value: activity.date.formatted(date: .complete, time: .omitted).capitalized,
+                    alignment: .center
+                )
+
                 LazyVGrid(columns: [GridItem(spacing: 16), GridItem(spacing: 16)], spacing: 16) {
-                    CyclingStatsRow(
-                        icon: "calendar",
-                        title: Word.date,
-                        value: activity.date.formatted(date: .numeric, time: .omitted),
-                        withBackground: true
-                    )
 
-                    CyclingStatsRow(
-                        icon: "timer",
+                    StatsRowView(
                         title: Word.duration,
-                        value: activity.durationInMin.asHoursMinutesAndSeconds,
-                        withBackground: true
+                        value: activity.durationInMin.asHoursMinutes,
+                        alignment: .center
                     )
 
-                    CyclingStatsRow(
-                        icon: "point.bottomleft.forward.to.point.topright.scurvepath.fill",
+                    StatsRowView(
                         title: Word.distance,
-                        value: activity.distanceInKm.formatWith(num: 2) + " km",
-                        withBackground: true
+                        value: activity.distanceInKm.toString() + " km",
+                        alignment: .center
                     )
 
-                    CyclingStatsRow(
-                        icon: "mountain.2.fill",
+                    StatsRowView(
                         title: Word.elevation,
-                        value: activity.elevationAscendedInM.formatWith(num: 2) + " m",
-                        withBackground: true
+                        value: activity.elevationAscendedInM.toString() + " m",
+                        alignment: .center
+                    )
+
+                    StatsRowView(
+                        title: Word.maxSpeed,
+                        value: activity.maxSpeedInKMH.toString() + " km/h",
+                        alignment: .center
                     )
                 }
-
-                CyclingStatsRow(
-                    icon: "gauge.with.dots.needle.67percent",
-                    title: Word.maxSpeed,
-                    value: activity.maxSpeedInKMH.formatWith(num: 2) + " km/h",
-                    withBackground: true
-                )
             }
         }
         .padding()

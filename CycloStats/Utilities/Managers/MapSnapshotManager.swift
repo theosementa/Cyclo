@@ -114,14 +114,9 @@ class MapSnapshotManager {
     }
 
     private static func colorForSpeed(_ speed: Double) -> UIColor {
-        switch speed {
-        case SpeedZone.zone1.range: return UIColor(SpeedZone.zone1.color)
-        case SpeedZone.zone2.range: return UIColor(SpeedZone.zone2.color)
-        case SpeedZone.zone3.range: return UIColor(SpeedZone.zone3.color)
-        case SpeedZone.zone4.range: return UIColor(SpeedZone.zone4.color)
-        case SpeedZone.zone5.range: return UIColor(SpeedZone.zone5.color)
-        case SpeedZone.zone6.range: return UIColor(SpeedZone.zone6.color)
-        default: return .black
+        for zone in SpeedZone.all where zone.range.contains(speed) {
+            return UIColor(zone.color)
         }
+        return .black
     }
 }

@@ -13,12 +13,13 @@ struct StatsRowView: View {
     // MARK: Dependencies
     var title: String
     var value: String
+    var alignment: HorizontalAlignment = .leading
 
     // MARK: - View
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: alignment, spacing: 0) {
             Text(title)
-                .fontWithLineHeight(Fonts.Label.large)
+                .fontWithLineHeight(Fonts.Body.small)
                 .foregroundStyle(TKDesignSystem.Colors.Background.Theme.bg600)
             Text(value)
                 .fontWithLineHeight(Fonts.Body.mediumBold)
